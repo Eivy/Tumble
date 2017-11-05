@@ -1,0 +1,67 @@
+body {
+	margin: 0;
+	padding 0;
+	background-color: #36465d;
+}
+
+#contents {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 300px;
+}
+
+#contents > .title {
+	position: relative;
+	text-align: center;
+	vertical-align: middle;
+	color: #fff;
+	top: 0;
+	height: 3em;
+	margin: 0;
+	padding: 0;
+	font-size: x-large;
+	font-family: sans-serif;
+}
+#contents > .content {
+	position: absolute;
+	overflow-y: scroll;
+	top: 3em;
+	bottom: 0;
+}
+
+#sidebar {
+	position: absolute;
+	overflow-x: unset;
+	overflow-y: scroll;
+	top: 3em;
+	bottom: 0;
+	left: 0;
+	width: 300px;
+}
+
+#sidebar .post {
+	border: 1px solid #36465d;
+	background-color: #fff;
+}
+
+#sidebar .quote, #sidebar .text, #sidebar .link {
+	font-size: x-small;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#sidebar .link {
+	font-weight: bold;
+}
+
+img {
+	max-width: 100%;
+	padding: 0;
+	margin: 0;
+	vertical-align: bottom;
+}
+.post>div {
+	height: 100%;
+}

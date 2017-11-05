@@ -1,0 +1,12 @@
+<template>
+	<div class='photo' @click=contentsRender(post) >
+		<img v-for="photo in post.photos" :src=photo.original_size.url>
+	</div>
+</template>
+
+<script>
+import Mixin from './Mixin.vue'
+export default {
+	mixins: [Mixin]
+}
+</script>
