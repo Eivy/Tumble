@@ -45,7 +45,7 @@ app.on('ready', () => {
 		});
 		main.webContents.on('dom-ready', () => {
 			console.log(token);
-			client.userDashboard((err, data) => {
+			client.userDashboard({reblog_info: true}, (err, data) => {
 				main.webContents.send('dashboard', {dashboard: data});
 			});
 		});
@@ -57,7 +57,7 @@ ipcMain.on('get', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
 		requiringDashboard = true;
-		client.userDashboard(msg, (err,data) => {
+		client.userDashboard(Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
 			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), dashboard: data});
 		});

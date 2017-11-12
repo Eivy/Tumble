@@ -6,7 +6,8 @@ module.exports = [
       filename: 'bundle.js'
     },
     module: {
-      loaders: [{
+      loaders: [
+        {
           test: /\.vue$/, loader: 'vue-loader'
         },
         {
@@ -20,6 +21,18 @@ module.exports = [
       }
     },
     target: 'electron'
+  },
+  {
+    entry: './render/index.scss',
+    output: {
+      path: __dirname+'/render',
+      filename: 'bundle.css'
+    },
+    module: {
+      rules: [{
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }]
+    }
   }
-]
-;
+];

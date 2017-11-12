@@ -1,6 +1,6 @@
 body {
 	margin: 0;
-	padding 0;
+	padding: 0;
 	background-color: #36465d;
 	font-family: sans-serif;
 }
@@ -28,6 +28,22 @@ body {
 	top: 3em;
 	bottom: 0;
 	width: 100%;
+}
+
+.content .photo {
+	color: #fff;
+}
+
+.content .info > div {
+	border-bottom: 1px solid #888;
+	margin-left: 50px;
+	height: 30px;
+	line-height: 30px;
+}
+.content .info .separator {
+	background-color: #56667d;
+	height: 20px;
+	line-height: 20px;
 }
 
 #sidebar {

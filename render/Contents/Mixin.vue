@@ -1,10 +1,14 @@
 <script>
 import Vue from 'vue'
 import Contents from '../Contents.vue'
+import Tag from './Tag.vue'
+import Info from './Info.vue'
 export default {
 	props: ['post'],
 	components: {
-		Contents
+		Contents,
+		Info,
+		Tag
 	},
 	methods: {
 		contentsRender: function(post) {
