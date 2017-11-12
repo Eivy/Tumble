@@ -52,11 +52,16 @@ app.on('ready', () => {
 	}
 });
 
+var requiringDashboard = false;
 ipcMain.on('get', (evt, msg) => {
 	console.log(msg);
-	client.userDashboard(msg, (err,data) => {
-		main.webContents.send('dashboard', data);
-	});
+	if (!requiringDashboard) {
+		requiringDashboard = true;
+		client.userDashboard(msg, (err,data) => {
+			requiringDashboard = false;
+			main.webContents.send('dashboard', data);
+		});
+	}
 });
 
 function getAuth(login, return_token) {
