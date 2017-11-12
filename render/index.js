@@ -6,22 +6,34 @@ import Contents from './Contents.vue'
 var client;
 var dashboard = undefined;
 
-var scrollTimeOut;
 ipcRenderer.on('dashboard', (evt, msg) => {
+	console.log(msg)
 	if (dashboard === undefined) {
-		dashboard = msg;
+		console.log(msg)
+		dashboard = msg.dashboard;
 		render(dashboard);
 		var sidebar = document.getElementById('sidebar');
+		var scrollTimeOut;
+		var prevScrollTop;
 		sidebar.onscroll = function() {
 			clearTimeout(scrollTimeOut)
 			scrollTimeOut = setTimeout(function() {
-				getPrevDashboard();
+				if (prevScrollTop > sidebar.scrollTop && sidebar.scrollTop < 100) {
+					ipcRenderer.send('get', {since_id: dashboard.posts[0].id});
+				} else {
+					getPrevDashboard();
+				}
+				prevScrollTop = sidebar.scrollTop;
 			}, 200)
 		}
 		getPrevDashboard();
 	} else {
-		dashboard.posts = dashboard.posts.concat(msg.posts);
-		getPrevDashboard();
+		if (msg.type === 'prev') {
+			dashboard.posts = dashboard.posts.concat(msg.dashboard.posts);
+			getPrevDashboard();
+		} else if (msg.type === 'next') {
+			dashboard.posts = msg.dashboard.posts.concat(dashboard.posts);
+		}
 	}
 });
 

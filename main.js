@@ -46,7 +46,7 @@ app.on('ready', () => {
 		main.webContents.on('dom-ready', () => {
 			console.log(token);
 			client.userDashboard((err, data) => {
-				main.webContents.send('dashboard', data);
+				main.webContents.send('dashboard', {dashboard: data});
 			});
 		});
 	}
@@ -59,7 +59,7 @@ ipcMain.on('get', (evt, msg) => {
 		requiringDashboard = true;
 		client.userDashboard(msg, (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('dashboard', data);
+			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), dashboard: data});
 		});
 	}
 });
