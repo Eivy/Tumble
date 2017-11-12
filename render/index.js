@@ -3,7 +3,6 @@ import {ipcRenderer} from 'electron'
 import Vue from 'vue'
 import SideBar from './SideBar.vue'
 import Contents from './Contents.vue'
-var client;
 var dashboard = undefined;
 
 ipcRenderer.on('dashboard', (evt, msg) => {
