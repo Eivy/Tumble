@@ -20,8 +20,14 @@ ipcRenderer.on('dashboard', (evt, msg) => {
 				}
 			}, 200)
 		}
+		if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
+			getNextDashboard();
+		}
 	} else {
 		dashboard.posts = dashboard.posts.concat(msg.posts);
+		if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
+			getNextDashboard();
+		}
 	}
 });
 
