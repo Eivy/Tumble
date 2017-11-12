@@ -15,19 +15,13 @@ ipcRenderer.on('dashboard', (evt, msg) => {
 		sidebar.onscroll = function() {
 			clearTimeout(scrollTimeOut)
 			scrollTimeOut = setTimeout(function() {
-				if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
-					getNextDashboard();
-				}
+				getPrevDashboard();
 			}, 200)
 		}
-		if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
-			getNextDashboard();
-		}
+		getPrevDashboard();
 	} else {
 		dashboard.posts = dashboard.posts.concat(msg.posts);
-		if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
-			getNextDashboard();
-		}
+		getPrevDashboard();
 	}
 });
 
@@ -40,6 +34,8 @@ function render(obj) {
 	});
 }
 
-function getNextDashboard() {
-	ipcRenderer.send('get', {before_id: dashboard.posts[dashboard.posts.length-1].id});
+function getPrevDashboard() {
+	if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
+		ipcRenderer.send('get', {before_id: dashboard.posts[dashboard.posts.length-1].id});
+	}
 }
