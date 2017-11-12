@@ -2,6 +2,7 @@ body {
 	margin: 0;
 	padding 0;
 	background-color: #36465d;
+	font-family: sans-serif;
 }
 
 #contents {
@@ -9,7 +10,7 @@ body {
 	top: 0;
 	bottom: 0;
 	right: 0;
-	left: 300px;
+	left: 302px;
 }
 
 #contents > .title {
@@ -19,32 +20,35 @@ body {
 	color: #fff;
 	top: 0;
 	height: 3em;
-	margin: 0;
-	padding: 0;
 	font-size: x-large;
-	font-family: sans-serif;
 }
-#contents > .content {
+.content {
 	position: absolute;
 	overflow-y: scroll;
 	top: 3em;
 	bottom: 0;
-	padding: 0 5% 0 5%;
+	width: 100%;
 }
 
 #sidebar {
+	border-right: 1px solid #888;
 	position: absolute;
 	overflow-x: unset;
 	overflow-y: scroll;
-	top: 3em;
+	padding-top: 3em;
+	top: 0;
 	bottom: 0;
 	left: 0;
 	width: 300px;
 }
 
-#sidebar .post {
+#sidebar .post > div {
 	border: 1px solid #36465d;
 	background-color: #fff;
+}
+
+#sidebar .post .photo {
+	background-color: transparent;
 }
 
 #sidebar .quote, #sidebar .text, #sidebar .link {
@@ -59,10 +63,9 @@ body {
 
 img {
 	width: 100%;
-	padding: 0;
-	margin: 0;
 	vertical-align: bottom;
 }
+
 .post>div {
 	height: 100%;
 }
