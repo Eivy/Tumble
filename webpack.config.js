@@ -23,7 +23,7 @@ module.exports = [
     target: 'electron'
   },
   {
-    entry: './render/index.scss',
+    entry: {style: './render/index.scss'},
     output: {
       path: __dirname+'/render',
       filename: 'bundle.css'
