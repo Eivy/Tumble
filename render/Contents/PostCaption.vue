@@ -3,7 +3,7 @@
 		<div class='separator'>Caption</div>
 		<div v-html=post.caption ></div>
 	</div>
-</template
+</template>
 
 <script>
 export default {

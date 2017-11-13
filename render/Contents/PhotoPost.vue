@@ -2,7 +2,7 @@
 	<div class='photo' @click=contentsRender(post) >
 		<img v-for="photo in post.photos" :src=photo.original_size.url>
 		<div>
-			<Caption v-bind:post=post />
+			<PostCaption v-if='post.caption.length > 0' v-bind:post=post />
 			<Info v-bind:post=post />
 			<Tag v-if='post.tags.length > 0' v-bind:post=post />
 		</div>
