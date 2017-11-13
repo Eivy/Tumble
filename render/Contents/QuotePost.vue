@@ -1,5 +1,5 @@
 <template>
-	<div class='quote' @click=contentsRender(post) >{{sanitizeText}}</div>
+	<div class='quote' >{{sanitizeText}}</div>
 </template>
 
 <script>

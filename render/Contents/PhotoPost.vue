@@ -1,5 +1,5 @@
 <template>
-	<div class='photo' @click=contentsRender(post) >
+	<div class='photo' >
 		<img v-for="photo in post.photos" :src=photo.original_size.url>
 		<div>
 			<PostCaption v-if='post.caption.length > 0' v-bind:post=post />

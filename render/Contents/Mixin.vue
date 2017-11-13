@@ -11,17 +11,6 @@ export default {
 		PostCaption,
 		Info,
 		Tag
-	},
-	methods: {
-		contentsRender: function(post) {
-			console.log(post)
-			new Vue({
-				el: '#contents',
-				components: {Contents},
-				data: function() { return post },
-				template: '<Contents v-bind:post=this />'
-			})
-		}
 	}
 }
 </script>

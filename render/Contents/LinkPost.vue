@@ -1,5 +1,5 @@
 <template>
-	<div class='link' @click=contentsRender(post) >{{post.title}}</div>
+	<div class='link' >{{post.title}}</div>
 </template>
 
 <script>
