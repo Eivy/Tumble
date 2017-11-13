@@ -1,6 +1,6 @@
 <template>
 	<div id='contents'>
-		<div class='title'>{{post.blog_name}}</div>
+		<h4 class='title'>{{post.blog_name}}</h4>
 		<div class='content'>
 			<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 			<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
