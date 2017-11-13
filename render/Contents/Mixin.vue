@@ -3,10 +3,12 @@ import Vue from 'vue'
 import Contents from '../Contents.vue'
 import Tag from './Tag.vue'
 import Info from './Info.vue'
+import Caption from './Caption.vue'
 export default {
 	props: ['post'],
 	components: {
 		Contents,
+		Caption,
 		Info,
 		Tag
 	},
