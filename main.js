@@ -20,11 +20,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-	main = new electron.BrowserWindow({width:1000, height: 800});
-	main.loadURL('file://' + __dirname + '/render/index.html');
-	main.on('close', () => {
-		main = null;
-	});
 	var token = store.get('token', {
 		consumer_key: consumer_key,
 		consumer_secret: consumer_secret
@@ -33,24 +28,33 @@ app.on('ready', () => {
 		var login = new electron.BrowserWindow({width:800, heigh:600});
 		login.on('close', () => {
 			store.set('token', token);
-			main.webContents.send('token', token);
+			showMain(token);
 		});
 		getAuth(login, token);
 	} else {
-		client = new tumblr.Client({
-			consumer_key: token.consumer_key,
-			consumer_secret: token.consumer_secret,
-			token: token.access_token,
-			token_secret: token.access_token_secret
-		});
-		main.webContents.on('dom-ready', () => {
-			console.log(token);
-			client.userDashboard({reblog_info: true}, (err, data) => {
-				main.webContents.send('dashboard', {dashboard: data});
-			});
-		});
+		showMain(token);
 	}
 });
+
+function showMain(token) {
+	main = new electron.BrowserWindow({width:1000, height: 800});
+	main.loadURL('file://' + __dirname + '/render/index.html');
+	main.on('close', () => {
+		main = null;
+	});
+	client = new tumblr.Client({
+		consumer_key: token.consumer_key,
+		consumer_secret: token.consumer_secret,
+		token: token.access_token,
+		token_secret: token.access_token_secret
+	});
+	main.webContents.on('dom-ready', () => {
+		console.log(token);
+		client.userDashboard({reblog_info: true}, (err, data) => {
+			main.webContents.send('dashboard', {dashboard: data});
+		});
+	});
+}
 
 var requiringDashboard = false;
 ipcMain.on('get', (evt, msg) => {
