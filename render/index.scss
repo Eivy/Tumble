@@ -11,23 +11,22 @@ body {
 	bottom: 0;
 	right: 0;
 	left: 302px;
-}
-
-#contents > .title {
-	position: fixed;
-	text-align: center;
-	vertical-align: middle;
-	color: #fff;
-	background-color: #36465d;
-	top: 0;
-	left: 302px;
-	right: 0;
-	height: 3em;
-	line-height: 3em;
-	opacity: 0.7;
-	z-index: 99;
-	margin: 0;
-	padding: 0;
+	> .title {
+		position: fixed;
+		text-align: center;
+		vertical-align: middle;
+		color: #fff;
+		background-color: #36465d;
+		top: 0;
+		left: 302px;
+		right: 0;
+		height: 3em;
+		line-height: 3em;
+		opacity: 0.7;
+		z-index: 99;
+		margin: 0;
+		padding: 0;
+	}
 }
 
 .content {
@@ -37,28 +36,27 @@ body {
 	top: 0;
 	bottom: 0;
 	width: 100%;
-}
-
-.content > div {
-	background-color: #fff;
-}
-.content .photo, .content .photo > div {
-	color: #fff;
-	background-color: transparent;
-}
-
-
-.content .info > div {
-	border-bottom: 1px solid #888;
-	margin-left: 50px;
-	height: 30px;
-	line-height: 30px;
-}
-.content .info .separator {
-	margin: 1px 0px 1px 0px;
-	background-color: #56667d;
-	height: 20px;
-	line-height: 20px;
+	> div {
+		background-color: #fff;
+	}
+	.photo {
+		color: #fff;
+		background-color: transparent;
+	}
+	.info {
+		> div {
+			border-bottom: 1px solid #888;
+			margin-left: 50px;
+			min-height: 30px;
+			line-height: 30px;
+		}
+		.separator {
+			margin: 1px 0px 1px 0px;
+			background-color: #56667d;
+			min-height: 20px;
+			line-height: 20px;
+		}
+	}
 }
 
 #sidebar {
@@ -71,25 +69,23 @@ body {
 	bottom: 0;
 	left: 0;
 	width: 300px;
-}
-
-#sidebar .post > div {
-	border: 1px solid #36465d;
-	background-color: #fff;
-}
-
-#sidebar .post .photo {
-	background-color: transparent;
-}
-
-#sidebar .quote, #sidebar .text, #sidebar .link {
-	font-size: x-small;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#sidebar .link {
-	font-weight: bold;
+	.post {
+		> div {
+			border: 1px solid #36465d;
+			background-color: #fff;
+		}
+		.photo {
+			background-color: transparent;
+		}
+	}
+	.quote, .text, .link {
+		font-size: x-small;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.link {
+		font-weight: bold;
+	}
 }
 
 img {
