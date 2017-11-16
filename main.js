@@ -62,6 +62,13 @@ ipcMain.on('dashboard', (evt, msg) => {
 	}
 });
 
+ipcMain.on('user', (evt, msg) => {
+	client.userInfo((err,data) => {
+		console.log(data);
+		main.webContents.send('user', data);
+	});
+});
+
 function getAuth(login, return_token) {
 	var consumer = OAuth({
 		consumer: {

@@ -2,10 +2,20 @@
 import {ipcRenderer} from 'electron'
 import Vue from 'vue'
 import SideBar from './SideBar.vue'
-import Contents from './Contents.vue'
+import Top from './Top.vue'
+
 var dashboard = undefined;
 
 ipcRenderer.send('dashboard', {});
+ipcRenderer.send('user', {});
+
+ipcRenderer.on('user', (evt, msg) => {
+	new Vue({
+		el: '#header',
+		data: function() {return msg},
+		components: {Top}
+	});
+});
 
 ipcRenderer.on('dashboard', (evt, msg) => {
 	console.log(msg)
