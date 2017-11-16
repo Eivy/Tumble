@@ -5,6 +5,8 @@ import SideBar from './SideBar.vue'
 import Contents from './Contents.vue'
 var dashboard = undefined;
 
+ipcRenderer.send('dashboard', {});
+
 ipcRenderer.on('dashboard', (evt, msg) => {
 	console.log(msg)
 	if (dashboard === undefined) {
@@ -18,7 +20,7 @@ ipcRenderer.on('dashboard', (evt, msg) => {
 			clearTimeout(scrollTimeOut)
 			scrollTimeOut = setTimeout(function() {
 				if (prevScrollTop > sidebar.scrollTop && sidebar.scrollTop < 100) {
-					ipcRenderer.send('get', {since_id: dashboard.posts[0].id});
+					ipcRenderer.send('dashboard', {since_id: dashboard.posts[0].id});
 				} else {
 					getPrevDashboard();
 				}
@@ -47,6 +49,6 @@ function render(obj) {
 
 function getPrevDashboard() {
 	if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
-		ipcRenderer.send('get', {before_id: dashboard.posts[dashboard.posts.length-1].id});
+		ipcRenderer.send('dashboard', {before_id: dashboard.posts[dashboard.posts.length-1].id});
 	}
 }

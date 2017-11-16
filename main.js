@@ -48,16 +48,10 @@ function showMain(token) {
 		token: token.access_token,
 		token_secret: token.access_token_secret
 	});
-	main.webContents.on('dom-ready', () => {
-		console.log(token);
-		client.userDashboard({reblog_info: true}, (err, data) => {
-			main.webContents.send('dashboard', {dashboard: data});
-		});
-	});
 }
 
 var requiringDashboard = false;
-ipcMain.on('get', (evt, msg) => {
+ipcMain.on('dashboard', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
 		requiringDashboard = true;
