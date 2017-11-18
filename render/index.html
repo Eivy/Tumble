@@ -6,9 +6,10 @@
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8">
 	</head>
 	<body>
-		<div id='header'> <Top :user=user :blog=blog /></div>
-		<div id='sidebar'></div>
-		<div id='contents'></div>
+		<div id='app'>
+			<router-view></router-view>
+			<div id='contents'></div>
+		</div>
 		<script type="text/javascript" src='bundle.js'></script>
 	</body>
 </html>

@@ -1,5 +1,5 @@
 <template>
-	<div id='sidebar'>
+	<div id='sidebar' @scroll=onscroll>
 		<waterfall id='waterfall' :line-gap='100' :watch=posts>
 		<waterfall-slot class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
 			<AnswerPost v-if="post.type === 'answer'" :post='post'/>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {ipcRenderer} from 'electron'
 import {Waterfall,WaterfallSlot} from 'vue-waterfall'
 import AnswerPost from './SideBar/AnswerPost.vue'
 import AudioPost from './SideBar/AudioPost.vue'
@@ -26,9 +27,8 @@ import VideoPost from './SideBar/VideoPost.vue'
 import PhotoPost from './SideBar/PhotoPost.vue'
 import QuotePost from './SideBar/QuotePost.vue'
 import TextPost from './SideBar/TextPost.vue'
-import Contents from './Contents.vue'
+
 export default {
-	props: ['posts'],
 	components: {
 		Waterfall,
 		WaterfallSlot,
@@ -40,6 +40,17 @@ export default {
 		PhotoPost,
 		QuotePost,
 		TextPost
+	},
+	data: function() {return {posts: []}},
+	created: function() {
+		ipcRenderer.on('dashboard', (evt, msg) => {
+			if (msg.type === 'prev') {
+				this.posts = this.$data.posts.concat(msg.dashboard.posts);
+			} else if (msg.type === 'next') {
+				this.posts = msg.dashboard.posts.concat(this.$data.posts);
+			}
+		});
+		ipcRenderer.send('dashboard', {});
 	},
 	methods: {
 		postSize: function(post) {
@@ -55,7 +66,18 @@ export default {
 					return {width: 1, height: 1};
 			}
 			return {width: 1, height: 1};
+		},
+		onscroll: function() {
+			clearTimeout(this.scrollTimeOut)
+			this.scrollTimeOut = setTimeout(function(obj) {
+				if (obj.prevScrollTop > sidebar.scrollTop && sidebar.scrollTop < 100) {
+					ipcRenderer.send('dashboard', {since_id: obj.posts[0].id});
+				} else if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
+					ipcRenderer.send('dashboard', {before_id: obj.posts[obj.posts.length - 1].id});
+				}
+				obj.prevScrollTop = sidebar.scrollTop;
+			}, 200, this)
 		}
-	},
+	}
 }
 </script>
