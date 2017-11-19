@@ -69,6 +69,24 @@ ipcMain.on('user', (evt, msg) => {
 	});
 });
 
+ipcMain.on('blog', (evt, msg) => {
+	console.log(msg);
+	if (!requiringDashboard) {
+		requiringDashboard = true;
+		client.blogPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
+			requiringDashboard = false;
+			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), dashboard: data});
+		});
+	}
+});
+
+ipcMain.on('avatar', (evt, msg) => {
+	console.log(msg);
+	client.blogAvatar(msg.name, msg.size, (err, data) => {
+		main.send('avatar', data);
+	});
+});
+
 function getAuth(login, return_token) {
 	var consumer = OAuth({
 		consumer: {

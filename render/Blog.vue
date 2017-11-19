@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div id='header'>
-			<div id='title'><h2>Dashboard</h2></div>
-			<div id='user'>{{name}}</div>
+		<div @scroll=onscroll id='header'>
+			<div id='back' @click=back>back</div>
+			<div id='blog'>{{blog}}</div>
 		</div>
 		<div id='sidebar' @scroll=onscroll >
 			<SideBar id='posts' :posts=posts />
@@ -15,13 +15,10 @@ import {ipcRenderer} from 'electron'
 import SideBar from './SideBar.vue'
 
 export default {
+	props: ['blog'],
 	components: {SideBar},
-	data: function() { return {name: '', posts: []} },
+	data: function() {return {posts: []}},
 	created: function() {
-		ipcRenderer.send('user');
-		ipcRenderer.on('user', (evt, msg) => {
-			this.$data.name = msg.user.name;
-		});
 		ipcRenderer.on('dashboard', (evt, msg) => {
 			if (msg.type === 'prev') {
 				this.posts = this.$data.posts.concat(msg.dashboard.posts);
@@ -29,19 +26,28 @@ export default {
 				this.posts = msg.dashboard.posts.concat(this.$data.posts);
 			}
 		});
-		ipcRenderer.send(this.$router.currentRoute.name, {});
+		ipcRenderer.send(this.$router.currentRoute.name, {name: this.blog});
+	},
+	beforeRouteUpdate: function(to, from, next) {
+		console.log(to);
+		this.posts = [];
+		ipcRenderer.send(this.$router.currentRoute.name, {name: to.params.blog});
+		next();
 	},
 	methods: {
 		onscroll: function() {
 			clearTimeout(this.scrollTimeOut)
 			this.scrollTimeOut = setTimeout(function(obj) {
 				if (obj.prevScrollTop > sidebar.scrollTop && sidebar.scrollTop < 100) {
-					ipcRenderer.send('dashboard', {since_id: obj.posts[0].id});
+					ipcRenderer.send('blog', {name: obj.blog, since_id: obj.posts[0].id});
 				} else if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
-					ipcRenderer.send('dashboard', {before_id: obj.posts[obj.posts.length - 1].id});
+					ipcRenderer.send('blog', {name: obj.blog, before_id: obj.posts[obj.posts.length - 1].id});
 				}
 				obj.prevScrollTop = sidebar.scrollTop;
 			}, 200, this)
+		},
+		back: function() {
+			this.$router.back();
 		}
 	}
 }
@@ -64,19 +70,16 @@ export default {
 	width: 300px;
 	color: white;
 	text-align: center;
-	#title {
+	#blog {
 		padding: 0;
 		margin: 0;
-		line-height: 2em;
-		height: 2em;
-		> h2 {
-			padding: 0;
-			margin: 0;
-		}
+		line-height: 3em;
+		height: 3em;
 	}
-	#user {
-		line-height: 1em;
-		height: 1em;
+	#back {
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 }
 </style>

@@ -13,6 +13,7 @@ export default {
 				el: '#contents',
 				components: {Contents},
 				data: function() { return post },
+				router: this.$router,
 				template: '<Contents v-bind:post=this />'
 			})
 		}

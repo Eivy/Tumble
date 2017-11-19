@@ -60,14 +60,6 @@ body {
 }
 
 #sidebar {
-	border-right: 1px solid #888;
-	position: absolute;
-	overflow-x: unset;
-	overflow-y: scroll;
-	top: 3em;
-	bottom: 0;
-	left: 0;
-	width: 300px;
 	.post {
 		> div {
 			border: 1px solid #36465d;

@@ -12,6 +12,12 @@ var router = new VueRouter({
 			name: 'dashboard',
 			path: '/dashboard',
 			component: Dashboard
+		},
+		{
+			name: 'blog',
+			path: '/blog/:blog',
+			component: Blog,
+			props: true
 		}
 	]
 });
