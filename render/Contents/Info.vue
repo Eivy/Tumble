@@ -2,8 +2,8 @@
 	<div class='info'>
 		<div class='separator'>Info</div>
 		<div @click=blog(post.blog_name)>{{post.blog_name}}</div>
-		<div @click=blog(post.reblogged_from_name)>reblogged: {{post.reblogged_from_name}}</div>
-		<div @click=blog(post.reblogged_root_name)>original: {{post.reblogged_root_name}}</div>
+		<div v-if='post.reblogged_from_name !== undefined' @click=blog(post.reblogged_from_name)>reblogged: {{post.reblogged_from_name}}</div>
+		<div v-if='post.reblogged_root_name !== undefined' @click=blog(post.reblogged_root_name)>original: {{post.reblogged_root_name}}</div>
 		<div>{{new Date(post.timestamp*1000).toLocaleString()}}</div>
 		<div>{{post.note_count}} notes</div>
 	</div>
