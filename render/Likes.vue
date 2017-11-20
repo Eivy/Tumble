@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div id='header'>
-			<div id='title'><h2>Dashboard</h2></div>
+			<div id='title'><h2>Likes</h2></div>
 			<div id='user'>{{name}}</div>
 		</div>
 		<div id='posts' @scroll=onscroll >
@@ -18,27 +18,29 @@ export default {
 	components: {Posts},
 	data: function() { return {name: '', posts: []} },
 	created: function() {
-		ipcRenderer.send('user');
 		ipcRenderer.on('user', (evt, msg) => {
 			this.name = msg.user.name;
 		});
-		ipcRenderer.on('dashboard', (evt, msg) => {
+		ipcRenderer.send('user');
+		ipcRenderer.on('likes', (evt, msg) => {
 			if (msg.type === 'prev') {
-				this.posts = this.posts.concat(msg.dashboard.posts);
+				this.posts = this.posts.concat(msg.likes.liked_posts);
 			} else if (msg.type === 'next') {
-				this.posts = msg.dashboard.posts.concat(this.posts);
+				this.posts = msg.likes.liked_posts.concat(this.posts);
 			}
 		});
+		console.log(this.$router.currentRoute.name);
 		ipcRenderer.send(this.$router.currentRoute.name, {});
 	},
 	methods: {
 		onscroll: function() {
 			clearTimeout(this.scrollTimeOut)
 			this.scrollTimeOut = setTimeout(function(obj) {
+				console.log('hoge');
 				if (obj.prevScrollTop > posts.scrollTop && posts.scrollTop < 100) {
-					ipcRenderer.send('dashboard', {since_id: obj.posts[0].id});
+					ipcRenderer.send(obj.$router.currentRoute.name, {after: obj.posts[0].timestamp});
 				} else if (posts.scrollHeight - posts.scrollTop - posts.clientHeight  < 100) {
-					ipcRenderer.send('dashboard', {before_id: obj.posts[obj.posts.length - 1].id});
+					ipcRenderer.send(obj.$router.currentRoute.name, {before: obj.posts[obj.posts.length - 1].timestamp});
 				}
 				obj.prevScrollTop = posts.scrollTop;
 			}, 200, this)

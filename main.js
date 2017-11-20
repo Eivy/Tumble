@@ -62,6 +62,17 @@ ipcMain.on('dashboard', (evt, msg) => {
 	}
 });
 
+ipcMain.on('likes', (evt, msg) => {
+	console.log(msg);
+	if (!requiringDashboard) {
+		requiringDashboard = true;
+		client.userLikes(msg, (err,data) => {
+			requiringDashboard = false;
+			main.webContents.send('likes', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), likes: data});
+		});
+	}
+});
+
 ipcMain.on('user', (evt, msg) => {
 	client.userInfo((err,data) => {
 		console.log(data);
