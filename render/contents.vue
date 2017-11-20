@@ -37,3 +37,42 @@ export default {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+#contents {
+	background-color: #36465d;
+	font-family: sans-serif;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 302px;
+	.title {
+		position: fixed;
+		text-align: center;
+		vertical-align: middle;
+		color: #fff;
+		background-color: #36465d;
+		top: 0;
+		left: 302px;
+		right: 0;
+		height: 3em;
+		line-height: 3em;
+		opacity: 0.7;
+		z-index: 99;
+		margin: 0;
+		padding: 0;
+	}
+}
+.content {
+	position: absolute;
+	overflow-y: scroll;
+	padding-top: 3em;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
+.content /deep/ img {
+	width: 100%;
+}
+</style>

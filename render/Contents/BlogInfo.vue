@@ -29,16 +29,19 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style scoped lang='scss'>
 #contents {
 	#title {
+		$height: 56px;
 		color: #fff;
-		height: 56px;
-		line-height: 56px;
+		height: $height;
+		line-height: $height;
 		#avatar {
-			width: 48px;
-			height: 48px;
-			padding: 4px;
+			$padding: 4px;
+			padding: $padding;
+			width: $height - $padding*2;
+			height: $height - $padding*2;
+			vertical-align: middle;
 		}
 	}
 	#posts {

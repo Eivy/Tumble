@@ -4,8 +4,8 @@
 			<div id='title'><h2>Dashboard</h2></div>
 			<div id='user'>{{name}}</div>
 		</div>
-		<div id='sidebar' @scroll=onscroll >
-			<Posts id='posts' :posts=posts />
+		<div id='posts' @scroll=onscroll >
+			<Posts :posts=posts />
 		</div>
 	</div>
 </template>
@@ -35,12 +35,12 @@ export default {
 		onscroll: function() {
 			clearTimeout(this.scrollTimeOut)
 			this.scrollTimeOut = setTimeout(function(obj) {
-				if (obj.prevScrollTop > sidebar.scrollTop && sidebar.scrollTop < 100) {
+				if (obj.prevScrollTop > posts.scrollTop && posts.scrollTop < 100) {
 					ipcRenderer.send('dashboard', {since_id: obj.posts[0].id});
-				} else if (sidebar.scrollHeight - sidebar.scrollTop - sidebar.clientHeight  < 100) {
+				} else if (posts.scrollHeight - posts.scrollTop - posts.clientHeight  < 100) {
 					ipcRenderer.send('dashboard', {before_id: obj.posts[obj.posts.length - 1].id});
 				}
-				obj.prevScrollTop = sidebar.scrollTop;
+				obj.prevScrollTop = posts.scrollTop;
 			}, 200, this)
 		}
 	}
@@ -48,35 +48,33 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-#sidebar {
+$header: 3em;
+$title: ($header/3)*2;
+$user: $header/3;
+#posts {
 	position: absolute;
-	padding: 0;
-	margin: 0;
-	top: 3em;
+	top: $header;
 	bottom: 0;
-	left: 0;
-	width: 300px;
+	width: 100%;
 	overflow-x: unset;
 	overflow-y: scroll;
-	border-right: 1px solid #888;
 }
 #header {
-	width: 300px;
 	color: white;
 	text-align: center;
 	#title {
 		padding: 0;
 		margin: 0;
-		line-height: 2em;
-		height: 2em;
+		line-height: $title;
+		height: $title;
 		> h2 {
 			padding: 0;
 			margin: 0;
 		}
 	}
 	#user {
-		line-height: 1em;
-		height: 1em;
+		line-height: $user;
+		height: $user;
 	}
 }
 </style>

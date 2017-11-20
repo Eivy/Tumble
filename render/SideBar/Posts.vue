@@ -1,5 +1,5 @@
 <template>
-	<waterfall :line-gap='100' :watch=posts>
+	<waterfall class='posts' :line-gap='100' :watch=posts>
 	<waterfall-slot class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 		<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
@@ -58,3 +58,31 @@ export default {
 	}
 }
 </script>
+
+<style scoped lang='scss'>
+.posts .post {
+	border: 1px solid transparent;
+	overflow: hidden;
+}
+.post /deep/ div {
+	background-color: #fff;
+	font-size: x-small;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 3px;
+	height: 100%;
+	width: 100%;
+}
+.post /deep/ .link {
+	background-color: #fff;
+	font-weight: bold;
+}
+.post /deep/ .photo {
+	background-color: transparent;
+	padding: 0;
+}
+.post /deep/ .photo img {
+	width: 100%;
+	vertical-align: bottom;
+}
+</style>

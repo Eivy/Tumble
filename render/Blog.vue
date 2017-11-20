@@ -4,8 +4,8 @@
 			<div id='back' @click=back>back</div>
 			<div id='blog'>{{blog}}</div>
 		</div>
-		<div id='sidebar' @scroll=onscroll >
-			<Posts id='posts' :posts=posts />
+		<div id='posts' @scroll=onscroll >
+			<Posts :posts=posts />
 		</div>
 	</div>
 </template>
@@ -54,17 +54,16 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-#sidebar {
+$header: 3em;
+$title: ($header/3)*2;
+$user: $header/3;
+#posts {
 	position: absolute;
-	padding: 0;
-	margin: 0;
-	top: 3em;
+	top: $header;
 	bottom: 0;
-	left: 0;
-	width: 300px;
+	width: 100%;
 	overflow-x: unset;
 	overflow-y: scroll;
-	border-right: 1px solid #888;
 }
 #header {
 	width: 300px;
