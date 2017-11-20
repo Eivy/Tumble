@@ -17,14 +17,14 @@
 <script>
 import {ipcRenderer} from 'electron'
 import {Waterfall,WaterfallSlot} from 'vue-waterfall'
-import AnswerPost from './SideBar/AnswerPost.vue'
-import AudioPost from './SideBar/AudioPost.vue'
-import ChatPost from './SideBar/ChatPost.vue'
-import LinkPost from './SideBar/LinkPost.vue'
-import VideoPost from './SideBar/VideoPost.vue'
-import PhotoPost from './SideBar/PhotoPost.vue'
-import QuotePost from './SideBar/QuotePost.vue'
-import TextPost from './SideBar/TextPost.vue'
+import AnswerPost from './AnswerPost.vue'
+import AudioPost from './AudioPost.vue'
+import ChatPost from './ChatPost.vue'
+import LinkPost from './LinkPost.vue'
+import VideoPost from './VideoPost.vue'
+import PhotoPost from './PhotoPost.vue'
+import QuotePost from './QuotePost.vue'
+import TextPost from './TextPost.vue'
 
 export default {
 	components: {

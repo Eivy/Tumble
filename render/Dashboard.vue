@@ -5,17 +5,17 @@
 			<div id='user'>{{name}}</div>
 		</div>
 		<div id='sidebar' @scroll=onscroll >
-			<SideBar id='posts' :posts=posts />
+			<Posts id='posts' :posts=posts />
 		</div>
 	</div>
 </template>
 
 <script>
 import {ipcRenderer} from 'electron'
-import SideBar from './SideBar.vue'
+import Posts from './SideBar/Posts.vue'
 
 export default {
-	components: {SideBar},
+	components: {Posts},
 	data: function() { return {name: '', posts: []} },
 	created: function() {
 		ipcRenderer.send('user');
