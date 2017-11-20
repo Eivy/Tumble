@@ -87,6 +87,13 @@ ipcMain.on('avatar', (evt, msg) => {
 	});
 });
 
+ipcMain.on('blogInfo', (evt, msg) => {
+	console.log(msg);
+	client.blogInfo(msg.name, (err, data) => {
+		main.send('blogInfo', data);
+	});
+});
+
 function getAuth(login, return_token) {
 	var consumer = OAuth({
 		consumer: {

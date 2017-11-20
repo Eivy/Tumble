@@ -9,12 +9,17 @@
 import {ipcRenderer} from 'electron'
 export default {
 	props: ['title'],
-	data: function() {return {posts: 0, avatar_url: ''}},
+	data: function() {return {posts: '', avatar_url: ''}},
 	created: function() {
 		ipcRenderer.on('avatar', (evt, msg) => {
 			this.avatar_url = msg.avatar_url;
 		});
 		ipcRenderer.send('avatar', {name: this.title, size: 48});
+		ipcRenderer.on('blogInfo', (evt, msg) => {
+			console.log(msg);
+			this.posts = msg.blog.posts;
+		});
+		ipcRenderer.send('blogInfo', {name: this.title});
 	},
 	methods: {
 		goTo: function() {
