@@ -13,6 +13,7 @@ const ipcMain = electron.ipcMain;
 
 var main;
 var client;
+var user;
 
 app.on('window-all-closed', () => {
 	if (process.platform != 'darwin')
@@ -50,6 +51,22 @@ function showMain(token) {
 	});
 }
 
+ipcMain.on('reblog', (evt, msg) => {
+	console.log(user);
+	console.log(msg);
+	client.reblogPost(user, msg, (err, data) => {
+		main.webContents.send('reblog', {err: err, data: data});
+	});
+});
+
+ipcMain.on('like', (evt, msg) => {
+	console.log(user);
+	console.log(msg);
+	client.likePost(user, msg, (err, data) => {
+		main.webContents.send('like', {err: err, data: data});
+	});
+});
+
 var requiringDashboard = false;
 ipcMain.on('dashboard', (evt, msg) => {
 	console.log(msg);
@@ -75,6 +92,7 @@ ipcMain.on('likes', (evt, msg) => {
 
 ipcMain.on('user', (evt, msg) => {
 	client.userInfo((err,data) => {
+		user = data.user.name;
 		console.log(data);
 		main.webContents.send('user', data);
 	});

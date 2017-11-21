@@ -11,6 +11,10 @@
 			<QuotePost v-else-if="post.type === 'quote'" :post='post'/>
 			<TextPost v-else-if="post.type === 'text'" :post='post'/>
 		</div>
+		<div id="buttons">
+			<div id="reblog" @click="doPost('reblog')" >Reblog</div>
+			<div id="like" @click="doPost('like')" >Like</div>
+		</div>
 	</div>
 </template>
 
@@ -35,6 +39,22 @@ export default {
 		PhotoPost,
 		QuotePost,
 		TextPost
+	},
+	created: function() {
+		ipcRenderer.on('reblog', (evt, msg) => {
+			console.log(msg);
+		});
+		ipcRenderer.on('like', (evt, msg) => {
+			console.log(msg);
+		});
+	},
+	methods: {
+		doPost: function(method) {
+			ipcRenderer.send(method, {
+				id: this.post.id,
+				reblog_key: this.post.reblog_key
+			});
+		}
 	}
 }
 </script>
@@ -64,11 +84,27 @@ export default {
 	position: absolute;
 	overflow-y: scroll;
 	padding-top: $headerHeight;
+	padding-bottom: $headerHeight;
 	top: 0;
 	bottom: 0;
 	width: 100%;
 }
 .content /deep/ img {
 	width: 100%;
+}
+#buttons {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: #555;
+	opacity: 0.9;
+	z-index: 99;
+	div {
+		display: inline-block;
+		height: $headerHeight;
+		line-height: $headerHeight;
+		padding: 0 1ex 0 1ex;
+		color: #fff;
+	}
 }
 </style>
