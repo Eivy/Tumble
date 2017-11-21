@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {ipcRenderer} from 'electron'
 import AnswerPost from './Contents/AnswerPost.vue'
 import AudioPost from './Contents/AudioPost.vue'
 import ChatPost from './Contents/ChatPost.vue'
@@ -39,25 +40,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "./size.scss";
 #contents {
 	background-color: #36465d;
 	font-family: sans-serif;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 302px;
 	.title {
 		position: fixed;
 		text-align: center;
-		vertical-align: middle;
+		background-color: $backgroundColor;
 		color: #fff;
-		background-color: #36465d;
 		top: 0;
-		left: 302px;
+		left: $sidebarSize;
 		right: 0;
-		height: 3em;
-		line-height: 3em;
+		height: $headerHeight;
+		line-height: $headerHeight;
 		opacity: 0.7;
 		z-index: 99;
 		margin: 0;
@@ -67,7 +63,7 @@ export default {
 .content {
 	position: absolute;
 	overflow-y: scroll;
-	padding-top: 3em;
+	padding-top: $headerHeight;
 	top: 0;
 	bottom: 0;
 	width: 100%;

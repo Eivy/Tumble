@@ -48,12 +48,10 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-$header: 3em;
-$title: ($header/3)*2;
-$user: $header/3;
+@import "./size.scss";
 #posts {
 	position: absolute;
-	top: $header;
+	top: $headerHeight;
 	bottom: 0;
 	width: 100%;
 	overflow-x: unset;
