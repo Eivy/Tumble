@@ -1,5 +1,5 @@
 <template>
-	<waterfall class='posts' :line-gap='100' :watch=posts>
+	<waterfall class='posts' :line-gap=width :watch=posts >
 	<waterfall-slot class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 		<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
@@ -40,6 +40,12 @@ export default {
 		TextPost
 	},
 	props: ['posts'],
+	data: function() { return {width: 100} },
+	created: function() {
+		setTimeout((obj) => {
+			obj.width = document.getElementById('posts').clientWidth / 3;
+		}, 100, this);
+	},
 	methods: {
 		postSize: function(post) {
 			switch(post.type) {
