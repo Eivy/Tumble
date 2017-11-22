@@ -33,4 +33,8 @@ export default {
 	min-height: 20px;
 	line-height: 20px;
 }
+.photo /deep/ img {
+	width: 100%;
+	vertical-align: bottom;
+}
 </style>
