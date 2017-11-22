@@ -57,7 +57,8 @@ export default {
 @import './base.scss';
 #posts {
 	position: absolute;
-	top: $headerHeight;
+	padding-top: $headerHeight;
+	top: 0;
 	bottom: 0;
 	width: 100%;
 	overflow-x: unset;
@@ -68,8 +69,8 @@ export default {
 	#blog {
 		padding: 0;
 		margin: 0;
-		line-height: 3em;
-		height: 3em;
+		line-height: $headerHeight;
+		height: $headerHeight;
 	}
 	#back {
 		position: absolute;
