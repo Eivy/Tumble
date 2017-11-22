@@ -15,13 +15,13 @@ import BlogInfo from './BlogInfo.vue'
 export default {
 	props: ['post'],
 	methods: {
-		blog: function(title) {
+		blog: function(blog_name) {
 			new Vue({
 				el: '#contents',
 				components: {BlogInfo},
 				router: this.$router,
-				data: {title: title},
-				template: '<BlogInfo :title=title />'
+				data: {blog_name: blog_name},
+				template: '<BlogInfo :blog_name=blog_name />'
 			})
 		}
 	}
