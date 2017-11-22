@@ -1,6 +1,7 @@
 'use strict;'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Links from './Links.vue'
 import Dashboard from './Dashboard.vue'
 import Likes from './Likes.vue'
 import Blog from './Blog.vue'
@@ -31,5 +32,6 @@ var router = new VueRouter({
 var app = new Vue({
 	router: router,
 	el: '#app',
+	components: {Links}
 });
 router.push('dashboard');
