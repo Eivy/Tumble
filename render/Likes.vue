@@ -18,10 +18,15 @@ export default {
 	components: {Posts},
 	data: function() { return {name: '', posts: []} },
 	created: function() {
-		ipcRenderer.on('user', (evt, msg) => {
-			this.name = msg.user.name;
-		});
-		ipcRenderer.send('user');
+		if (global.user === undefined) {
+			ipcRenderer.send('user');
+			ipcRenderer.on('user', (evt, msg) => {
+				this.name = msg.user.name;
+				global.user = this.name;
+			});
+		} else {
+			this.name = global.user;
+		}
 		ipcRenderer.on('likes', (evt, msg) => {
 			if (msg.type === 'prev') {
 				this.posts = this.posts.concat(msg.likes.liked_posts);

@@ -18,10 +18,15 @@ export default {
 	components: {Posts},
 	data: function() { return {name: '', posts: []} },
 	created: function() {
-		ipcRenderer.send('user');
-		ipcRenderer.on('user', (evt, msg) => {
-			this.name = msg.user.name;
-		});
+		if (global.user === undefined) {
+			ipcRenderer.send('user');
+			ipcRenderer.on('user', (evt, msg) => {
+				this.name = msg.user.name;
+				global.user = this.name;
+			});
+		} else {
+			this.name = global.user;
+		}
 		ipcRenderer.on('dashboard', (evt, msg) => {
 			if (msg.type === 'prev') {
 				this.posts = this.posts.concat(msg.dashboard.posts);

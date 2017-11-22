@@ -12,7 +12,8 @@
 			<TextPost v-else-if="post.type === 'text'" :post='post'/>
 		</div>
 		<div id="buttons">
-			<div id="reblog" @click="doPost('reblog')" >Reblog</div>
+			<div v-if='post.blog_name !== this.user' id="reblog" @click="doPost('reblog')" >Reblog</div>
+			<div v-else id="reblog" @click="doPost('delete')" >Delete</div>
 			<div v-if='post.liked' id="like" @click="doPost('unlike')" >UnLike</div>
 			<div v-else id="like" @click="doPost('like')" >Like</div>
 		</div>
@@ -41,7 +42,9 @@ export default {
 		QuotePost,
 		TextPost
 	},
+	data: function() { return {user: ''} },
 	created: function() {
+		this.user = global.user;
 		ipcRenderer.on('reblog', (evt, msg) => {
 			console.log(msg);
 		});

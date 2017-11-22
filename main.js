@@ -70,7 +70,13 @@ ipcMain.on('reblog', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
 	client.reblogPost(user, msg, (err, data) => {
-		main.webContents.send('reblog', {err: err, data: data});
+		main.webContents.send('reblog', {type: 'reblog', err: err, data: data});
+	});
+});
+
+ipcMain.on('delete', (evt, msg) => {
+	client.deletePost(user, msg, (err, data) => {
+		main.webContents.send('reblog', {type: 'delete', err: err, data: data});
 	});
 });
 
