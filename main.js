@@ -69,7 +69,15 @@ ipcMain.on('like', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
 	client.likePost(user, msg, (err, data) => {
-		main.webContents.send('like', {err: err, data: data});
+		main.webContents.send('like', {type: 'like', err: err, data: data});
+	});
+});
+
+ipcMain.on('unlike', (evt, msg) => {
+	console.log(user);
+	console.log(msg);
+	client.unlikePost(user, msg, (err, data) => {
+		main.webContents.send('like', {type: 'unlike', err: err, data: data});
 	});
 });
 

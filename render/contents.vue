@@ -13,7 +13,8 @@
 		</div>
 		<div id="buttons">
 			<div id="reblog" @click="doPost('reblog')" >Reblog</div>
-			<div id="like" @click="doPost('like')" >Like</div>
+			<div v-if='post.liked' id="like" @click="doPost('unlike')" >UnLike</div>
+			<div v-else id="like" @click="doPost('like')" >Like</div>
 		</div>
 	</div>
 </template>
@@ -46,6 +47,11 @@ export default {
 		});
 		ipcRenderer.on('like', (evt, msg) => {
 			console.log(msg);
+			if (msg.type === 'like') {
+				this.post.liked = true;
+			} else {
+				this.post.liked = false;
+			}
 		});
 	},
 	methods: {
