@@ -38,7 +38,13 @@ app.on('ready', () => {
 });
 
 function showMain(token) {
-	main = new electron.BrowserWindow({width:1000, height: 800});
+	main = new electron.BrowserWindow({
+		width:1000,
+		height: 800,
+		webPreferences: {
+			blinkFeatures: 'CSSBackdropFilter'
+		}
+	});
 	main.loadURL('file://' + __dirname + '/render/index.html');
 	main.on('close', () => {
 		main = null;

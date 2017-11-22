@@ -60,24 +60,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./size.scss";
+@import "./base.scss";
 #contents {
 	background-color: #36465d;
 	font-family: sans-serif;
 	.title {
-		position: fixed;
-		text-align: center;
-		background-color: $backgroundColor;
-		color: #fff;
-		top: 0;
-		left: $sidebarSize;
-		right: 0;
-		height: $headerHeight;
-		line-height: $headerHeight;
-		opacity: 0.7;
-		z-index: 99;
-		margin: 0;
-		padding: 0;
+		@include header;
+	}
+	#buttons {
+		@include footer;
+		div {
+			display: inline-block;
+			padding: 0 1ex 0 1ex;
+			color: #fff;
+		}
 	}
 }
 .content {
@@ -91,20 +87,5 @@ export default {
 }
 .content /deep/ img {
 	width: 100%;
-}
-#buttons {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	background-color: #555;
-	opacity: 0.9;
-	z-index: 99;
-	div {
-		display: inline-block;
-		height: $headerHeight;
-		line-height: $headerHeight;
-		padding: 0 1ex 0 1ex;
-		color: #fff;
-	}
 }
 </style>

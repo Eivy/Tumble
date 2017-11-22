@@ -54,21 +54,17 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-$header: 3em;
-$title: ($header/3)*2;
-$user: $header/3;
+@import './base.scss';
 #posts {
 	position: absolute;
-	top: $header;
+	top: $headerHeight;
 	bottom: 0;
 	width: 100%;
 	overflow-x: unset;
 	overflow-y: scroll;
 }
 #header {
-	width: 300px;
-	color: white;
-	text-align: center;
+	@include header;
 	#blog {
 		padding: 0;
 		margin: 0;

@@ -1,0 +1,28 @@
+$headerHeight: 3em;
+$title: ($headerHeight/3)*2;
+$user: $headerHeight/3;
+$sidebarSize: 300px;
+$backgroundColor: #36465d;
+
+@mixin features{
+	position: absolute;
+	color: #fff;
+	background-color: #000;
+	width: 100%;
+	height: $headerHeight;
+	line-height: $headerHeight;
+	padding: 0;
+	margin: 0;
+	filter: opacity(50%);
+	backdrop-filter: blur(10px);
+	z-index: 99;
+	text-align: center;
+}
+@mixin header {
+	@include features;
+	top: 0;
+}
+@mixin footer {
+	@include features;
+	bottom: 0;
+}

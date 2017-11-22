@@ -48,21 +48,20 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import "./size.scss";
+@import "./base.scss";
 #posts {
 	position: absolute;
-	top: $headerHeight;
+	padding-top: $headerHeight;
+	padding-bottom: $headerHeight;
+	top: 0;
 	bottom: 0;
 	width: 100%;
 	overflow-x: unset;
 	overflow-y: scroll;
 }
 #header {
-	color: white;
-	text-align: center;
+	@include header;
 	#title {
-		padding: 0;
-		margin: 0;
 		line-height: $title;
 		height: $title;
 		> h2 {
