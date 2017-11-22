@@ -1,6 +1,7 @@
 'use strict';
 const electron = require('electron');
 const app = electron.app;
+const shell = electron.shell;
 const request = require('request');
 const OAuth = require('oauth-1.0a');
 const crypto = require('crypto');
@@ -48,6 +49,14 @@ function showMain(token) {
 	main.loadURL('file://' + __dirname + '/render/index.html');
 	main.on('close', () => {
 		main = null;
+	});
+	main.webContents.on('new-window', (e, url) => {
+		e.preventDefault();
+		shell.openExternal(url);
+	});
+	main.webContents.on('will-navigate', (e, url) => {
+		e.preventDefault();
+		shell.openExternal(url);
 	});
 	client = new tumblr.Client({
 		consumer_key: token.consumer_key,
