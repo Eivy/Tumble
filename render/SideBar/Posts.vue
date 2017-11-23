@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import {ipcRenderer} from 'electron'
 import {Waterfall,WaterfallSlot} from 'vue-waterfall'
 import Vue from 'vue'
 import Contents from '../Contents.vue'
