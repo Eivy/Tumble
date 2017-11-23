@@ -1,6 +1,6 @@
 <template>
 	<waterfall id='posts' :line-gap=width :watch=posts >
-	<waterfall-slot class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
+	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 		<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
 		<ChatPost v-else-if="post.type === 'chat'" :post='post'/>
@@ -17,6 +17,8 @@
 <script>
 import {ipcRenderer} from 'electron'
 import {Waterfall,WaterfallSlot} from 'vue-waterfall'
+import Vue from 'vue'
+import Contents from '../Contents.vue'
 import AnswerPost from './AnswerPost.vue'
 import AudioPost from './AudioPost.vue'
 import ChatPost from './ChatPost.vue'
@@ -60,6 +62,21 @@ export default {
 					return {width: 1, height: 1};
 			}
 			return {width: 1, height: 1};
+		},
+		contentsRender: function(post) {
+			console.log(post)
+			new Vue({
+				el: '#contents',
+				components: {Contents},
+				data: function() { return post },
+				router: this.$router,
+				template: '<Contents v-bind:post=this />'
+			})
+			var target = event.target;
+			while (!target.classList.contains('post')) {
+				target = target.parentNode;
+			}
+			global.current = target
 		}
 	}
 }

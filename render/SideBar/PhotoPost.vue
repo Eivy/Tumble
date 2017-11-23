@@ -1,5 +1,5 @@
 <template>
-	<div class='photo' @click=contentsRender(post) >
+	<div class='photo'>
 		<img v-for="photo in post.photos" :src=photo.alt_sizes[2].url>
 	</div>
 </template>

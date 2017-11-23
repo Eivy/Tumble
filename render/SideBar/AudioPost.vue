@@ -1,5 +1,5 @@
 <template>
-	<div class='audio' @click=contentsRender(post) >{{post.blog_name}}<br/>audio</div>
+	<div class='audio'>{{post.blog_name}}<br/>audio</div>
 </template>
 
 <script>
