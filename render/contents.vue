@@ -1,7 +1,7 @@
 <template>
 	<div id='contents'>
 		<h4 class='title'>{{post.blog_name}}</h4>
-		<div class='content'>
+		<div id='content'>
 			<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 			<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
 			<ChatPost v-else-if="post.type === 'chat'" :post='post'/>
@@ -85,10 +85,10 @@ export default {
 		}
 	}
 }
-.content {
+#content {
 	@include content;
 }
-.content /deep/ img {
+#content /deep/ img {
 	width: 100%;
 }
 </style>

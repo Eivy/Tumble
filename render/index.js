@@ -71,5 +71,14 @@ document.onkeydown = function() {
 		case 76: // l
 			document.getElementById('like').click();
 			break;
+		case 32: // space
+			var cover = document.getElementById('contents');
+			var content = document.getElementById('content');
+			var value = (cover.clientHeight / 2) - content.style.paddingTop;
+			if (event.shiftKey) {
+				value = value * -1;
+			}
+			content.scrollTop += value;
+			break;
 	}
 };
