@@ -25,3 +25,14 @@ $backgroundColor: #36465d;
 	@include features;
 	bottom: 0;
 }
+
+@mixin content {
+	position: absolute;
+	padding-top: $headerHeight;
+	padding-bottom: $headerHeight;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	overflow-x: unset;
+	overflow-y: scroll;
+}

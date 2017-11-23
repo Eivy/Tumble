@@ -4,7 +4,7 @@
 			<div id='title'><h2>Likes</h2></div>
 			<div id='user'>{{name}}</div>
 		</div>
-		<div id='posts' @scroll=onscroll >
+		<div id='posts-cover' @scroll=onscroll >
 			<Posts :posts=posts />
 		</div>
 	</div>
@@ -56,13 +56,8 @@ export default {
 
 <style scoped lang='scss'>
 @import "./base.scss";
-#posts {
-	position: absolute;
-	top: $headerHeight;
-	bottom: 0;
-	width: 100%;
-	overflow-x: unset;
-	overflow-y: scroll;
+#posts-cover {
+	@include content;
 }
 #header {
 	@include header;

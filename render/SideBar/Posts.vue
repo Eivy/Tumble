@@ -1,5 +1,5 @@
 <template>
-	<waterfall class='posts' :line-gap=width :watch=posts >
+	<waterfall id='posts' :line-gap=width :watch=posts >
 	<waterfall-slot class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 		<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
@@ -43,7 +43,7 @@ export default {
 	data: function() { return {width: 100} },
 	created: function() {
 		setTimeout((obj) => {
-			obj.width = document.getElementById('posts').clientWidth / 3;
+			obj.width = document.getElementById('posts').parentNode.clientWidth / 3;
 		}, 100, this);
 	},
 	methods: {
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.posts .post {
+#posts .post {
 	border: 1px solid transparent;
 	overflow: hidden;
 }

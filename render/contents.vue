@@ -71,8 +71,6 @@ export default {
 <style scoped lang="scss">
 @import "./base.scss";
 #contents {
-	background-color: #36465d;
-	font-family: sans-serif;
 	.title {
 		@include header;
 	}
@@ -86,13 +84,7 @@ export default {
 	}
 }
 .content {
-	position: absolute;
-	overflow-y: scroll;
-	padding-top: $headerHeight;
-	padding-bottom: $headerHeight;
-	top: 0;
-	bottom: 0;
-	width: 100%;
+	@include content;
 }
 .content /deep/ img {
 	width: 100%;
