@@ -65,5 +65,11 @@ document.onkeydown = function() {
 			global.current.firstChild.click();
 			global.current.scrollIntoView(false);
 			break;
+		case 82: // r
+			document.getElementById('reblog').click();
+			break;
+		case 76: // l
+			document.getElementById('like').click();
+			break;
 	}
 };
