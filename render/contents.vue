@@ -45,6 +45,8 @@ export default {
 	data: function() { return {user: ''} },
 	created: function() {
 		this.user = global.user;
+		ipcRenderer.removeAllListeners('reblog');
+		ipcRenderer.removeAllListeners('like');
 		ipcRenderer.on('reblog', (evt, msg) => {
 			console.log(msg);
 		});

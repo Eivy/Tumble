@@ -27,6 +27,7 @@ export default {
 		} else {
 			this.name = global.user;
 		}
+		ipcRenderer.removeAllListeners('dashboard');
 		ipcRenderer.on('dashboard', (evt, msg) => {
 			if (msg.type === 'prev') {
 				this.posts = this.posts.concat(msg.dashboard.posts);
