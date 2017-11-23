@@ -9,9 +9,11 @@ export default {
 			clearTimeout(this.scrollTimeOut)
 			this.scrollTimeOut = setTimeout(function(obj) {
 				var cover = document.getElementById('posts-cover');
-				if (obj.prevScrollTop > cover.scrollTop && cover.scrollTop < 100) {
-					ipcRenderer.send(obj.$router.currentRoute.name, Object.assign(data, {since_id: obj.posts[0].id, before: obj.posts[0].timestamp}));
-				} else if (cover.scrollHeight - cover.scrollTop - cover.clientHeight  < 100) {
+				if (obj.prevScrollTop > cover.scrollTop) {
+					if(cover.scrollTop < document.getElementById('posts').firstChild.clientHeight) {
+						ipcRenderer.send(obj.$router.currentRoute.name, Object.assign(data, {since_id: obj.posts[0].id, after: obj.posts[0].timestamp}));
+					}
+				} else if (cover.scrollTop + cover.clientHeight > document.getElementById('posts').lastChild.previousElementSibling.offsetTop) {
 					ipcRenderer.send(obj.$router.currentRoute.name, Object.assign(data, {before_id: obj.posts[obj.posts.length - 1].id, before: obj.posts[obj.posts.length - 1].timestamp}));
 				}
 				obj.prevScrollTop = cover.scrollTop;
