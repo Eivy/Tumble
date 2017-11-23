@@ -16,6 +16,8 @@
 			<div v-else id="reblog" @click="doPost('delete')" >Delete</div>
 			<div v-if='post.liked' id="like" @click="doPost('unlike')" >UnLike</div>
 			<div v-else id="like" @click="doPost('like')" >Like</div>
+			<div id='prev' @click='prev'>Prev</div>
+			<div id='next' @click='next'>Next</div>
 		</div>
 	</div>
 </template>
@@ -65,6 +67,28 @@ export default {
 				id: this.post.id,
 				reblog_key: this.post.reblog_key
 			});
+		},
+		prev: function() {
+			if (global.current === undefined) {
+				global.current = document.getElementById('posts').lastChild;
+			} else {
+				if (global.current.previousElementSibling !== null) {
+					global.current = current.previousElementSibling;
+				}
+			}
+			global.current.firstChild.click();
+			global.current.scrollIntoView(false);
+		},
+		next: function() {
+			if (global.current === undefined) {
+				global.current = document.getElementById('posts').firstChild;
+			} else {
+				if (global.current.nextElementSibling !== null) {
+					global.current = current.nextElementSibling;
+				}
+			}
+			global.current.firstChild.click();
+			global.current.scrollIntoView(false);
 		}
 	}
 }
