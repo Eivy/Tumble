@@ -53,7 +53,7 @@ export default {
 				case 'photo':
 					var height = 0.0;
 					for(var i = 0; i < post.photos.length; i++) {
-						height += post.photos[i].original_size.height / post.photos[i].original_size.width;
+						height += (post.photos[i].alt_sizes[2].height * 0.98) / post.photos[i].alt_sizes[2].width;
 					}
 					return {width: 1, height: height};
 					break;
