@@ -39,7 +39,7 @@ export default {
 }
 #header {
 	@include header;
-	#blog {
+	#tag {
 		padding: 0;
 		margin: 0;
 		line-height: $headerHeight;

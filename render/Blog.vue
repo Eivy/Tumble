@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div @scroll=onscroll id='header'>
+		<div id='header'>
 			<div id='back' @click=back>back</div>
 			<div id='blog'>{{blog}}</div>
 		</div>
