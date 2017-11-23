@@ -3,6 +3,7 @@
 		<div id='header'>
 			<div id='title'><h2>Likes</h2></div>
 			<div id='user'>{{name}}</div>
+			<div id='update' @click='update({})'>Update</div>
 		</div>
 		<div id='posts-cover' @scroll='onscroll({})' >
 			<Posts :posts=posts />
@@ -57,6 +58,9 @@ export default {
 	#user {
 		line-height: $user;
 		height: $user;
+	}
+	#update {
+		@include update;
 	}
 }
 </style>

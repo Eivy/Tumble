@@ -36,3 +36,12 @@ $backgroundColor: #36465d;
 	overflow-x: unset;
 	overflow-y: scroll;
 }
+
+@mixin update {
+	position: absolute;
+	right: 0;
+	display: inline-block;
+	top: 0;
+	height: $headerHeight;
+	line-height: $headerHeight;
+}

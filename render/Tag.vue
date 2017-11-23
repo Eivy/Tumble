@@ -3,6 +3,7 @@
 		<div id='header'>
 			<div id='back' @click=back>back</div>
 			<div id='tag'>{{tag}}</div>
+			<div id='update' @click='update({tag: tag})'>Update</div>
 		</div>
 		<div id='posts-cover' @scroll='onscroll({tag: tag})'>
 			<Posts :posts=this.posts />
@@ -49,6 +50,9 @@ export default {
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+	#update {
+		@include update;
 	}
 }
 </style>

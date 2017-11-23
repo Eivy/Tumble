@@ -21,6 +21,10 @@ export default {
 		},
 		back: function() {
 			this.$router.back();
+		},
+		update: function(data) {
+			this.posts = [];
+			ipcRenderer.send(this.$router.currentRoute.name, data);
 		}
 	}
 }
