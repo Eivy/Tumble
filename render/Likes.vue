@@ -4,7 +4,7 @@
 			<div id='title'><h2>Likes</h2></div>
 			<div id='user'>{{name}}</div>
 		</div>
-		<div id='posts-cover' @scroll=onscroll >
+		<div id='posts-cover' @scroll='onscroll({})' >
 			<Posts :posts=posts />
 		</div>
 	</div>
@@ -12,11 +12,10 @@
 
 <script>
 import {ipcRenderer} from 'electron'
-import Posts from './SideBar/Posts.vue'
+import Mixin from './Mixin.vue'
 
 export default {
-	components: {Posts},
-	data: function() { return {name: '', posts: []} },
+	mixins: [Mixin],
 	created: function() {
 		if (global.user === undefined) {
 			ipcRenderer.send('user');
@@ -36,20 +35,6 @@ export default {
 		});
 		console.log(this.$router.currentRoute.name);
 		ipcRenderer.send(this.$router.currentRoute.name, {});
-	},
-	methods: {
-		onscroll: function() {
-			clearTimeout(this.scrollTimeOut)
-			this.scrollTimeOut = setTimeout(function(obj) {
-				console.log('hoge');
-				if (obj.prevScrollTop > posts.scrollTop && posts.scrollTop < 100) {
-					ipcRenderer.send(obj.$router.currentRoute.name, {after: obj.posts[0].timestamp});
-				} else if (posts.scrollHeight - posts.scrollTop - posts.clientHeight  < 100) {
-					ipcRenderer.send(obj.$router.currentRoute.name, {before: obj.posts[obj.posts.length - 1].timestamp});
-				}
-				obj.prevScrollTop = posts.scrollTop;
-			}, 200, this)
-		}
 	}
 }
 </script>

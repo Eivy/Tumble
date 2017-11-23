@@ -4,7 +4,7 @@
 			<div id='title'><h2>Dashboard</h2></div>
 			<div id='user'>{{name}}</div>
 		</div>
-		<div id='posts-cover' @scroll=onscroll >
+		<div id='posts-cover' @scroll='onscroll({})'>
 			<Posts :posts=posts />
 		</div>
 	</div>
@@ -12,11 +12,10 @@
 
 <script>
 import {ipcRenderer} from 'electron'
-import Posts from './SideBar/Posts.vue'
+import Mixin from './Mixin.vue'
 
 export default {
-	components: {Posts},
-	data: function() { return {name: '', posts: []} },
+	mixins: [Mixin],
 	created: function() {
 		if (global.user === undefined) {
 			ipcRenderer.send('user');
@@ -36,19 +35,6 @@ export default {
 			}
 		});
 		ipcRenderer.send(this.$router.currentRoute.name, {});
-	},
-	methods: {
-		onscroll: function() {
-			clearTimeout(this.scrollTimeOut)
-			this.scrollTimeOut = setTimeout(function(obj) {
-				if (obj.prevScrollTop > posts.scrollTop && posts.scrollTop < 100) {
-					ipcRenderer.send('dashboard', {since_id: obj.posts[0].id});
-				} else if (posts.scrollHeight - posts.scrollTop - posts.clientHeight  < 100) {
-					ipcRenderer.send('dashboard', {before_id: obj.posts[obj.posts.length - 1].id});
-				}
-				obj.prevScrollTop = posts.scrollTop;
-			}, 200, this)
-		}
 	}
 }
 </script>
