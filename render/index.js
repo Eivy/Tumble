@@ -5,6 +5,7 @@ import Links from './Links.vue'
 import Dashboard from './Dashboard.vue'
 import Likes from './Likes.vue'
 import Blog from './Blog.vue'
+import Tag from './Tag.vue'
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,12 @@ var router = new VueRouter({
 			name: 'blog',
 			path: '/blog/:blog',
 			component: Blog,
+			props: true
+		},
+		{
+			name: 'tag',
+			path: '/tag/:tag',
+			component: Tag,
 			props: true
 		}
 	]

@@ -138,6 +138,17 @@ ipcMain.on('blog', (evt, msg) => {
 	}
 });
 
+ipcMain.on('tag', (evt, msg) => {
+	console.log(msg);
+	if (!requiringDashboard) {
+		requiringDashboard = true;
+		client.taggedPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
+			requiringDashboard = false;
+			main.webContents.send('dashboard', {dashboard: {posts: data}});
+		});
+	}
+});
+
 ipcMain.on('avatar', (evt, msg) => {
 	console.log(msg);
 	client.blogAvatar(msg.name, msg.size, (err, data) => {
