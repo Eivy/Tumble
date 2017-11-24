@@ -1,7 +1,7 @@
 {
   "name": "Tumble",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tumblr client for desktop",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
