@@ -49,12 +49,28 @@ document.onkeydown = function() {
 		case 74: // j
 		case 39: // right
 		case 40: // down
-			document.getElementById('next').click();
+			if (global.current === undefined) {
+				global.current = document.getElementById('posts').firstChild;
+			} else {
+				if (global.current.nextElementSibling !== null) {
+					global.current = current.nextElementSibling;
+				}
+			}
+			global.current.firstChild.click();
+			global.current.scrollIntoView(false);
 			break;
 		case 75: // k
 		case 37: // left
 		case 38: // up
-			document.getElementById('prev').click();
+			if (global.current === undefined) {
+				global.current = document.getElementById('posts').lastChild;
+			} else {
+				if (global.current.previousElementSibling !== null) {
+					global.current = current.previousElementSibling;
+				}
+			}
+			global.current.firstChild.click();
+			global.current.scrollIntoView(false);
 			break;
 		case 82: // r
 			document.getElementById('reblog').click();
