@@ -84,6 +84,7 @@ document.onkeydown = function() {
 			document.getElementById('like').click();
 			break;
 		case 32: // space
+			event.preventDefault();
 			var cover = document.getElementById('contents');
 			var content = document.getElementById('content');
 			var value = (cover.clientHeight / 2) - content.style.paddingTop;
