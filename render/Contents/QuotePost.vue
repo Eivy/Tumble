@@ -6,7 +6,7 @@
 		</div>
 			<div>
 				<PostInfo v-bind:post=post />
-				<Tag v-if='post.tags.length > 0' v-bind:post=post />
+				<PostTag v-if='post.tags.length > 0' v-bind:post=post />
 			</div>
 	</div>
 </template>
