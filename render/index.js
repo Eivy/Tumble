@@ -57,7 +57,10 @@ document.onkeydown = function() {
 				}
 			}
 			global.current.firstChild.click();
-			global.current.scrollIntoView(false);
+			var rect = global.current.getClientRects()[0];
+			if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
+				global.current.scrollIntoView(false);
+			}
 			break;
 		case 75: // k
 		case 37: // left
@@ -70,7 +73,9 @@ document.onkeydown = function() {
 				}
 			}
 			global.current.firstChild.click();
-			global.current.scrollIntoView(false);
+			if (global.current.getClientRects()[0].top < 0) {
+				global.current.scrollIntoView();
+			}
 			break;
 		case 82: // r
 			document.getElementById('reblog').click();
