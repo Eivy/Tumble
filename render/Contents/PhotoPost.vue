@@ -1,11 +1,13 @@
 <template>
-	<div class='photo' >
-		<img v-for="photo in post.photos" :src=photo.original_size.url>
-		<div>
-			<PostCaption v-if='post.caption.length > 0' v-bind:post=post />
-			<PostInfo v-bind:post=post />
-			<Tag v-if='post.tags.length > 0' v-bind:post=post />
+	<div>
+		<div class='photo' >
+			<img v-for="photo in post.photos" :src=photo.original_size.url>
 		</div>
+			<div>
+				<PostCaption v-if='post.caption.length > 0' v-bind:post=post />
+				<PostInfo v-bind:post=post />
+				<Tag v-if='post.tags.length > 0' v-bind:post=post />
+			</div>
 	</div>
 </template>
 
