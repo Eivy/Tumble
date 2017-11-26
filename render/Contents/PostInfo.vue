@@ -1,5 +1,5 @@
 <template>
-	<div class='info'>
+	<div id='info'>
 		<div class='separator'>Info</div>
 		<div @click=blog(post.blog_name)>{{post.blog_name}}</div>
 		<div v-if='post.reblogged_from_name !== undefined' @click=blog(post.reblogged_from_name)>reblogged: {{post.reblogged_from_name}}</div>
@@ -27,3 +27,23 @@ export default {
 	}
 }
 </script>
+
+<style scoped lang='scss'>
+@import '../base.scss';
+#info {
+	background-color: $backgroundColor;
+	color: #fff;
+}
+#info div {
+	border-bottom: 1px solid #888;
+	margin-left: 50px;
+	min-height: 30px;
+	line-height: 30px;
+}
+#info .separator {
+	margin: 1px 0px 1px 0px;
+	background-color: #56667d;
+	min-height: 20px;
+	line-height: 20px;
+}
+</style>

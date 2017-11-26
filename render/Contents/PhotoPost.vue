@@ -21,19 +21,7 @@ export default {
 	color: #fff;
 	background-color: transparent;
 }
-.photo /deep/ .info div {
-	border-bottom: 1px solid #888;
-	margin-left: 50px;
-	min-height: 30px;
-	line-height: 30px;
-}
-.photo /deep/ .info .separator {
-	margin: 1px 0px 1px 0px;
-	background-color: #56667d;
-	min-height: 20px;
-	line-height: 20px;
-}
-.photo /deep/ img {
+img {
 	width: 100%;
 	vertical-align: bottom;
 }
