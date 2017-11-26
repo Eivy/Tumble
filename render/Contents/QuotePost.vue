@@ -1,17 +1,31 @@
 <template>
-	<div class='quote' >{{sanitizeText}}</div>
+	<div>
+		<div class='quote' >
+			<div id='text' v-html=post.text ></div>
+			<div id='source' v-html=post.source ></div>
+		</div>
+			<div>
+				<PostInfo v-bind:post=post />
+				<Tag v-if='post.tags.length > 0' v-bind:post=post />
+			</div>
+	</div>
 </template>
 
 <script>
 import Mixin from './Mixin.vue'
 export default {
-	mixins: [Mixin],
-	computed: {
-		sanitizeText: function() {
-			var e = document.createElement('div');
-			e.innerHTML = this.post.text;
-			return e.textContent;
-		}
-	}
+	mixins: [Mixin]
 }
 </script>
+
+<style scoped lang='scss'>
+@import '../base.scss';
+.quote {
+	background-color: #fff;
+	padding: $contentPadding;
+	#source {
+		padding: $contentPadding;
+		padding-top: $contentPadding * 3;
+	}
+}
+</style>
