@@ -15,3 +15,10 @@ export default {
 	}
 }
 </script>
+
+<style scoped lang='scss'>
+@import '../base.scss';
+.info {
+	@include info;
+}
+</style>

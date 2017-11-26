@@ -46,3 +46,20 @@ $contentPadding: 1em;
 	height: $headerHeight;
 	line-height: $headerHeight;
 }
+
+@mixin info {
+	background-color: $backgroundColor;
+	color: #fff;
+	div {
+		border-bottom: 1px solid #888;
+		margin-left: 50px;
+		min-height: 30px;
+		line-height: 30px;
+	}
+	.separator {
+		margin: 1px 0px 1px 0px;
+		background-color: #56667d;
+		min-height: 20px;
+		line-height: 20px;
+	}
+}
