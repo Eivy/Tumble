@@ -1,5 +1,5 @@
 <template>
-	<waterfall id='posts' :line-gap=width :watch=posts >
+	<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
 	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post).width :height=postSize(post).height >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 		<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
@@ -76,6 +76,13 @@ export default {
 				target = target.parentNode;
 			}
 			global.current = target
+		},
+		reflowed: function() {
+			var p = document.getElementById('posts');
+			if (p.parentNode.clientHeight == p.parentNode.scrollHeight && this.posts.length != 0) {
+				p.style.height = (p.parentNode.scrollHeight * 2)+"px";
+				p.parentNode.scrollTop = 1;
+			}
 		}
 	}
 }
