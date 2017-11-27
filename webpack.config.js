@@ -6,6 +6,7 @@ module.exports = [
       path: __dirname+'/render',
       filename: 'bundle.js'
     },
+    devtool: 'inline-source-map',
     module: {
       loaders: [
         {
