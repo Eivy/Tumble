@@ -42,10 +42,8 @@ export default {
 	},
 	props: ['posts'],
 	data: function() { return {width: 100} },
-	created: function() {
-		setTimeout((obj) => {
-			obj.width = document.getElementById('posts').parentNode.clientWidth / 3;
-		}, 100, this);
+	mounted: function() {
+		this.width = document.getElementById('posts').parentNode.clientWidth / 3;
 	},
 	methods: {
 		postSize: function(post) {
