@@ -1,13 +1,13 @@
 <script>
 import Vue from 'vue'
-import Contents from '../Contents.vue'
+import Post from './Post.vue'
 import PostTag from './PostTag.vue'
 import PostInfo from './PostInfo.vue'
 import PostCaption from './PostCaption.vue'
 export default {
 	props: ['post'],
 	components: {
-		Contents,
+		Post,
 		PostCaption,
 		PostInfo,
 		PostTag

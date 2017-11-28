@@ -24,14 +24,14 @@
 
 <script>
 import {ipcRenderer} from 'electron'
-import AnswerPost from './Contents/AnswerPost.vue'
-import AudioPost from './Contents/AudioPost.vue'
-import ChatPost from './Contents/ChatPost.vue'
-import LinkPost from './Contents/LinkPost.vue'
-import VideoPost from './Contents/VideoPost.vue'
-import PhotoPost from './Contents/PhotoPost.vue'
-import QuotePost from './Contents/QuotePost.vue'
-import TextPost from './Contents/TextPost.vue'
+import AnswerPost from './AnswerPost.vue'
+import AudioPost from './AudioPost.vue'
+import ChatPost from './ChatPost.vue'
+import LinkPost from './LinkPost.vue'
+import VideoPost from './VideoPost.vue'
+import PhotoPost from './PhotoPost.vue'
+import QuotePost from './QuotePost.vue'
+import TextPost from './TextPost.vue'
 export default {
 	props: ['post'],
 	components: {
@@ -95,7 +95,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./base.scss";
+@import "../base.scss";
 #contents {
 	.title {
 		@include header;
@@ -111,8 +111,5 @@ export default {
 }
 #content {
 	@include content;
-}
-#content /deep/ img {
-	width: 100%;
 }
 </style>

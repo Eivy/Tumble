@@ -17,7 +17,7 @@
 <script>
 import {Waterfall,WaterfallSlot} from 'vue-waterfall'
 import Vue from 'vue'
-import Contents from '../Contents.vue'
+import Post from '../Contents/Post.vue'
 import AnswerPost from './AnswerPost.vue'
 import AudioPost from './AudioPost.vue'
 import ChatPost from './ChatPost.vue'
@@ -66,10 +66,10 @@ export default {
 			console.log(post)
 			new Vue({
 				el: '#contents',
-				components: {Contents},
+				components: {Post},
 				data: function() { return post },
 				router: this.$router,
-				template: '<Contents v-bind:post=this />'
+				template: '<Post v-bind:post=this />'
 			})
 			var target = event.target;
 			while (!target.classList.contains('post')) {
