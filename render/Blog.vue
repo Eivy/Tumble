@@ -20,10 +20,10 @@ export default {
 	mixins: [Mixin],
 	created: function() {
 		ipcRenderer.on('dashboard', (evt, msg) => {
-			if (msg.type === 'prev') {
-				this.posts = this.$data.posts.concat(msg.dashboard.posts);
-			} else if (msg.type === 'next') {
-				this.posts = msg.dashboard.posts.concat(this.$data.posts);
+			if (msg.type === 'before') {
+				this.posts = this.posts.concat(msg.dashboard.posts);
+			} else if (msg.type === 'after') {
+				this.posts = msg.dashboard.posts.concat(this.posts);
 			}
 		});
 		ipcRenderer.send(this.$router.currentRoute.name, {name: this.blog});

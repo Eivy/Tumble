@@ -103,7 +103,7 @@ ipcMain.on('dashboard', (evt, msg) => {
 		requiringDashboard = true;
 		client.userDashboard(Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), dashboard: data});
+			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), dashboard: data});
 		});
 	}
 });
@@ -114,7 +114,7 @@ ipcMain.on('likes', (evt, msg) => {
 		requiringDashboard = true;
 		client.userLikes(msg, (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('likes', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), likes: data});
+			main.webContents.send('likes', {type: (msg.hasOwnProperty('after') ? 'after' : 'before'), likes: data});
 		});
 	}
 });
@@ -133,7 +133,7 @@ ipcMain.on('blog', (evt, msg) => {
 		requiringDashboard = true;
 		client.blogPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'next' : 'prev'), dashboard: data});
+			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), dashboard: data});
 		});
 	}
 });
