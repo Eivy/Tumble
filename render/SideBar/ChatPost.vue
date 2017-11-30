@@ -1,5 +1,5 @@
 <template>
-	<div class='chat'>{{post.blog_name}}<br/>chat</div>
+	<div class='chat'>{{post.title === null || post.title === undefined ? post.body : post.title}}</div>
 </template>
 
 <script>
