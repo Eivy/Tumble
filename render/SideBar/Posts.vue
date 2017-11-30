@@ -2,7 +2,7 @@
 	<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
 	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post) :height=size[post.id] >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
-		<AudioPost v-else-if="post.type === 'audio'" :post='post'/>
+		<AudioPost v-else-if="post.type === 'audio'" :post='post' @resize=resize />
 		<ChatPost v-else-if="post.type === 'chat'" :post='post'/>
 		<LinkPost v-else-if="post.type === 'link'" :post='post'/>
 		<VideoPost v-else-if="post.type === 'video'" :post='post' @resize=resize />
@@ -129,5 +129,13 @@ export default {
 .post /deep/ .video img {
 	width: 100%;
 	vertical-align: bottom;
+}
+.post /deep/ .audio {
+	background-color: transparent;
+	padding: 0;
+}
+.post /deep/ .audio div {
+	background-color: transparent;
+	padding: 0;
 }
 </style>

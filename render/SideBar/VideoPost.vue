@@ -16,12 +16,6 @@ export default {
 			return video.getElementsByTagName('video')[0].poster;
 
 		}
-	},
-	methods: {
-		resize: function() {
-			var img = this.$refs.img;
-			this.$emit('resize', {id: this.post.id, width: img.naturalWidth, height: img.naturalHeight});
-		}
 	}
 }
 </script>
