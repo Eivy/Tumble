@@ -1,5 +1,5 @@
 <template>
-	<div class='answer'>{{post.blog_name}}<br/>Answer</div>
+	<div class='answer'>{{post.blog_name}}<br/>Answered to {{post.asking_name}}</div>
 </template>
 
 <script>
