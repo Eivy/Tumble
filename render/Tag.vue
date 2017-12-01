@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div id='header'>
-			<div id='back' @click=back>back</div>
+			<Icon id='back' @click.native=back name='angle-left'></Icon>
 			<div id='tag'>{{tag}}</div>
-			<div id='update' @click='update({tag: tag})'>Update</div>
+			<Icon id='update' @click.native='update({name: blog})' name='refresh'></Icon>
 		</div>
 		<div id='posts-cover' @scroll='onscroll({tag: tag})'>
 			<Posts :posts=this.posts />
@@ -47,9 +47,7 @@ export default {
 		height: $headerHeight;
 	}
 	#back {
-		position: absolute;
-		top: 0;
-		left: 0;
+		@include back;
 	}
 	#update {
 		@include update;

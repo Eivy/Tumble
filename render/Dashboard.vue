@@ -3,7 +3,7 @@
 		<div id='header'>
 			<div id='title'><h2>Dashboard</h2></div>
 			<div id='user'>{{name}}</div>
-			<div id='update' @click='update({})'>Update</div>
+			<Icon id='update' @click.native='update({})' name='refresh'></Icon>
 		</div>
 		<div id='posts-cover' @scroll='onscroll({})'>
 			<Posts :posts=posts />

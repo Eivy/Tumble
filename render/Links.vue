@@ -1,12 +1,15 @@
 <template>
 	<div id='links'>
-		<div class='button' @click="goTo('/dashboard')">Dashboard</div>
-		<div class='button' @click="goTo('/likes')">Likes</div>
+		<div id='dashboard' @click="goTo('/dashboard')"><Icon name='dashboard'></Icon></div>
+		<div id='likes' @click="goTo('/likes')"><Icon name='heartbeat'></Icon></div>
 	</div>
 </template>
 
 <script>
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon.vue'
 export default {
+	components: {Icon},
 	methods: {
 		goTo: function(target) {
 			this.$router.push(target);
@@ -20,8 +23,15 @@ export default {
 #links {
 	@include footer;
 	width: $sidebarSize;
-	.button {
+	div {
 		display: inline-block;
+		height: $headerHeight;
+		width: $headerHeight / 2;
+		padding: 0 ($headerHeight/2) 0 ($headerHeight/2);
+		svg {
+			width: 100%;
+			height: 100%;
+		}
 	}
 }
 </style>

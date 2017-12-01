@@ -40,10 +40,23 @@ $contentPadding: 1em;
 
 @mixin update {
 	position: absolute;
-	right: 0;
 	display: inline-block;
-	top: 0;
-	height: $headerHeight;
+	top: 50%;
+	right: 0;
+	transform: translate(-25%, -50%);
+	height: $headerHeight / 2;
+	width: $headerHeight / 2;
+	line-height: $headerHeight;
+}
+
+@mixin back {
+	position: absolute;
+	display: inline-block;
+	top: 50%;
+	left: 0;
+	transform: translate(0, -50%);
+	height: $headerHeight / 2;
+	width: $headerHeight / 2;
 	line-height: $headerHeight;
 }
 
@@ -62,4 +75,20 @@ $contentPadding: 1em;
 		min-height: 20px;
 		line-height: 20px;
 	}
+	.link {
+		position: relative;
+		.goto {
+			position: absolute;
+			height: 100%;
+			right: 0;
+		}
+	}
+}
+.spin {
+    animation: spin 1.5s linear infinite;
+	border-radius: 50%;
+}
+@keyframes spin {
+	0% {transform: translate(-25%, -50%) rotate(0deg);}
+	100% {transform: translate(-25%, -50%) rotate(360deg);}
 }

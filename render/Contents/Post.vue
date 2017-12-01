@@ -11,18 +11,20 @@
 			<QuotePost v-else-if="post.type === 'quote'" :post='post'/>
 			<TextPost v-else-if="post.type === 'text'" :post='post'/>
 		</div>
-		<div id="buttons">
-			<div v-if='post.blog_name !== this.user' id="reblog" @click="doPost('reblog')" >Reblog</div>
-			<div v-else id="reblog" @click="doPost('delete')" >Delete</div>
-			<div v-if='post.liked' id="like" @click="doPost('unlike')" >UnLike</div>
-			<div v-else id="like" @click="doPost('like')" >Like</div>
-			<div id='prev' @click='prev'>Prev</div>
-			<div id='next' @click='next'>Next</div>
+		<div id='buttons'>
+			<div id='reblog' v-if='post.blog_name !== this.user' @click="doPost('reblog')" ><Icon name='retweet' scale=2></Icon></div>
+			<div id='reblog' v-else @click="doPost('delete')"><Icon name='trash' scale=2></Icon></div>
+			<div id='like' v-if='post.liked' @click="doPost('unlike')" ><Icon name='heart' scale=2></Icon></div>
+			<div id='like' v-else @click="doPost('like')" ><Icon name='heart-o' scale=2></Icon></div>
+			<div id='prev' @click='prev'><Icon name='angle-left' scale=2></Icon></div>
+			<div id='next' @click='next'><Icon name='angle-right' scale=2></Icon></div>
 		</div>
 	</div>
 </template>
 
 <script>
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon.vue'
 import {ipcRenderer} from 'electron'
 import AnswerPost from './AnswerPost.vue'
 import AudioPost from './AudioPost.vue'
@@ -35,6 +37,7 @@ import TextPost from './TextPost.vue'
 export default {
 	props: ['post'],
 	components: {
+		Icon,
 		AnswerPost,
 		AudioPost,
 		ChatPost,
@@ -110,8 +113,13 @@ export default {
 		@include footer;
 		div {
 			display: inline-block;
-			padding: 0 1ex 0 1ex;
-			color: #fff;
+			height: $headerHeight;
+			width: $headerHeight / 2;
+			padding: 0 ($headerHeight/2) 0 ($headerHeight/2);
+			svg {
+				width: 100%;
+				height: 100%;
+			}
 		}
 		.disabled {
 			color: gray;
