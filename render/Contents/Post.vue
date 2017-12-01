@@ -63,10 +63,16 @@ export default {
 	},
 	methods: {
 		doPost: function(method) {
+			if (event.target.classList.contains('disabled')) {
+				return;
+			}
 			ipcRenderer.send(method, {
 				id: this.post.id,
 				reblog_key: this.post.reblog_key
 			});
+			if (event.target.id === 'reblog') {
+				event.target.classList.add('disabled');
+			}
 		},
 		prev: function() {
 			if (global.current === undefined) {
@@ -106,6 +112,9 @@ export default {
 			display: inline-block;
 			padding: 0 1ex 0 1ex;
 			color: #fff;
+		}
+		.disabled {
+			color: gray;
 		}
 	}
 }
