@@ -49,49 +49,59 @@ document.onkeydown = function() {
 		case 74: // j
 		case 39: // right
 		case 40: // down
-			if (global.current === undefined) {
-				global.current = document.getElementById('posts').firstChild;
-			} else {
-				if (global.current.nextElementSibling !== null) {
-					global.current = current.nextElementSibling;
+			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+				if (global.current === undefined) {
+					global.current = document.getElementById('posts').firstChild;
+				} else {
+					if (global.current.nextElementSibling !== null) {
+						global.current = current.nextElementSibling;
+					}
 				}
-			}
-			global.current.firstChild.click();
-			var rect = global.current.getClientRects()[0];
-			if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
-				global.current.scrollIntoView(false);
+				global.current.firstChild.click();
+				var rect = global.current.getClientRects()[0];
+				if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
+					global.current.scrollIntoView(false);
+				}
 			}
 			break;
 		case 75: // k
 		case 37: // left
 		case 38: // up
-			if (global.current === undefined) {
-				global.current = document.getElementById('posts').lastChild;
-			} else {
-				if (global.current.previousElementSibling !== null) {
-					global.current = current.previousElementSibling;
+			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+				if (global.current === undefined) {
+					global.current = document.getElementById('posts').lastChild;
+				} else {
+					if (global.current.previousElementSibling !== null) {
+						global.current = current.previousElementSibling;
+					}
 				}
-			}
-			global.current.firstChild.click();
-			if (global.current.getClientRects()[0].top < 0) {
-				global.current.scrollIntoView();
+				global.current.firstChild.click();
+				if (global.current.getClientRects()[0].top < 0) {
+					global.current.scrollIntoView();
+				}
 			}
 			break;
 		case 82: // r
-			document.getElementById('reblog').click();
+			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+				document.getElementById('reblog').click();
+			}
 			break;
 		case 76: // l
-			document.getElementById('like').click();
+			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+				document.getElementById('like').click();
+			}
 			break;
 		case 32: // space
-			event.preventDefault();
-			var cover = document.getElementById('contents');
-			var content = document.getElementById('content');
-			var value = (cover.clientHeight / 2) - content.style.paddingTop;
-			if (event.shiftKey) {
-				value = value * -1;
+			if (!event.altKey && !event.ctrlKey && !event.metaKey) {
+				event.preventDefault();
+				var cover = document.getElementById('contents');
+				var content = document.getElementById('content');
+				var value = (cover.clientHeight / 2) - content.style.paddingTop;
+				if (event.shiftKey) {
+					value = value * -1;
+				}
+				content.scrollTop += value;
 			}
-			content.scrollTop += value;
 			break;
 	}
 };
