@@ -2,14 +2,17 @@
 	<div id='contents'>
 		<h4 class='title'>{{blog_name}}</h4>
 		<div id='title'><img id='avatar' :src=avatar_url >{{blog.title}}</div>
-		<div id='posts' @click=goTo ><span>投稿</span><span id='count'>{{blog.posts}}</span></div>
+		<div id='posts' class='link' @click=goTo ><span>投稿</span><span id='count'>{{blog.posts}}</span><Icon class='goto' name='angle-right' scale='2'></Icon></div>
 	</div>
 </template>
 
 <script>
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon.vue'
 import {ipcRenderer} from 'electron'
 export default {
 	props: ['blog_name'],
+	components: {Icon},
 	data: function() {return {blog: {}, avatar_url: ''}},
 	created: function() {
 		ipcRenderer.on('avatar', (evt, msg) => {
@@ -51,14 +54,7 @@ export default {
 		}
 	}
 	#posts {
-		background-color: #eee;
-		padding: 1em;
-		#count {
-			position: absolute;
-			right: 1em;
-			color: #aaa;
-			line-height: 1em;
-		}
+		@include blogInfo;
 	}
 }
 </style>

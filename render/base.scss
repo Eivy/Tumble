@@ -50,14 +50,24 @@ $contentPadding: 1em;
 }
 
 @mixin back {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  height: $headerHeight / 2;
+  width: $headerHeight / 2;
+  line-height: $headerHeight;
+}
+
+@mixin link {
+  position: relative;
+  .goto {
 	position: absolute;
-	display: inline-block;
-	top: 50%;
-	left: 0;
-	transform: translate(0, -50%);
-	height: $headerHeight / 2;
-	width: $headerHeight / 2;
-	line-height: $headerHeight;
+	height: 100%;
+	top: 0;
+	right: 0;
+  }
 }
 
 @mixin info {
@@ -76,12 +86,7 @@ $contentPadding: 1em;
 		line-height: 20px;
 	}
 	.link {
-		position: relative;
-		.goto {
-			position: absolute;
-			height: 100%;
-			right: 0;
-		}
+	  @include link;
 	}
 }
 .spin {
@@ -91,4 +96,24 @@ $contentPadding: 1em;
 @keyframes spin {
 	0% {transform: translate(-25%, -50%) rotate(0deg);}
 	100% {transform: translate(-25%, -50%) rotate(360deg);}
+}
+
+@mixin blogInfo {
+	@include link;
+	color: #000;
+	background-color: #eee;
+	padding: 1em;
+	height: 1.5em;
+	position: relative;
+	#count {
+		position: absolute;
+		top: 50%;
+		right: 2em;
+		color: #aaa;
+		line-height: 1em;
+		transform: translateY(-50%);
+	}
+	.goto {
+		color: gray;
+	}
 }
