@@ -3,6 +3,7 @@
 		<h4 class='title'>{{blog_name}}</h4>
 		<div id='title'><img id='avatar' :src=avatar_url >{{blog.title}}</div>
 		<div id='posts' class='link' @click=goTo ><span>投稿</span><span id='count'>{{blog.posts}}</span><Icon class='goto' name='angle-right' scale='2'></Icon></div>
+		<a id='blog' class='link' :href=blog.url >{{blog.url}}<Icon class='goto' name='angle-right' scale='2'></Icon></a>
 	</div>
 </template>
 
@@ -53,8 +54,11 @@ export default {
 			vertical-align: middle;
 		}
 	}
-	#posts {
+	#posts, #blog {
 		@include blogInfo;
+	}
+	#blog {
+		display: block;
 	}
 }
 </style>
