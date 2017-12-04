@@ -2,8 +2,11 @@
 	<div id='contents'>
 		<h4 class='title'>{{blog_name}}</h4>
 		<div id='title'><img id='avatar' :src=avatar_url >{{blog.title}}</div>
-		<div id='posts' class='link' @click=goTo ><span>投稿</span><span id='count'>{{blog.posts}}</span><Icon class='goto' name='angle-right' scale='2'></Icon></div>
+		<div id='posts' class='link' @click=goTo ><span>Posts</span><span id='count'>{{blog.posts}}</span><Icon class='goto' name='angle-right' scale='2'></Icon></div>
 		<a id='blog' class='link' :href=blog.url >{{blog.url}}<Icon class='goto' name='angle-right' scale='2'></Icon></a>
+		<div id='spacer'></div>
+		<div id='follow' v-if='blog.followed' @click=follow >UnFollow</div>
+		<div id='follow' v-else @click=follow >Follow</div>
 	</div>
 </template>
 
@@ -25,10 +28,25 @@ export default {
 			this.blog = msg.blog;
 		});
 		ipcRenderer.send('blogInfo', {name: this.blog_name});
+		ipcRenderer.on('follow', (evt, msg) => {
+			console.log(msg);
+			ipcRenderer.send('blogInfo', {name: this.blog_name});
+		});
+		ipcRenderer.on('unfollow', (evt, msg) => {
+			console.log(msg);
+			ipcRenderer.send('blogInfo', {name: this.blog_name});
+		});
 	},
 	methods: {
 		goTo: function() {
 			this.$router.push('/blog/'+this.blog_name)
+		},
+		follow: function() {
+			if (this.blog.followed) {
+				ipcRenderer.send('unfollow', {url: this.blog.url});
+			} else {
+				ipcRenderer.send('follow', {url: this.blog.url});
+			}
 		}
 	}
 }
@@ -54,11 +72,18 @@ export default {
 			vertical-align: middle;
 		}
 	}
-	#posts, #blog {
+	#posts, #blog, #follow {
 		@include blogInfo;
+	}
+	#follow {
+		text-align: center;
+		font-style: bold;
 	}
 	#blog {
 		display: block;
+	}
+	#spacer {
+		height: $headerHeight;
 	}
 }
 </style>

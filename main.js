@@ -96,6 +96,18 @@ ipcMain.on('unlike', (evt, msg) => {
 	});
 });
 
+ipcMain.on('follow', (evt, msg) => {
+	client.followBlog(msg.url, (err, data) => {
+		main.webContents.send('follow', data);
+	});
+});
+
+ipcMain.on('unfollow', (evt, msg) => {
+	client.unfollowBlog(msg.url, (err, data) => {
+		main.webContents.send('unfollow', data);
+	});
+});
+
 var requiringDashboard = false;
 ipcMain.on('dashboard', (evt, msg) => {
 	console.log(msg);
