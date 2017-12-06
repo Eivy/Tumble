@@ -60,14 +60,25 @@ $contentPadding: 1em;
   line-height: $headerHeight;
 }
 
-@mixin link {
-  position: relative;
-  .goto {
-	position: absolute;
-	height: 100%;
-	top: 0;
-	right: 0;
-  }
+@mixin button {
+	position: relative;
+	color: #000;
+	background-color: #eee;
+	height: 1.5em;
+	line-height: 1.5em;
+	padding: 1em;
+	margin-bottom: 1px;
+}
+
+@mixin link_in_content {
+	padding: 0;
+	margin: 0;
+	color: #fff;
+	background-color: transparent;
+	border-bottom: 1px solid #888;
+	margin-left: 50px;
+	min-height: 30px;
+	line-height: 30px;
 }
 
 @mixin info {
@@ -85,9 +96,6 @@ $contentPadding: 1em;
 		min-height: 20px;
 		line-height: 20px;
 	}
-	.link {
-	  @include link;
-	}
 }
 .spin {
     animation: spin 1.5s linear infinite;
@@ -96,25 +104,4 @@ $contentPadding: 1em;
 @keyframes spin {
 	0% {transform: translate(-25%, -50%) rotate(0deg);}
 	100% {transform: translate(-25%, -50%) rotate(360deg);}
-}
-
-@mixin blogInfo {
-	@include link;
-	color: #000;
-	background-color: #eee;
-	padding: 1em;
-	height: 1.5em;
-	position: relative;
-	margin-bottom: 1px;
-	#count {
-		position: absolute;
-		top: 50%;
-		right: 2em;
-		color: #aaa;
-		line-height: 1em;
-		transform: translateY(-50%);
-	}
-	.goto {
-		color: gray;
-	}
 }

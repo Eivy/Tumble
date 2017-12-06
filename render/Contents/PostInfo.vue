@@ -1,22 +1,21 @@
 <template>
 	<div class='info'>
 		<div class='separator'>Info</div>
-		<div @click=blog(post.blog_name)>{{post.blog_name}}</div>
-		<div class='link' v-if='post.reblogged_from_name !== undefined' @click=blog(post.reblogged_from_name)>reblogged: {{post.reblogged_from_name}}<Icon class='goto' name='angle-right' scale='2'></Icon></div>
-		<div class='link' v-if='post.reblogged_root_name !== undefined' @click=blog(post.reblogged_root_name)>original: {{post.reblogged_root_name}}<Icon  class='goto' name='angle-right' scale='2'></Icon></div>
+		<LinkItem :text=post.blog_name @click.native=blog(post.blog_name) ></LinkItem>
+		<LinkItem v-if='post.reblogged_from_name !== undefined' :text="'reblogged: ' + post.reblogged_from_name" @click.native=blog(post.reblogged_from_name)></LinkItem>
+		<LinkItem v-if='post.reblogged_root_name !== undefined' :text="'original: ' + post.reblogged_root_name" @click.native=blog(post.reblogged_root_name)></LinkItem>
 		<div>{{new Date(post.timestamp*1000).toLocaleString()}}</div>
 		<div>{{post.note_count}} notes</div>
 	</div>
 </template>
 
 <script>
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon.vue'
 import Vue from 'vue'
+import LinkItem from '../LinkItem.vue'
 import BlogInfo from './BlogInfo.vue'
 export default {
 	props: ['post'],
-	components: {Icon},
+	components: {LinkItem},
 	methods: {
 		blog: function(blog_name) {
 			new Vue({
@@ -35,5 +34,8 @@ export default {
 @import '../base.scss';
 .info {
 	@include info;
+	.link {
+		@include link_in_content;
+	}
 }
 </style>

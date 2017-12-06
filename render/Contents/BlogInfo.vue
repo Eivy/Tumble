@@ -2,8 +2,8 @@
 	<div id='contents'>
 		<h4 class='title'>{{blog_name}}</h4>
 		<div id='title'><img id='avatar' :src=avatar_url >{{blog.title}}</div>
-		<div id='posts' class='link' @click=goTo ><span>Posts</span><span id='count'>{{blog.posts}}</span><Icon class='goto' name='angle-right' scale='2'></Icon></div>
-		<a id='blog' class='link' :href=blog.url >{{blog.url}}<Icon class='goto' name='angle-right' scale='2'></Icon></a>
+		<LinkItem id='posts' :text='"Posts"' :count=blog.posts @click.native="goTo('/blog/'+blog_name)"></LinkItem>
+		<LinkItem id='blog' :text='blog.url' @click.native=open(blog.url) ></LinkItem>
 		<div id='spacer'></div>
 		<div id='follow' v-if='blog.followed' @click=follow >UnFollow</div>
 		<div id='follow' v-else @click=follow >Follow</div>
@@ -11,12 +11,11 @@
 </template>
 
 <script>
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon.vue'
+import LinkItem from '../LinkItem.vue'
 import {ipcRenderer} from 'electron'
 export default {
 	props: ['blog_name'],
-	components: {Icon},
+	components: {LinkItem},
 	data: function() {return {blog: {}, avatar_url: ''}},
 	created: function() {
 		ipcRenderer.on('avatar', (evt, msg) => {
@@ -38,15 +37,18 @@ export default {
 		});
 	},
 	methods: {
-		goTo: function() {
-			this.$router.push('/blog/'+this.blog_name)
-		},
 		follow: function() {
 			if (this.blog.followed) {
 				ipcRenderer.send('unfollow', {url: this.blog.url});
 			} else {
 				ipcRenderer.send('follow', {url: this.blog.url});
 			}
+		},
+		open: function(path) {
+			window.open(path);
+		},
+		goTo: function(path) {
+			this.$router.push(path);
 		}
 	}
 }
@@ -72,8 +74,8 @@ export default {
 			vertical-align: middle;
 		}
 	}
-	#posts, #blog, #follow {
-		@include blogInfo;
+	#follow {
+		@include button;
 	}
 	#follow {
 		text-align: center;
