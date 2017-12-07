@@ -139,6 +139,20 @@ ipcMain.on('user', (evt, msg) => {
 	});
 });
 
+ipcMain.on('followers', (evt, msg) => {
+	console.log(msg);
+	client.blogFollowers(msg.blog_identifier, {offset: msg.offset}, (err, data) => {
+		main.webContents.send('followers', {blogs: data.users});
+	});
+});
+
+ipcMain.on('following', (evt, msg) => {
+	console.log(msg);
+	client.userFollowing(msg, (err, data) => {
+		main.webContents.send('following', data);
+	});
+});
+
 ipcMain.on('blog', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
@@ -164,7 +178,7 @@ ipcMain.on('tag', (evt, msg) => {
 ipcMain.on('avatar', (evt, msg) => {
 	console.log(msg);
 	client.blogAvatar(msg.name, msg.size, (err, data) => {
-		main.send('avatar', data);
+		main.send('avatar'+msg.name, data);
 	});
 });
 

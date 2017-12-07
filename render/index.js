@@ -6,6 +6,8 @@ import Dashboard from './Dashboard.vue'
 import Likes from './Likes.vue'
 import Blog from './Blog.vue'
 import Tag from './Tag.vue'
+import UserInfo from './UserInfo.vue'
+import Follows from './Follows.vue'
 
 Vue.use(VueRouter);
 
@@ -32,7 +34,27 @@ var router = new VueRouter({
 			path: '/tag/:tag',
 			component: Tag,
 			props: true
+		},
+		{
+			name: 'userinfo',
+			path: '/userinfo',
+			component: UserInfo,
+			props: true
+		},
+		{
+			name: 'followers',
+			path: '/followers/:blog',
+			component: Follows,
+			props: true
+		},
+		{
+			name: 'following',
+			path: '/following/:blog',
+			component: Follows,
+			props: true
 		}
+
+
 	]
 });
 

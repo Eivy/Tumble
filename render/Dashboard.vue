@@ -18,6 +18,7 @@ import Mixin from './Mixin.vue'
 export default {
 	mixins: [Mixin],
 	created: function() {
+		console.log(global.user);
 		if (global.user === undefined) {
 			ipcRenderer.send('user');
 			ipcRenderer.on('user', (evt, msg) => {

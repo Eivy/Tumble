@@ -18,7 +18,7 @@ export default {
 	components: {LinkItem},
 	data: function() {return {blog: {}, avatar_url: ''}},
 	created: function() {
-		ipcRenderer.on('avatar', (evt, msg) => {
+		ipcRenderer.on('avatar'+this.blog_name, (evt, msg) => {
 			this.avatar_url = msg.avatar_url;
 		});
 		ipcRenderer.send('avatar', {name: this.blog_name, size: 48});
