@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class='link' >
-			<a :href=post.url>{{post.title}}</a>
+			<a :href=post.url>{{post.title ? post.title : post.url}}</a>
 			<div>{{post.excerpt}}</div>
 			<img v-for="photo in post.photos" :src=photo.original_size.url>
 			<div v-html=post.description ></div>
