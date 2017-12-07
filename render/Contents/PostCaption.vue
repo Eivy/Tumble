@@ -15,5 +15,10 @@ export default {
 @import '../base.scss';
 .info {
 	@include info;
+	background-color: #fff;
+	color: #000;
+	.separator {
+		color: #fff;
+	}
 }
 </style>
