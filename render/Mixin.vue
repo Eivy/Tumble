@@ -1,4 +1,6 @@
 <script>
+import Store from 'electron-store'
+var store = new Store();
 import {ipcRenderer} from 'electron'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
@@ -14,6 +16,9 @@ export default {
 				this.posts = msg.posts.concat(this.posts);
 			} else {
 				this.posts = this.posts.concat(msg.posts);
+			}
+			if (this.$router.currentRoute.name !== 'blog') {
+				store.set('cache.'+this.$router.currentRoute.name+'.posts', this.posts);
 			}
 		});
 	},

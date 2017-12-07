@@ -170,7 +170,7 @@ ipcMain.on('tag', (evt, msg) => {
 		requiringDashboard = true;
 		client.taggedPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('dashboard', {dashboard: {posts: data}});
+			main.webContents.send('tag', {posts: data});
 		});
 	}
 });

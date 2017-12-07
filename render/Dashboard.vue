@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import Store from 'electron-store'
+var store = new Store();
 import {ipcRenderer} from 'electron'
 import Mixin from './Mixin.vue'
 
@@ -28,7 +30,13 @@ export default {
 		} else {
 			this.name = global.user;
 		}
-		ipcRenderer.send(this.$router.currentRoute.name, {});
+	},
+	mounted: function() {
+		if (store.has('cache.'+this.$router.currentRoute.name+'.posts')) {
+			this.posts = store.get('cache.'+this.$router.currentRoute.name+'.posts');
+		} else {
+			ipcRenderer.send(this.$router.currentRoute.name, {});
+		}
 	}
 }
 </script>

@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import Store from 'electron-store'
+var store = new Store();
 import {ipcRenderer} from 'electron'
 import Mixin from './Mixin.vue'
 

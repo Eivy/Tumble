@@ -53,8 +53,6 @@ var router = new VueRouter({
 			component: Follows,
 			props: true
 		}
-
-
 	]
 });
 
