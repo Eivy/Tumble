@@ -15,6 +15,7 @@ export default {
 	data: function() { return {avatar_url: null} },
 	components: {Icon},
 	created: function() {
+		ipcRenderer.removeAllListeners('avatar'+this.blog_name)
 		ipcRenderer.on('avatar'+this.blog_name, (evt, msg) => {
 			this.avatar_url = msg.avatar_url;
 		});

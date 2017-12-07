@@ -26,6 +26,7 @@ export default {
 	data: function () { return {blogs: []}},
 	created: function() {
 		console.log(this.$router.currentRoute.name);
+		ipcRenderer.removeAllListeners(this.$router.currentRoute.name);
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
 			console.log(msg);
 			this.blogs = this.blogs.concat(msg.blogs);

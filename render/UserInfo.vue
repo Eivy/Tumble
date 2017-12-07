@@ -26,6 +26,7 @@ export default {
 	data: function () { return {blogs: null, name: '', following: ''} },
 	created: function() {
 		ipcRenderer.send('user')
+		ipcRenderer.removeAllListeners('user')
 		ipcRenderer.on('user', (err, data) => {
 			this.blogs = data.user.blogs;
 			this.name = data.user.name;
