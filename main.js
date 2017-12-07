@@ -177,9 +177,18 @@ ipcMain.on('tag', (evt, msg) => {
 
 ipcMain.on('avatar', (evt, msg) => {
 	console.log(msg);
-	client.blogAvatar(msg.name, msg.size, (err, data) => {
-		main.send('avatar'+msg.name, data);
-	});
+	var avatar = store.get('cache.avatar.'+msg.name, undefined);
+	if (!avatar) {
+		client.blogAvatar(msg.name, msg.size, (err, data) => {
+			if (!err) {
+				store.set('cache.avatar.'+msg.name, data);
+				avatar = data;
+			} else {
+				console.log(err);
+			}
+		});
+	}
+	main.send('avatar'+msg.name, avatar);
 });
 
 ipcMain.on('blogInfo', (evt, msg) => {
