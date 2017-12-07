@@ -6,11 +6,24 @@ import Posts from './SideBar/Posts.vue'
 export default {
 	data: function() { return {name: '', posts: []} },
 	components: {Posts, Icon},
+	created: function () {
+		console.log(this.$router.currentRoute.name);
+		ipcRenderer.removeAllListeners(this.$router.currentRoute.name);
+		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
+			if (msg.type === 'after') {
+				this.posts = msg.posts.concat(this.posts);
+			} else {
+				this.posts = this.posts.concat(msg.posts);
+			}
+		});
+	},
 	mounted: function() {
 		ipcRenderer.on(this.$router.currentRoute.name, () => {
 			document.getElementById('update').classList.remove('spin');
 		});
-		this.spin();
+		if (this.posts.length = 0) {
+			this.spin();
+		}
 	},
 	methods: {
 		onscroll: function(data) {

@@ -27,14 +27,6 @@ export default {
 		} else {
 			this.name = global.user;
 		}
-		ipcRenderer.on('likes', (evt, msg) => {
-			if (msg.type === 'before') {
-				this.posts = this.posts.concat(msg.likes.liked_posts);
-			} else if (msg.type === 'after') {
-				this.posts = msg.likes.liked_posts.concat(this.posts);
-			}
-		});
-		console.log(this.$router.currentRoute.name);
 		ipcRenderer.send(this.$router.currentRoute.name, {});
 	}
 }

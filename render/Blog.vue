@@ -19,13 +19,6 @@ export default {
 	props: ['blog'],
 	mixins: [Mixin],
 	created: function() {
-		ipcRenderer.on('dashboard', (evt, msg) => {
-			if (msg.type === 'before') {
-				this.posts = this.posts.concat(msg.dashboard.posts);
-			} else if (msg.type === 'after') {
-				this.posts = msg.dashboard.posts.concat(this.posts);
-			}
-		});
 		ipcRenderer.send(this.$router.currentRoute.name, {name: this.blog});
 	},
 	beforeRouteUpdate: function(to, from, next) {

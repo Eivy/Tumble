@@ -19,9 +19,6 @@ export default {
 	props: ['tag'],
 	mixins: [Mixin],
 	created: function() {
-		ipcRenderer.on('dashboard', (evt, msg) => {
-			this.posts = this.posts.concat(msg.dashboard.posts);
-		});
 		ipcRenderer.send(this.$router.currentRoute.name, {tag: this.tag});
 	},
 	beforeRouteUpdate: function(to, from, next) {
