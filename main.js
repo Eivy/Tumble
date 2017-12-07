@@ -177,18 +177,18 @@ ipcMain.on('tag', (evt, msg) => {
 
 ipcMain.on('avatar', (evt, msg) => {
 	console.log(msg);
-	var avatar = store.get('cache.avatar.'+msg.name, undefined);
-	if (!avatar) {
+	if (store.has('cache.avatar.'+msg.name)) {
+		main.send('avatar'+msg.name, store.get('cache.avatar.'+msg.name));
+	} else {
 		client.blogAvatar(msg.name, msg.size, (err, data) => {
 			if (!err) {
 				store.set('cache.avatar.'+msg.name, data);
-				avatar = data;
+				main.send('avatar'+msg.name, data);
 			} else {
 				console.log(err);
 			}
 		});
 	}
-	main.send('avatar'+msg.name, avatar);
 });
 
 ipcMain.on('blogInfo', (evt, msg) => {
