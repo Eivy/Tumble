@@ -13,7 +13,9 @@ document.onkeydown = function() {
 				}
 				global.current.firstChild.click();
 				var rect = global.current.getClientRects()[0];
-				if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
+				if (global.current.getClientRects()[0].top < 0) {
+					global.current.scrollIntoView();
+				} else if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
 					global.current.scrollIntoView(false);
 				}
 			}
@@ -30,8 +32,11 @@ document.onkeydown = function() {
 					}
 				}
 				global.current.firstChild.click();
+				var rect = global.current.getClientRects()[0];
 				if (global.current.getClientRects()[0].top < 0) {
 					global.current.scrollIntoView();
+				} else if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
+					global.current.scrollIntoView(false);
 				}
 			}
 			break;
@@ -56,6 +61,9 @@ document.onkeydown = function() {
 				}
 				content.scrollTop += value;
 			}
+			break;
+		case 27:
+			global.current = undefined;
 			break;
 	}
 };
