@@ -26,5 +26,6 @@ export default {
 <style scoped lang='scss'>
 .video {
 	text-align: center;
+	overflow: auto;
 }
 </style>

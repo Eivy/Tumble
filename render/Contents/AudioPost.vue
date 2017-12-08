@@ -31,6 +31,9 @@ export default {
 
 <style scoped lang='scss'>
 @import '../base.scss';
+.audio {
+	overflow: auto;
+}
 .audio-info {
 	overflow: hidden;
 	background-color: #fff;
