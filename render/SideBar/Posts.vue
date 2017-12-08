@@ -1,5 +1,6 @@
 <template>
 	<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
+	<div id='current'></div>
 	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post) :height=size[post.id] >
 		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
 		<AudioPost v-else-if="post.type === 'audio'" :post='post' @resize=resize />
@@ -76,7 +77,12 @@ export default {
 			while (!target.classList.contains('post')) {
 				target = target.parentNode;
 			}
-			global.current = target
+			global.current = target;
+			var current = document.getElementById('current');
+			current.style.top = global.current.style.top;
+			current.style.left = global.current.style.left;
+			current.style.width = global.current.style.width;
+			current.style.height = global.current.style.height;
 		},
 		reflowed: function() {
 			var p = document.getElementById('posts');
@@ -96,6 +102,12 @@ export default {
 #posts .post {
 	border: 1px solid transparent;
 	overflow: hidden;
+}
+#current {
+	position: absolute;
+	background-color: #000;
+	opacity: 0.5;
+	z-index: 999;
 }
 .post /deep/ div {
 	background-color: #fff;
