@@ -31,7 +31,7 @@ export default {
 			console.log(msg);
 			this.blogs = this.blogs.concat(msg.blogs);
 		});
-		ipcRenderer.send(this.$router.currentRoute.name, {blog_identifier: this.blog, offset: this.blogs.length+1});
+		ipcRenderer.send(this.$router.currentRoute.name, {blog_identifier: this.blog, offset: this.blog.lengs > 0 ? this.blogs.length+1 : 0});
 	},
 	methods: {
 		back: function () {
