@@ -44,7 +44,7 @@ export default {
 	props: ['posts'],
 	data: function() { return {width: 100, size: {}} },
 	mounted: function() {
-		this.width = document.getElementById('posts').parentNode.clientWidth / 3;
+		this.width = document.getElementById('posts').parentNode.clientWidth / this.$store.state.thumb_size;
 	},
 	methods: {
 		postSize: function(post) {
@@ -58,6 +58,9 @@ export default {
 						height += (post.photos[i].alt_sizes[2].height * 0.98) / post.photos[i].alt_sizes[2].width;
 					}
 					this.$set(this.size, post.id, height);
+					break;
+				case 'video':
+					this.$set(this.size, post.id, post.thumbnail_height / post.thumbnail_width);
 					break;
 				default:
 					this.$set(this.size, post.id, 1);

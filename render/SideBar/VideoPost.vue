@@ -1,6 +1,6 @@
 <template>
 	<div ref='root' class='video'>
-		<img ref='img' @load=resize :src=thumbs ></img>
+		<img ref='img' :src=post.thumbnail_url ></img>
 		<Icon name='youtube-play' class='play mark'></Icon>
 	</div>
 </template>
@@ -11,15 +11,7 @@ import Icon from 'vue-awesome/components/Icon.vue'
 import Mixin from './Mixin.vue'
 export default {
 	mixins: [Mixin],
-	components: {Icon},
-	computed: {
-		thumbs: function() {
-			var parser = new DOMParser();
-			var video = parser.parseFromString(this.post.player[0].embed_code, "text/html");
-			return video.getElementsByTagName('video')[0].poster;
-
-		}
-	}
+	components: {Icon}
 }
 </script>
 
