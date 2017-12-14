@@ -57,6 +57,9 @@ export default {
 @import "./base.scss";
 #posts-cover {
 	@include content;
+	.title {
+		@include separator;
+	}
 }
 #header {
 	@include header;
