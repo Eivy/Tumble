@@ -81,6 +81,13 @@ $contentPadding: 1em;
 	line-height: 30px;
 }
 
+@mixin separator {
+	margin: 1px 0px 1px 0px;
+	background-color: #56667d;
+	min-height: 20px;
+	line-height: 20px;
+}
+
 @mixin info {
 	background-color: $backgroundColor;
 	color: #fff;
@@ -91,14 +98,11 @@ $contentPadding: 1em;
 		line-height: 30px;
 	}
 	.separator {
-		margin: 1px 0px 1px 0px;
-		background-color: #56667d;
-		min-height: 20px;
-		line-height: 20px;
+		@include separator;
 	}
 }
 .spin {
-    animation: spin 1.5s linear infinite;
+	animation: spin 1.5s linear infinite;
 	border-radius: 50%;
 }
 @keyframes spin {

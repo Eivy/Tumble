@@ -3,6 +3,7 @@
 		<div id='header'>
 			<div id='path'><h2>User</h2></div>
 			<div id='user'>{{name}}</div>
+			<Icon id='config' name='cog' @click.native='config'></Icon>
 		</div>
 		<div id='posts-cover'>
 			<div class='info'>
@@ -19,10 +20,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import {ipcRenderer} from 'electron'
+import Icon from 'vue-awesome/components/Icon.vue'
 import LinkItem from './LinkItem.vue'
+import Config from './Contents/Config.vue'
 export default {
-	components: {LinkItem},
+	components: {Icon, LinkItem},
 	data: function () { return {blogs: null, name: '', following: ''} },
 	created: function() {
 		ipcRenderer.send('user')
@@ -36,6 +40,14 @@ export default {
 	methods: {
 		goTo: function(path) {
 			this.$router.push(path)
+		},
+		config: function() {
+			new Vue({
+				el: '#contents',
+				components: {Config},
+				store: this.$store,
+				template: '<Config></Config>'
+			})
 		}
 	}
 }
@@ -60,7 +72,7 @@ export default {
 		line-height: $user;
 		height: $user;
 	}
-	#update {
+	#config {
 		@include update;
 	}
 }

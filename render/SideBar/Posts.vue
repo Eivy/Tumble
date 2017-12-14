@@ -17,6 +17,7 @@
 
 <script>
 import {Waterfall,WaterfallSlot} from 'vue-waterfall'
+import Store from 'electron-store'
 import Vue from 'vue'
 import Post from '../Contents/Post.vue'
 import AnswerPost from './AnswerPost.vue'
@@ -27,6 +28,8 @@ import VideoPost from './VideoPost.vue'
 import PhotoPost from './PhotoPost.vue'
 import QuotePost from './QuotePost.vue'
 import TextPost from './TextPost.vue'
+
+const store = new Store();
 
 export default {
 	components: {
@@ -42,9 +45,14 @@ export default {
 		TextPost
 	},
 	props: ['posts'],
-	data: function() { return {width: 100, size: {}} },
+	data: function() { return {size: {}} },
 	mounted: function() {
-		this.width = document.getElementById('posts').parentNode.clientWidth / this.$store.state.thumb_size;
+		this.$store.commit('thumb_size', {size: store.get('config.thumb_size', 3)});
+	},
+	computed: {
+		width () {
+			return this.$store.state.width;
+		}
 	},
 	methods: {
 		postSize: function(post) {
