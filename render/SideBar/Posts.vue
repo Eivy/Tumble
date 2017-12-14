@@ -132,6 +132,7 @@ export default {
 .post /deep/ .photo img {
 	width: 100%;
 	vertical-align: bottom;
+	display: block;
 }
 .post /deep/ .video {
 	background-color: transparent;
