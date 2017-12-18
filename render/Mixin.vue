@@ -17,14 +17,6 @@ export default {
 			} else {
 				this.posts = this.posts.concat(msg.posts);
 			}
-			if (store.get('config.distinct', false)) {
-				var tmp = [];
-				for(var item of this.posts) {
-					if (tmp.find((i, index, array) => i.reblog_key === item.reblog_key) === undefined)
-						tmp.push(item);
-				}
-				this.posts = tmp;
-			}
 			if (this.$router.currentRoute.name !== 'blog') {
 				store.set('cache.'+this.$router.currentRoute.name+'.posts', this.posts);
 			}

@@ -30,6 +30,16 @@ export default {
 		} else {
 			this.name = global.user;
 		}
+		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
+			if (store.get('config.distinct', false)) {
+				var tmp = [];
+				for(var item of this.posts) {
+					if (tmp.find((i, index, array) => i.reblog_key === item.reblog_key) === undefined)
+						tmp.push(item);
+				}
+				this.posts = tmp;
+			}
+		})
 	},
 	mounted: function() {
 		if (store.has('cache.'+this.$router.currentRoute.name+'.posts')) {
