@@ -16,6 +16,18 @@
 					</div>
 				</div>
 			</div>
+			<div class='group'>
+				<div class='subtitle'>Dashboard</div>
+				<div id='line-count' class='item'>
+					<span class='name'>Hide same Posts</span>
+					<div class='value'>
+						<label class='switch'>
+							<input type='checkbox' v-model='distinct' @change='apply("distinct")'>
+							<span class='slider round'></span>
+						</label>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -29,8 +41,8 @@ export default {
 	data: function () { return store.get('config', {}) },
 	methods: {
 		apply: function (name) {
-			store.set('config.'+name, event.target.value);
-			this.$store.commit('valueChange', {name: name, value: event.target.value});
+			store.set('config.'+name, event.target.type == 'checkbox' ? event.target.checked : event.target.value);
+			this.$store.commit('valueChange', {name: name, value: event.target.type == 'checkbox' ? event.target.checked : event.target.value});
 		}
 	}
 }
@@ -53,6 +65,44 @@ export default {
 		.value {
 			display: inline-block;
 			float: right;
+			.switch {
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 34px;
+				input {display:none;}
+			}
+			.slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				transition: .4s;
+				border-radius: 34px;
+				&:before {
+					position: absolute;
+					content: "";
+					height: 26px;
+					width: 26px;
+					left: 4px;
+					bottom: 4px;
+					background-color: white;
+					transition: .4s;
+					border-radius: 50%;
+				}
+			}
+			input:checked + .slider {
+				background-color: #2196F3;
+			}
+			input:focus + .slider {
+				box-shadow: 0 0 1px #2196F3;
+			}
+			input:checked + .slider:before {
+				transform: translateX(26px);
+			}
 		}
 	}
 }

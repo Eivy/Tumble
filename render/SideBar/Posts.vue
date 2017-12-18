@@ -48,6 +48,7 @@ export default {
 	data: function() { return {size: {}} },
 	mounted: function() {
 		this.$store.commit('valueChange', {name: 'thumb_size', value: store.get('config.thumb_size', 3)});
+		this.$store.commit('valueChange', {name: 'distinct', value: store.get('config.distinct', false)});
 	},
 	computed: {
 		width () {
