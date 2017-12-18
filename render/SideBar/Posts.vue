@@ -2,14 +2,14 @@
 	<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
 	<div id='current'></div>
 	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post) :height=size[post.id] >
-		<AnswerPost v-if="post.type === 'answer'" :post='post'/>
+		<AnswerPost v-if="post.type === 'answer'" :post='post' @text_resize=resize />
 		<AudioPost v-else-if="post.type === 'audio'" :post='post' @resize=resize />
-		<ChatPost v-else-if="post.type === 'chat'" :post='post'/>
-		<LinkPost v-else-if="post.type === 'link'" :post='post'/>
-		<VideoPost v-else-if="post.type === 'video'" :post='post' @resize=resize />
+		<ChatPost v-else-if="post.type === 'chat'" :post='post' @text_resize=resize />
+		<LinkPost v-else-if="post.type === 'link'" :post='post' @text_resize=resize />
+		<VideoPost v-else-if="post.type === 'video'" :post='post'/>
 		<PhotoPost v-else-if="post.type === 'photo'" :post='post'/>
-		<QuotePost v-else-if="post.type === 'quote'" :post='post'/>
-		<TextPost v-else-if="post.type === 'text'" :post='post'/>
+		<QuotePost v-else-if="post.type === 'quote'" :post='post' @text_resize=resize />
+		<TextPost v-else-if="post.type === 'text'" :post='post' @text_resize=resize />
 		<div v-else>{{post.type}}</div>
 	</waterfall-slot>
 	</waterfall>
@@ -123,14 +123,11 @@ export default {
 	z-index: 999;
 	transition: .2s;
 }
-.post /deep/ div {
+.post > div {
 	background-color: #fff;
-	font-size: x-small;
+	font-size: xx-small;
 	overflow: hidden;
-	text-overflow: ellipsis;
 	padding: 3px;
-	height: 100%;
-	width: 100%;
 }
 .post /deep/ .link {
 	background-color: #fff;
