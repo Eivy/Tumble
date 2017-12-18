@@ -47,11 +47,12 @@ export default {
 	props: ['posts'],
 	data: function() { return {size: {}} },
 	mounted: function() {
-		this.$store.commit('thumb_size', {size: store.get('config.thumb_size', 3)});
+		this.$store.commit('valueChange', {name: 'thumb_size', value: store.get('config.thumb_size', 3)});
 	},
 	computed: {
 		width () {
-			return this.$store.state.width;
+			var el = document.getElementById('posts-cover');
+			return (el ? document.getElementById('posts-cover').clientWidth : 300) / this.$store.state.thumb_size;
 		}
 	},
 	methods: {

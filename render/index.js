@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 
 var app = new Vue({
-	router: router,
+	router,
 	store,
 	el: '#app',
 	components: {Links}

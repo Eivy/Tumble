@@ -7,7 +7,7 @@
 				<div id='line-count' class='item'>
 					<span class='name'>Size</span>
 					<div class='value'>
-						<select v-model='thumb_size' @change='thumbSizeApply'>
+						<select v-model='thumb_size' @change='apply("thumb_size")'>
 							<option value='1'>Extra Large</option>
 							<option value='2'>Large</option>
 							<option value='3'>Normal</option>
@@ -28,9 +28,9 @@ const store = new Store();
 export default {
 	data: function () { return store.get('config', {}) },
 	methods: {
-		thumbSizeApply: function () {
-			store.set('config.thumb_size', event.target.value);
-			this.$store.commit('thumb_size', {size: event.target.value});
+		apply: function (name) {
+			store.set('config.'+name, event.target.value);
+			this.$store.commit('valueChange', {name: name, value: event.target.value});
 		}
 	}
 }
