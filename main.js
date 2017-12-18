@@ -194,7 +194,7 @@ ipcMain.on('avatar', (evt, msg) => {
 ipcMain.on('blogInfo', (evt, msg) => {
 	console.log(msg);
 	client.blogInfo(msg.name, (err, data) => {
-		main.send('blogInfo', data);
+		main.send('blogInfo', err ? err : data);
 	});
 });
 

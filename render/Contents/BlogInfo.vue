@@ -7,6 +7,7 @@
 		<div id='spacer'></div>
 		<div id='follow' v-if='blog.followed' @click=follow >UnFollow</div>
 		<div id='follow' v-else @click=follow >Follow</div>
+		<div ref='msg' id='msg'><div id='msg_in'>Faild to load Blog Infomation</div></div>
 	</div>
 </template>
 
@@ -24,7 +25,11 @@ export default {
 		ipcRenderer.send('avatar', {name: this.blog_name, size: 48});
 		ipcRenderer.on('blogInfo', (evt, msg) => {
 			console.log(msg);
-			this.blog = msg.blog;
+			if (msg.hasOwnProperty('blog')) {
+				this.blog = msg.blog;
+			} else {
+				this.$refs.msg.style.display = 'table';
+			}
 		});
 		ipcRenderer.send('blogInfo', {name: this.blog_name});
 		ipcRenderer.on('follow', (evt, msg) => {
@@ -86,6 +91,23 @@ export default {
 	}
 	#spacer {
 		height: $headerHeight;
+	}
+	#msg {
+		position: absolute;
+		display: none;
+		background-color: rgba(255, 255, 255, 0.7);
+		width: 100%;
+		height: 100%;
+		top: 0;
+		#msg_in {
+			width: 100%;
+			height: 100%;
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			color: #f00;
+			font-size: xx-large;
+		}
 	}
 }
 </style>
