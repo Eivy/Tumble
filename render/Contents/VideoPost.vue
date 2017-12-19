@@ -28,4 +28,9 @@ export default {
 	text-align: center;
 	overflow: auto;
 }
+.video /deep/ video {
+	max-width: 100% !important;
+	max-height: 85vh !important;
+	object-fit: contain !important;
+}
 </style>
