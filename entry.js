@@ -10,7 +10,6 @@ import Store from 'electron-store'
 import tumblr from 'tumblr.js'
 const store = new Store();
 
-var main;
 var client;
 var user;
 
@@ -37,7 +36,7 @@ app.on('ready', () => {
 });
 
 function showMain(token) {
-	main = new electron.BrowserWindow({
+	var main = new electron.BrowserWindow({
 		width:1000,
 		height: 800,
 		webPreferences: {
@@ -68,13 +67,13 @@ ipcMain.on('reblog', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
 	client.reblogPost(user, msg, (err, data) => {
-		main.webContents.send('reblog', {type: 'reblog', err: err, data: data});
+		evt.sender.send('reblog', {type: 'reblog', err: err, data: data});
 	});
 });
 
 ipcMain.on('delete', (evt, msg) => {
 	client.deletePost(user, msg, (err, data) => {
-		main.webContents.send('reblog', {type: 'delete', err: err, data: data});
+		evt.sender.send('reblog', {type: 'delete', err: err, data: data});
 	});
 });
 
@@ -82,7 +81,7 @@ ipcMain.on('like', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
 	client.likePost(user, msg, (err, data) => {
-		main.webContents.send('like', {type: 'like', err: err, data: data});
+		evt.sender.send('like', {type: 'like', err: err, data: data});
 	});
 });
 
@@ -90,19 +89,19 @@ ipcMain.on('unlike', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
 	client.unlikePost(user, msg, (err, data) => {
-		main.webContents.send('like', {type: 'unlike', err: err, data: data});
+		evt.sender.send('like', {type: 'unlike', err: err, data: data});
 	});
 });
 
 ipcMain.on('follow', (evt, msg) => {
 	client.followBlog(msg.url, (err, data) => {
-		main.webContents.send('follow', data);
+		evt.sender.send('follow', data);
 	});
 });
 
 ipcMain.on('unfollow', (evt, msg) => {
 	client.unfollowBlog(msg.url, (err, data) => {
-		main.webContents.send('unfollow', data);
+		evt.sender.send('unfollow', data);
 	});
 });
 
@@ -113,7 +112,7 @@ ipcMain.on('dashboard', (evt, msg) => {
 		requiringDashboard = true;
 		client.userDashboard(Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), posts: data.posts});
+			evt.sender.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), posts: data.posts});
 		});
 	}
 });
@@ -124,7 +123,7 @@ ipcMain.on('likes', (evt, msg) => {
 		requiringDashboard = true;
 		client.userLikes(msg, (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('likes', {type: (msg.hasOwnProperty('after') ? 'after' : 'before'), posts: data.liked_posts});
+			evt.sender.send('likes', {type: (msg.hasOwnProperty('after') ? 'after' : 'before'), posts: data.liked_posts});
 		});
 	}
 });
@@ -133,21 +132,21 @@ ipcMain.on('user', (evt, msg) => {
 	client.userInfo((err,data) => {
 		user = data.user.name;
 		console.log(data);
-		main.webContents.send('user', data);
+		evt.sender.send('user', data);
 	});
 });
 
 ipcMain.on('followers', (evt, msg) => {
 	console.log(msg);
 	client.blogFollowers(msg.blog_identifier, {offset: msg.offset}, (err, data) => {
-		main.webContents.send('followers', {blogs: data.users});
+		evt.sender.send('followers', {blogs: data.users});
 	});
 });
 
 ipcMain.on('following', (evt, msg) => {
 	console.log(msg);
 	client.userFollowing(msg, (err, data) => {
-		main.webContents.send('following', data);
+		evt.sender.send('following', data);
 	});
 });
 
@@ -157,7 +156,7 @@ ipcMain.on('blog', (evt, msg) => {
 		requiringDashboard = true;
 		client.blogPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
-			main.send('blog', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), posts: data.posts});
+			evt.sender.send('blog', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), posts: data.posts});
 		});
 	}
 });
@@ -168,7 +167,7 @@ ipcMain.on('tag', (evt, msg) => {
 		requiringDashboard = true;
 		client.taggedPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
-			main.webContents.send('tag', {posts: data});
+			evt.sender.send('tag', {posts: data});
 		});
 	}
 });
@@ -176,12 +175,12 @@ ipcMain.on('tag', (evt, msg) => {
 ipcMain.on('avatar', (evt, msg) => {
 	console.log(msg);
 	if (store.has('cache.avatar.'+msg.name)) {
-		main.send('avatar'+msg.name, store.get('cache.avatar.'+msg.name));
+		evt.sender.send('avatar'+msg.name, store.get('cache.avatar.'+msg.name));
 	} else {
 		client.blogAvatar(msg.name, msg.size, (err, data) => {
 			if (!err) {
 				store.set('cache.avatar.'+msg.name, data);
-				main.send('avatar'+msg.name, data);
+				evt.sender.send('avatar'+msg.name, data);
 			} else {
 				console.log(err);
 			}
@@ -192,7 +191,7 @@ ipcMain.on('avatar', (evt, msg) => {
 ipcMain.on('blogInfo', (evt, msg) => {
 	console.log(msg);
 	client.blogInfo(msg.name, (err, data) => {
-		main.send('blogInfo', err ? err : data);
+		evt.sender.send('blogInfo', err ? err : data);
 	});
 });
 
