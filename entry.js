@@ -1,16 +1,14 @@
 'use strict';
-const electron = require('electron');
-const app = electron.app;
-const shell = electron.shell;
-const request = require('request');
-const OAuth = require('oauth-1.0a');
-const crypto = require('crypto');
-const querystring = require('querystring');
-const Url = require('url');
-const Store = require('electron-store');
+import electron from 'electron'
+import {app,shell,ipcMain} from 'electron'
+import request from 'request';
+import OAuth from 'oauth-1.0a'
+import crypto from 'crypto'
+import querystring from 'querystring'
+import Url from 'url'
+import Store from 'electron-store'
+import tumblr from 'tumblr.js'
 const store = new Store();
-const tumblr = require('tumblr.js');
-const ipcMain = electron.ipcMain;
 
 var main;
 var client;

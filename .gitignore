@@ -1,4 +1,5 @@
 package-lock.json
 node_module
 bundle.js
+main.js
 style.css
