@@ -73,7 +73,7 @@ export default {
 				id: this.post.id,
 				reblog_key: this.post.reblog_key
 			});
-			if (event.target.id === 'reblog') {
+			if (method === 'reblog') {
 				event.target.classList.add('disabled');
 			}
 		},
