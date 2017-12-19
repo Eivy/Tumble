@@ -19,19 +19,14 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-	var token = store.get('token', {
-		consumer_key: consumer.key,
-		consumer_secret: consumer.secret
-	});
-	if (!token.hasOwnProperty('access_token')) {
+	if (store.has('default_account') && store.has('token.'+store.get('default_account'))) {
+		showMain(store.get('token.'+store.get('default_account')));
+	} else {
 		var login = new electron.BrowserWindow({width:800, heigh:600});
 		login.on('close', () => {
-			store.set('token', token);
 			showMain(token);
 		});
 		getAuth(login, token);
-	} else {
-		showMain(token);
 	}
 });
 
@@ -63,6 +58,10 @@ function showMain(token) {
 	});
 	c.userInfo((err,data) => {
 		main.webContents.user = data.user.name;
+		if (!store.has('token.'+data.user.name))
+			store.set('token.'+data.user.name, token);
+		if (!store.has('default_account'))
+			store.set('default_account', data.user.name);
 	});
 	main.webContents.client = c;
 }
