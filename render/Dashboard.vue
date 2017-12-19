@@ -14,22 +14,13 @@
 <script>
 import Store from 'electron-store'
 var store = new Store();
-import {ipcRenderer} from 'electron'
+import {ipcRenderer, remote} from 'electron'
 import Mixin from './Mixin.vue'
 
 export default {
 	mixins: [Mixin],
 	created: function() {
-		console.log(global.user);
-		if (global.user === undefined) {
-			ipcRenderer.send('user');
-			ipcRenderer.on('user', (evt, msg) => {
-				this.name = msg.user.name;
-				global.user = this.name;
-			});
-		} else {
-			this.name = global.user;
-		}
+		this.name = remote.getCurrentWindow().webContents.user;
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
 			if (store.get('config.distinct', false)) {
 				var tmp = [];

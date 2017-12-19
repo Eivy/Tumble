@@ -21,7 +21,7 @@
 
 <script>
 import Vue from 'vue'
-import {ipcRenderer} from 'electron'
+import {ipcRenderer, remote} from 'electron'
 import Icon from 'vue-awesome/components/Icon.vue'
 import LinkItem from './LinkItem.vue'
 import Config from './Contents/Config.vue'
@@ -29,11 +29,11 @@ export default {
 	components: {Icon, LinkItem},
 	data: function () { return {blogs: null, name: '', following: ''} },
 	created: function() {
+		this.name = remote.getCurrentWindow().webContents.user;
 		ipcRenderer.send('user')
 		ipcRenderer.removeAllListeners('user')
 		ipcRenderer.on('user', (err, data) => {
 			this.blogs = data.user.blogs;
-			this.name = data.user.name;
 			this.following = data.user.following;
 		});
 	},
