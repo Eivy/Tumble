@@ -12,7 +12,6 @@ const store = new Store();
 
 import consumer from './consumer.js'
 
-var client;
 var user;
 
 app.on('window-all-closed', () => {
@@ -57,24 +56,28 @@ function showMain(token) {
 		e.preventDefault();
 		shell.openExternal(url);
 	});
-	client = new tumblr.Client({
+	var c = new tumblr.Client({
 		consumer_key: token.consumer_key,
 		consumer_secret: token.consumer_secret,
 		token: token.access_token,
 		token_secret: token.access_token_secret
 	});
+	c.userInfo((err,data) => {
+		main.webContents.user = data.user.name;
+	});
+	main.webContents.client = c;
 }
 
 ipcMain.on('reblog', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
-	client.reblogPost(user, msg, (err, data) => {
+	evt.sender.client.reblogPost(user, msg, (err, data) => {
 		evt.sender.send('reblog', {type: 'reblog', err: err, data: data});
 	});
 });
 
 ipcMain.on('delete', (evt, msg) => {
-	client.deletePost(user, msg, (err, data) => {
+	evt.sender.client.deletePost(user, msg, (err, data) => {
 		evt.sender.send('reblog', {type: 'delete', err: err, data: data});
 	});
 });
@@ -82,7 +85,7 @@ ipcMain.on('delete', (evt, msg) => {
 ipcMain.on('like', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
-	client.likePost(user, msg, (err, data) => {
+	evt.sender.client.likePost(user, msg, (err, data) => {
 		evt.sender.send('like', {type: 'like', err: err, data: data});
 	});
 });
@@ -90,19 +93,19 @@ ipcMain.on('like', (evt, msg) => {
 ipcMain.on('unlike', (evt, msg) => {
 	console.log(user);
 	console.log(msg);
-	client.unlikePost(user, msg, (err, data) => {
+	evt.sender.client.unlikePost(user, msg, (err, data) => {
 		evt.sender.send('like', {type: 'unlike', err: err, data: data});
 	});
 });
 
 ipcMain.on('follow', (evt, msg) => {
-	client.followBlog(msg.url, (err, data) => {
+	evt.sender.client.followBlog(msg.url, (err, data) => {
 		evt.sender.send('follow', data);
 	});
 });
 
 ipcMain.on('unfollow', (evt, msg) => {
-	client.unfollowBlog(msg.url, (err, data) => {
+	evt.sender.client.unfollowBlog(msg.url, (err, data) => {
 		evt.sender.send('unfollow', data);
 	});
 });
@@ -112,7 +115,7 @@ ipcMain.on('dashboard', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
 		requiringDashboard = true;
-		client.userDashboard(Object.assign({reblog_info: true}, msg), (err,data) => {
+		evt.sender.client.userDashboard(Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
 			evt.sender.send('dashboard', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), posts: data.posts});
 		});
@@ -123,7 +126,7 @@ ipcMain.on('likes', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
 		requiringDashboard = true;
-		client.userLikes(msg, (err,data) => {
+		evt.sender.client.userLikes(msg, (err,data) => {
 			requiringDashboard = false;
 			evt.sender.send('likes', {type: (msg.hasOwnProperty('after') ? 'after' : 'before'), posts: data.liked_posts});
 		});
@@ -131,7 +134,7 @@ ipcMain.on('likes', (evt, msg) => {
 });
 
 ipcMain.on('user', (evt, msg) => {
-	client.userInfo((err,data) => {
+	evt.sender.client.userInfo((err,data) => {
 		user = data.user.name;
 		console.log(data);
 		evt.sender.send('user', data);
@@ -140,14 +143,14 @@ ipcMain.on('user', (evt, msg) => {
 
 ipcMain.on('followers', (evt, msg) => {
 	console.log(msg);
-	client.blogFollowers(msg.blog_identifier, {offset: msg.offset}, (err, data) => {
+	evt.sender.client.blogFollowers(msg.blog_identifier, {offset: msg.offset}, (err, data) => {
 		evt.sender.send('followers', {blogs: data.users});
 	});
 });
 
 ipcMain.on('following', (evt, msg) => {
 	console.log(msg);
-	client.userFollowing(msg, (err, data) => {
+	evt.sender.client.userFollowing(msg, (err, data) => {
 		evt.sender.send('following', data);
 	});
 });
@@ -156,7 +159,7 @@ ipcMain.on('blog', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
 		requiringDashboard = true;
-		client.blogPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
+		evt.sender.client.blogPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
 			evt.sender.send('blog', {type: (msg.hasOwnProperty('since_id') ? 'after' : 'before'), posts: data.posts});
 		});
@@ -167,7 +170,7 @@ ipcMain.on('tag', (evt, msg) => {
 	console.log(msg);
 	if (!requiringDashboard) {
 		requiringDashboard = true;
-		client.taggedPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
+		evt.sender.client.taggedPosts(msg.name, Object.assign({reblog_info: true}, msg), (err,data) => {
 			requiringDashboard = false;
 			evt.sender.send('tag', {posts: data});
 		});
@@ -179,7 +182,7 @@ ipcMain.on('avatar', (evt, msg) => {
 	if (store.has('cache.avatar.'+msg.name)) {
 		evt.sender.send('avatar'+msg.name, store.get('cache.avatar.'+msg.name));
 	} else {
-		client.blogAvatar(msg.name, msg.size, (err, data) => {
+		evt.sender.client.blogAvatar(msg.name, msg.size, (err, data) => {
 			if (!err) {
 				store.set('cache.avatar.'+msg.name, data);
 				evt.sender.send('avatar'+msg.name, data);
@@ -192,7 +195,7 @@ ipcMain.on('avatar', (evt, msg) => {
 
 ipcMain.on('blogInfo', (evt, msg) => {
 	console.log(msg);
-	client.blogInfo(msg.name, (err, data) => {
+	evt.sender.client.blogInfo(msg.name, (err, data) => {
 		evt.sender.send('blogInfo', err ? err : data);
 	});
 });
