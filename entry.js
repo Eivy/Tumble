@@ -10,6 +10,8 @@ import Store from 'electron-store'
 import tumblr from 'tumblr.js'
 const store = new Store();
 
+import consumer from './consumer.js'
+
 var client;
 var user;
 
@@ -20,8 +22,8 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
 	var token = store.get('token', {
-		consumer_key: consumer_key,
-		consumer_secret: consumer_secret
+		consumer_key: consumer.key,
+		consumer_secret: consumer.secret
 	});
 	if (!token.hasOwnProperty('access_token')) {
 		var login = new electron.BrowserWindow({width:800, heigh:600});
@@ -198,8 +200,8 @@ ipcMain.on('blogInfo', (evt, msg) => {
 function getAuth(login, return_token) {
 	var consumer = OAuth({
 		consumer: {
-			key: consumer_key,
-			secret: consumer_secret
+			key: consumer.key,
+			secret: consumer.secret
 		},
 		signature_method: 'HMAC-SHA1',
 		hash_function: (base_string, key) => {
