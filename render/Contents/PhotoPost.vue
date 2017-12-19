@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class='photo' >
-			<img v-for="photo in post.photos" :src=photo.original_size.url>
+			<img v-for="photo in post.photos" :class='{block: post.is_blocks_post_format, single: post.photos.length === 1}' :src=photo.original_size.url>
 		</div>
 			<div>
 				<PostCaption v-if='post.caption.length > 0' v-bind:post=post />
@@ -22,9 +22,23 @@ export default {
 .photo {
 	color: #fff;
 	background-color: transparent;
-}
-img {
-	width: 100%;
-	vertical-align: bottom;
+	text-align: center;
+	img {
+		display: block;
+		vertical-align: bottom;
+		width: 100%;
+		max-width: 100%;
+		object-fit: contain;
+		margin: 0 auto;
+	}
+	.block {
+		display: inline;
+		width: auto;
+		max-height: 90vh;
+	}
+	.single{
+		height: 90vh;
+		width: auto;
+	}
 }
 </style>
