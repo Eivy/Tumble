@@ -9,6 +9,8 @@ import Store from 'electron-store'
 import tumblr from 'tumblr.js'
 const store = new Store();
 
+import Consumer from './consumer.js'
+
 export default {
 	createWindow : function (token, name) {
 		var w = new electron.BrowserWindow({
@@ -51,10 +53,12 @@ export default {
 	},
 
 	getAuth: function (login, return_token) {
+		return_token.consumer_key = Consumer.key;
+		return_token.consumer_secret = Consumer.secret;
 		var consumer = OAuth({
 			consumer: {
-				key: consumer.key,
-				secret: consumer.secret
+				key: Consumer.key,
+				secret: Consumer.secret
 			},
 			signature_method: 'HMAC-SHA1',
 			hash_function: (base_string, key) => {
@@ -76,9 +80,7 @@ export default {
 			method: requestTokenData.method,
 			form: consumer.authorize(requestTokenData, {})
 		}, (err, res, body) => {
-			console.log(body);
 			var q = querystring.parse(body);
-			console.log(q);
 			access_token = q.oauth_token;
 			access_token_secret = q.oauth_token_secret;
 			login.loadURL('https://www.tumblr.com/oauth/authorize?oauth_token=' + access_token);
@@ -89,7 +91,6 @@ export default {
 				return;
 			}
 			var q = querystring.parse(Url.parse(url).query);
-			console.log(q);
 			const accessTokenData = {
 				url: 'https://www.tumblr.com/oauth/access_token',
 				method: 'POST',
@@ -97,7 +98,6 @@ export default {
 					oauth_verifier: q.oauth_verifier,
 				}
 			}
-			console.log(consumer.toHeader(consumer.authorize(accessTokenData, {key: access_token, secret: access_token_secret})));
 			request({
 				url: accessTokenData.url,
 				method: accessTokenData.method,
@@ -106,7 +106,6 @@ export default {
 				if (err) {
 					console.log("Error getting OAuth access token: " + err);
 				} else {
-					console.log(body);
 					var q = querystring.parse(body);
 					return_token.access_token = q.oauth_token;
 					return_token.access_token_secret = q.oauth_token_secret;
