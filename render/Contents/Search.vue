@@ -1,8 +1,8 @@
 <template>
 	<div id='contents'>
-		<div id='search'>
+		<div id='top'>
 			<Icon name='search'></Icon>
-			<input type='search' @search=search($event.target.value) ></input>
+			<input ref=text type='search' @search=search($event.target.value) ></input>
 		</div>
 		<div id='log'>
 			<LinkItem v-for='(l, i) in log' :key=i :text=l @click.native=search(l)></LinkItem>
@@ -19,6 +19,9 @@ const store = new Store()
 export default {
 	components: {Icon, LinkItem},
 	data: function () { return {'log': store.get('cache.search', [])}},
+	mounted: function () {
+		this.$refs.text.focus()
+	},
 	methods: {
 		search: function(value) {
 			if (value.length > 0) {
@@ -35,7 +38,7 @@ export default {
 
 <style scoped lang='scss'>
 @import '../base.scss';
-#search {
+#top {
 	@include header;
 	input {
 		position: absolute;
