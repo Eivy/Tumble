@@ -1,7 +1,10 @@
 'use strict;'
+import {ipcRenderer} from 'electron'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+
+import Config from './Contents/Config.vue'
 
 import Links from './Links.vue'
 import './keydown.js'
@@ -18,3 +21,13 @@ var app = new Vue({
 	components: {Links}
 });
 router.push('dashboard');
+
+ipcRenderer.on('config', (evt, msg) => {
+	new Vue({
+		el: '#contents',
+		components: {Config},
+		template: '<Config></Config>',
+		store,
+		router
+	})
+});
