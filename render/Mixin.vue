@@ -11,13 +11,33 @@ export default {
 	created: function () {
 		console.log(this.$router.currentRoute.name);
 		ipcRenderer.removeAllListeners(this.$router.currentRoute.name);
-		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
-			if (msg.type === 'after') {
-				this.posts = msg.posts.concat(this.posts);
-			} else {
-				this.posts = this.posts.concat(msg.posts);
-			}
-		});
+		if (this.$router.currentRoute.name === 'dashboard') {
+			ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
+				if (store.get('config.distinct', false)) {
+					var tmp = [];
+					for(var item of msg.posts) {
+						if (tmp.find((i, index, array) => i.reblog_key === item.reblog_key) === undefined
+							&& this.posts.find((i, index, array) => i.reblog_key === item.reblog_key) === undefined
+						)
+							tmp.push(item);
+					}
+					msg.posts = tmp;
+				}
+				if (msg.type === 'after') {
+					this.posts = msg.posts.concat(this.posts);
+				} else {
+					this.posts = this.posts.concat(msg.posts);
+				}
+			});
+		} else {
+			ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
+				if (msg.type === 'after') {
+					this.posts = msg.posts.concat(this.posts);
+				} else {
+					this.posts = this.posts.concat(msg.posts);
+				}
+			});
+		}
 	},
 	mounted: function() {
 		ipcRenderer.on(this.$router.currentRoute.name, () => {
