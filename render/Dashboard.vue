@@ -22,6 +22,7 @@ export default {
 	created: function() {
 		this.name = remote.getCurrentWindow().webContents.user;
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
+			store.set('cache.'+this.$router.currentRoute.name+'.posts', this.posts);
 			if (store.get('config.distinct', false)) {
 				var tmp = [];
 				for(var item of this.posts) {

@@ -17,9 +17,6 @@ export default {
 			} else {
 				this.posts = this.posts.concat(msg.posts);
 			}
-			if (this.$router.currentRoute.name !== 'blog') {
-				store.set('cache.'+this.$router.currentRoute.name+'.posts', this.posts);
-			}
 		});
 	},
 	mounted: function() {
