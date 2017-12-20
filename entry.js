@@ -20,33 +20,33 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
 	if (store.has('default_account') && store.has('token.'+store.get('default_account'))) {
-		showMain(store.get('token.'+store.get('default_account')));
+		createWindow(store.get('token.'+store.get('default_account')));
 	} else {
 		var login = new electron.BrowserWindow({width:800, heigh:600});
 		login.on('close', () => {
-			showMain(token);
+			createWindow(token);
 		});
 		getAuth(login, token);
 	}
 });
 
-function showMain(token) {
-	var main = new electron.BrowserWindow({
+function createWindow(token) {
+	var w = new electron.BrowserWindow({
 		width:1000,
 		height: 800,
 		webPreferences: {
 			blinkFeatures: 'CSSBackdropFilter'
 		}
 	});
-	main.loadURL('file://' + __dirname + '/render/index.html');
-	main.on('close', () => {
-		main = null;
+	w.loadURL('file://' + __dirname + '/render/index.html');
+	w.on('close', () => {
+		w = null;
 	});
-	main.webContents.on('new-window', (e, url) => {
+	w.webContents.on('new-window', (e, url) => {
 		e.preventDefault();
 		shell.openExternal(url);
 	});
-	main.webContents.on('will-navigate', (e, url) => {
+	w.webContents.on('will-navigate', (e, url) => {
 		e.preventDefault();
 		shell.openExternal(url);
 	});
@@ -57,13 +57,13 @@ function showMain(token) {
 		token_secret: token.access_token_secret
 	});
 	c.userInfo((err,data) => {
-		main.webContents.user = data.user.name;
+		w.webContents.user = data.user.name;
 		if (!store.has('token.'+data.user.name))
 			store.set('token.'+data.user.name, token);
 		if (!store.has('default_account'))
 			store.set('default_account', data.user.name);
 	});
-	main.webContents.client = c;
+	w.webContents.client = c;
 }
 
 function getAuth(login, return_token) {
