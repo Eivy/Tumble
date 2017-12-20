@@ -113,7 +113,7 @@ export default {
 
 <style scoped lang='scss'>
 #posts .post {
-	border: 1px solid transparent;
+	border: 1px solid rgba(0, 0, 0, 0.5);
 	overflow: hidden;
 }
 #current {
