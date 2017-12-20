@@ -31,3 +31,15 @@ ipcRenderer.on('config', (evt, msg) => {
 		router
 	})
 });
+
+ipcRenderer.on('reload', (evt, msg) => {
+	document.getElementById('update').dispatchEvent(new MouseEvent('click'));
+});
+
+ipcRenderer.on('search', (evt, msg) => {
+	document.getElementById('search').click();
+});
+
+ipcRenderer.on('goto', (evt, msg) => {
+	router.push(msg)
+});
