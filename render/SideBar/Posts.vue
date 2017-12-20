@@ -1,6 +1,5 @@
 <template>
 	<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
-	<div id='current'></div>
 	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post) :height=size[post.id] >
 		<AnswerPost v-if="post.type === 'answer'" :post='post' @text_resize=resize />
 		<AudioPost v-else-if="post.type === 'audio'" :post='post' @resize=resize />
@@ -12,6 +11,7 @@
 		<TextPost v-else-if="post.type === 'text'" :post='post' @text_resize=resize />
 		<div v-else>{{post.type}}</div>
 	</waterfall-slot>
+	<div id='current'></div>
 	</waterfall>
 </template>
 
