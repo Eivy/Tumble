@@ -4,12 +4,10 @@ document.onkeydown = function() {
 		case 39: // right
 		case 40: // down
 			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
-				if (global.current === undefined) {
-					global.current = document.getElementById('posts').firstChild;
+				if (global.current.nextElementSibling !== null) {
+					global.current = current.nextElementSibling;
 				} else {
-					if (global.current.nextElementSibling !== null) {
-						global.current = current.nextElementSibling;
-					}
+					global.current = document.getElementById('posts').firstChild;
 				}
 				global.current.firstChild.click();
 				var rect = global.current.getClientRects()[0];
