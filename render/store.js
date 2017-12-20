@@ -9,7 +9,8 @@ const store = new Store();
 export default new Vuex.Store({
 	state: {
 		thumb_size: 4,
-		distinct: false
+		distinct: false,
+		own: false
 	},
 	mutations: {
 		valueChange (st, payload) {

@@ -18,11 +18,20 @@
 			</div>
 			<div class='group'>
 				<div class='subtitle'>Dashboard</div>
-				<div id='line-count' class='item'>
+				<div id='hide_same_post' class='item'>
 					<span class='name'>Hide same Posts</span>
 					<div class='value'>
 						<label class='switch'>
 							<input type='checkbox' v-model='distinct' @change='apply("distinct")'>
+							<span class='slider round'></span>
+						</label>
+					</div>
+				</div>
+				<div id='hide_own_post' class='item'>
+					<span class='name'>Hide own Posts</span>
+					<div class='value'>
+						<label class='switch'>
+							<input type='checkbox' v-model='own' @change='apply("own")'>
 							<span class='slider round'></span>
 						</label>
 					</div>

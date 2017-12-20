@@ -1,7 +1,7 @@
 <script>
 import Store from 'electron-store'
 var store = new Store();
-import {ipcRenderer} from 'electron'
+import {ipcRenderer, remote} from 'electron'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Posts from './SideBar/Posts.vue'
@@ -13,6 +13,9 @@ export default {
 		ipcRenderer.removeAllListeners(this.$router.currentRoute.name);
 		if (this.$router.currentRoute.name === 'dashboard') {
 			ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
+				if (store.get('config.own', false)) {
+					msg.posts = msg.posts.filter((item, index, array) => item.blog_name !== remote.getCurrentWindow().webContents.user);
+				}
 				if (store.get('config.distinct', false)) {
 					var tmp = [];
 					for(var item of msg.posts) {
