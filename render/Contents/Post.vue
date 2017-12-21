@@ -12,7 +12,7 @@
 			<TextPost v-else-if="post.type === 'text'" :post='post'/>
 		</div>
 		<div id='buttons'>
-			<div id='reblog' v-if='post.blog_name !== this.user' @click="doPost('reblog')" ><Icon name='retweet' scale=2></Icon></div>
+			<div id='reblog' v-if='post.blog_name !== user' @click="doPost('reblog')" ><Icon name='retweet' scale=2></Icon></div>
 			<div id='reblog' v-else @click="doPost('delete')"><Icon name='trash' scale=2></Icon></div>
 			<div id='like' v-if='post.liked' @click="doPost('unlike')" ><Icon name='heart' scale=2></Icon></div>
 			<div id='like' v-else @click="doPost('like')" ><Icon name='heart-o' scale=2></Icon></div>
@@ -25,7 +25,7 @@
 <script>
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
-import {ipcRenderer} from 'electron'
+import {ipcRenderer,remote} from 'electron'
 import AnswerPost from './AnswerPost.vue'
 import AudioPost from './AudioPost.vue'
 import ChatPost from './ChatPost.vue'
@@ -47,9 +47,8 @@ export default {
 		QuotePost,
 		TextPost
 	},
-	data: function() { return {user: ''} },
+	data: function() { return {user: remote.getCurrentWindow().webContents.user} },
 	created: function() {
-		this.user = global.user;
 		ipcRenderer.removeAllListeners('reblog');
 		ipcRenderer.removeAllListeners('like');
 		ipcRenderer.on('reblog', (evt, msg) => {
