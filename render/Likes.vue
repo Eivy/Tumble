@@ -23,12 +23,12 @@ export default {
 		this.name = remote.getCurrentWindow().webContents.user;
 		console.log(ipcRenderer);
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
-			store.set('cache.'+this.$router.currentRoute.name+'.posts', this.posts);
+			store.set('cache.'+this.name+'.'+this.$router.currentRoute.name+'.posts', this.posts);
 		});
 	},
 	mounted: function() {
-		if (store.has('cache.'+this.$router.currentRoute.name)) {
-			this.posts = store.get('cache.'+this.$router.currentRoute.name+'.posts');
+		if (store.has('cache.'+this.name+'.'+this.$router.currentRoute.name)) {
+			this.posts = store.get('cache.'+this.name+'.'+this.$router.currentRoute.name+'.posts');
 		} else {
 			ipcRenderer.send(this.$router.currentRoute.name, {});
 		}
