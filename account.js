@@ -20,7 +20,26 @@ export default {
 				blinkFeatures: 'CSSBackdropFilter'
 			}
 		});
-		w.loadURL('file://' + __dirname + '/render/index.html');
+		var c = new tumblr.Client({
+			consumer_key: token.consumer_key,
+			consumer_secret: token.consumer_secret,
+			token: token.access_token,
+			token_secret: token.access_token_secret
+		});
+		w.webContents.client = c;
+		if (name !== undefined) {
+			w.webContents.user = name;
+			w.loadURL('file://' + __dirname + '/render/index.html');
+		} else {
+			c.userInfo((err,data) => {
+				w.webContents.user = data.user.name;
+				if (!store.has('token.'+data.user.name)) {
+					store.set('token.'+data.user.name, token);
+					store.set('default_account', data.user.name);
+				}
+				w.loadURL('file://' + __dirname + '/render/index.html');
+			});
+		}
 		w.on('close', () => {
 			w = null;
 		});
@@ -32,24 +51,6 @@ export default {
 			e.preventDefault();
 			shell.openExternal(url);
 		});
-		var c = new tumblr.Client({
-			consumer_key: token.consumer_key,
-			consumer_secret: token.consumer_secret,
-			token: token.access_token,
-			token_secret: token.access_token_secret
-		});
-		if (name !== undefined) {
-				w.webContents.user = name;
-		} else {
-			c.userInfo((err,data) => {
-				w.webContents.user = data.user.name;
-				if (!store.has('token.'+data.user.name)) {
-					store.set('token.'+data.user.name, token);
-					store.set('default_account', data.user.name);
-				}
-			});
-		}
-		w.webContents.client = c;
 	},
 
 	getAuth: function (login, return_token) {
