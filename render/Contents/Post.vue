@@ -19,6 +19,14 @@
 			<div id='prev' @click='prev'><Icon name='angle-left' scale=2></Icon></div>
 			<div id='next' @click='next'><Icon name='angle-right' scale=2></Icon></div>
 		</div>
+		<div id='edit_reblog'>
+			<div id='form'>
+				<div class='input'>Comment:<input ref='comment' type='text'></input></div>
+				<div class='input'>Tag:<input ref='tag' type='search' @search='addTag'></input></div>
+				<div id='tags'><div v-for='(t, i) in post.tags' :key=i class='tag' @click='removeTag'>{{t}}</div></div>
+				<div><div class='button' onclick='document.getElementById("edit_reblog").style.display = "none"'>Cancel</div><div class='button' @click='reblogEditted'>Reblog</div></div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -68,12 +76,16 @@ export default {
 			if (event.target.classList.contains('disabled')) {
 				return;
 			}
-			ipcRenderer.send(method, {
-				id: this.post.id,
-				reblog_key: this.post.reblog_key
-			});
-			if (method === 'reblog') {
-				event.target.classList.add('disabled');
+			if (method === 'reblog' && event.shiftKey) {
+				document.getElementById('edit_reblog').style.display = 'block';
+			} else {
+				ipcRenderer.send(method, {
+					id: this.post.id,
+					reblog_key: this.post.reblog_key
+				});
+				if (method === 'reblog') {
+					event.target.classList.add('disabled');
+				}
 			}
 		},
 		prev: function() {
@@ -97,6 +109,24 @@ export default {
 			}
 			global.current.firstChild.click();
 			global.current.scrollIntoView(false);
+		},
+		addTag: function() {
+			if (this.$refs.tag.value.length > 0)
+				this.post.tags.push(this.$refs.tag);
+		},
+		removeTag: function() {
+			this.post.tags.splice(this.post.tags.indexOf(event.target.innerHTML), 1);
+		},
+		reblogEditted: function() {
+			if (this.$refs.tag.length > 0)
+				alert('Tag not added.')
+			else 
+				ipcRenderer.send('reblog', {
+					id: this.post.id,
+					reblog_key: this.post.reblog_key,
+					comment: this.$refs.comment.value,
+					tags: this.post.tags.join(',')
+				});
 		}
 	}
 }
@@ -124,8 +154,62 @@ export default {
 			color: gray;
 		}
 	}
-}
-#content {
-	@include content;
+	#content {
+		@include content;
+	}
+	#edit_reblog {
+		display: none;
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-color: rgba($backgroundColor, 0.8);
+		#form {
+			position: absolute;
+			border-radius: 1em;
+			padding: 1em;
+			top: 50%;
+			left: 50%;
+			width: 50%;
+			background-color: #fff;
+			transform: translate(-50%, -50%);
+			#tags {
+				clear: right;
+				height: $headerHeight*2;
+				overflow-y: scroll;
+				.tag {
+					display: inline-block;
+					margin: 2px;
+					padding: 2px;
+					border-radius: 5px;
+					border: 1px solid #000;
+					line-height: 1em;
+					height: 1em;
+					&:after {
+						content: '×';
+						padding-left: 5px;
+					}
+				}
+			}
+			.input {
+				clear: right;
+				input {
+					float: right;
+					border-radius: 5px;
+					border: 1px solid #000;
+					font-size: 100%;
+					padding: 0;
+					margin: 5px;
+				}
+			}
+			.button {
+				float: right;
+				display: inline;
+				border: 1px solid #888;
+				border-radius: 0.5em;
+				font-weight: bold;
+				padding: 0.5em;
+			}
+		}
+	}
 }
 </style>

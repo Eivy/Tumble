@@ -39,7 +39,7 @@ document.onkeydown = function() {
 			}
 			break;
 		case 82: // r
-			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+			if (!event.altKey && !event.ctrlKey && !event.metaKey) {
 				document.getElementById('reblog').click();
 			}
 			break;
