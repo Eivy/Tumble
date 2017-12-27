@@ -6,7 +6,7 @@ const store = new Store();
 
 var accounts = store.get('token', {});
 var newWindowItems = [
-	{label: 'New Account'},
+	{label: 'New Account', click: () => Account.newAccount()},
 	{type: 'separator'}
 ];
 for(var a in accounts) {

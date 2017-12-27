@@ -19,11 +19,6 @@ app.on('ready', () => {
 		var name = store.get('default_account')
 		Account.createWindow(store.get('token.'+name, name));
 	} else {
-		var token = {};
-		var login = new electron.BrowserWindow({width:800, heigh:600});
-		login.on('close', () => {
-			Account.createWindow(token);
-		});
-		Account.getAuth(login, token);
+		Account.newAccount();
 	}
 });

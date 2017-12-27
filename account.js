@@ -11,8 +11,16 @@ const store = new Store();
 
 import Consumer from './consumer.js'
 
-export default {
-	createWindow : function (token, name) {
+export default class Account {
+	static newAccount () {
+		var token = {};
+		var login = new electron.BrowserWindow({width:800, heigh:600});
+		login.on('close', () => {
+			this.createWindow(token);
+		});
+		this.getAuth(login, token);
+	}
+	static createWindow (token, name) {
 		var w = new electron.BrowserWindow({
 			width:1000,
 			height: 800,
@@ -51,9 +59,8 @@ export default {
 			e.preventDefault();
 			shell.openExternal(url);
 		});
-	},
-
-	getAuth: function (login, return_token) {
+	}
+	static getAuth (login, return_token) {
 		return_token.consumer_key = Consumer.key;
 		return_token.consumer_secret = Consumer.secret;
 		var consumer = OAuth({
