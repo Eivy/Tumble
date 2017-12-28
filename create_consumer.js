@@ -6,7 +6,7 @@ prompt.get(['key', 'secret'], (err, result) => {
 		'key': result.key,
 		'secret': result.secret
 	};
-	fs.writeFile('consumer.js', 'export default '+JSON.stringify(o), (err) => {
+	fs.writeFile('main/consumer.js', 'export default '+JSON.stringify(o), (err) => {
 		if (err) {
 			console.log('Error!! '+err);
 			process.exit(1);
