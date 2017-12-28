@@ -16,7 +16,10 @@ export default class Account {
 		var token = {};
 		var login = new electron.BrowserWindow({width:800, heigh:600});
 		login.on('close', () => {
-			this.createWindow(token);
+			if (login.did_auth) {
+				this.createWindow(token);
+				login.webContents.session.clearStorageData({'strages': ['cookies']});
+			}
 		});
 		this.getAuth(login, token);
 	}
@@ -118,6 +121,7 @@ export default class Account {
 					return_token.access_token = q.oauth_token;
 					return_token.access_token_secret = q.oauth_token_secret;
 				}
+				login.did_auth = true;
 				login.close();
 			});
 		});
