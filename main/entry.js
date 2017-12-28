@@ -7,6 +7,7 @@ const store = new Store();
 import './ipcMain.js'
 import menu from './menu.js'
 import Account from './account.js'
+import Consumer from './consumer.js'
 
 app.on('window-all-closed', () => {
 	if (process.platform != 'darwin')
@@ -17,7 +18,9 @@ app.on('ready', () => {
 	Menu.setApplicationMenu(menu)
 	if (store.has('config.default_account') && store.has('token.'+store.get('config.default_account'))) {
 		var name = store.get('config.default_account')
-		Account.createWindow(store.get('token.'+name, name));
+		let token = store.get('token.'+name);
+		Object.assign(token, Consumer);
+		Account.createWindow(token, name);
 	} else {
 		Account.newAccount();
 	}

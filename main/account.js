@@ -45,6 +45,8 @@ export default class Account {
 			c.userInfo((err,data) => {
 				w.webContents.user = data.user.name;
 				if (!store.has('token.'+data.user.name)) {
+					delete token.consumer_key
+					delete token.consumer_secret
 					store.set('token.'+data.user.name, token);
 					store.set('config.default_account', data.user.name);
 				}
