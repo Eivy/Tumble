@@ -43,7 +43,7 @@ export default class Account {
 				w.webContents.user = data.user.name;
 				if (!store.has('token.'+data.user.name)) {
 					store.set('token.'+data.user.name, token);
-					store.set('default_account', data.user.name);
+					store.set('config.default_account', data.user.name);
 				}
 				w.loadURL('file://' + __dirname + '/render/index.html');
 			});

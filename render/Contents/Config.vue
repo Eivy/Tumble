@@ -3,6 +3,17 @@
 		<h4 class='title'>Config</h4>
 		<div id='content'>
 			<div class='group'>
+				<div class='subtitle'>Account</div>
+				<div id='line-count' class='item'>
+					<span class='name'>Default</span>
+					<div class='value'>
+						<select v-model='default_account' @change='apply("default_account")'>
+							<option v-for='(k, i) in token()' :value=i >{{i}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class='group'>
 				<div class='subtitle'>Thumbnail</div>
 				<div id='line-count' class='item'>
 					<span class='name'>Size</span>
@@ -52,6 +63,9 @@ export default {
 		apply: function (name) {
 			store.set('config.'+name, event.target.type == 'checkbox' ? event.target.checked : event.target.value);
 			this.$store.commit('valueChange', {name: name, value: event.target.type == 'checkbox' ? event.target.checked : event.target.value});
+		},
+		token: function () {
+			return store.get('token')
 		}
 	}
 }

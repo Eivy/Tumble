@@ -15,8 +15,8 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
 	Menu.setApplicationMenu(menu)
-	if (store.has('default_account') && store.has('token.'+store.get('default_account'))) {
-		var name = store.get('default_account')
+	if (store.has('config.default_account') && store.has('token.'+store.get('config.default_account'))) {
+		var name = store.get('config.default_account')
 		Account.createWindow(store.get('token.'+name, name));
 	} else {
 		Account.newAccount();
