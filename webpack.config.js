@@ -23,8 +23,8 @@ module.exports = [
     entry: './render/index.js',
     externals: [{ 'electron-store': 'require("electron-store")' }],
     output: {
-      path: __dirname+'/render',
-      filename: 'bundle.js'
+      path: __dirname,
+      filename: 'render.js'
     },
     devtool: 'inline-source-map',
     module: {
@@ -49,8 +49,8 @@ module.exports = [
       style: './render/index.scss'
     },
     output: {
-      path: __dirname+'/render',
-      filename: '[name].css'
+      path: __dirname,
+      filename: 'style.css'
     },
     module: {
       rules: [{

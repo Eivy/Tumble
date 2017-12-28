@@ -1,6 +1,6 @@
 package-lock.json
 node_module
-bundle.js
+render.js
 main.js
 consumer.js
 style.css

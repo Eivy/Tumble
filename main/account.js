@@ -40,7 +40,7 @@ export default class Account {
 		w.webContents.client = c;
 		if (name !== undefined) {
 			w.webContents.user = name;
-			w.loadURL('file://' + __dirname + '/render/index.html');
+			w.loadURL('file://' + __dirname + '/index.html');
 		} else {
 			c.userInfo((err,data) => {
 				w.webContents.user = data.user.name;
@@ -50,7 +50,7 @@ export default class Account {
 					store.set('token.'+data.user.name, token);
 					store.set('config.default_account', data.user.name);
 				}
-				w.loadURL('file://' + __dirname + '/render/index.html');
+				w.loadURL('file://' + __dirname + '/index.html');
 			});
 		}
 		w.on('close', () => {
