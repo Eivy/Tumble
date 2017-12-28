@@ -9,7 +9,7 @@ var newWindowItems = [
 	{label: 'New Account', click: () => Account.newAccount()},
 	{type: 'separator'}
 ];
-for(var a in accounts) {
+for(let a in accounts) {
 	newWindowItems.push(
 		{
 			label: a,
