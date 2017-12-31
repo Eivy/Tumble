@@ -69,13 +69,10 @@ if (process.platform === 'darwin') {
 	})
 
 	// Window menu
-	template[1].submenu = [
-		{role: 'close'},
-		{role: 'minimize'},
-		{role: 'zoom'},
-		{type: 'separator'},
-		{role: 'front'}
-	]
+	template[2].submenu.push({type: 'separator'})
+	template[2].submenu.push({role: 'zoom'})
+	template[2].submenu.push({type: 'separator'})
+	template[2].submenu.push({role: 'front'})
 } else {
 	template.push({
 		label: 'Help',
