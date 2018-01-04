@@ -1,5 +1,5 @@
 import electron from 'electron'
-import {shell} from 'electron'
+import {shell, Menu} from 'electron'
 import request from 'request';
 import OAuth from 'oauth-1.0a'
 import crypto from 'crypto'
@@ -52,6 +52,11 @@ export default class Account {
 				if (!store.has('config.default_account')) {
 					store.set('config.default_account', data.user.name);
 				}
+				var menu = Menu.getApplicationMenu().getMenuItemById('accounts');
+				menu.submenu.append(new electron.MenuItem({
+					label: data.user.name,
+					click: () => this.createWindow(store.get('token.'+data.user.name), data.user.name)
+				}))
 				w.loadURL('file://' + __dirname + '/index.html');
 			});
 		}

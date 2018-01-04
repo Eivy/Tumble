@@ -42,6 +42,7 @@ const template = [
 		role: 'window',
 		submenu: [
 			{
+				id: 'accounts',
 				label: 'New Window', 
 				submenu: newWindowItems
 			},
