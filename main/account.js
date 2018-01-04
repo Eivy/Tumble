@@ -48,6 +48,8 @@ export default class Account {
 					delete token.consumer_key
 					delete token.consumer_secret
 					store.set('token.'+data.user.name, token);
+				}
+				if (!store.has('config.default_account')) {
 					store.set('config.default_account', data.user.name);
 				}
 				w.loadURL('file://' + __dirname + '/index.html');
