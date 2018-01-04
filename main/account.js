@@ -66,12 +66,12 @@ export default class Account {
 		});
 	}
 	static getAuth (login, return_token) {
-		return_token.consumer_key = Consumer.key;
-		return_token.consumer_secret = Consumer.secret;
+		return_token.consumer_key = Consumer.consumer_key;
+		return_token.consumer_secret = Consumer.consumer_secret;
 		var consumer = OAuth({
 			consumer: {
-				key: Consumer.key,
-				secret: Consumer.secret
+				key: Consumer.consumer_key,
+				secret: Consumer.consumer_secret
 			},
 			signature_method: 'HMAC-SHA1',
 			hash_function: (base_string, key) => {
@@ -94,6 +94,7 @@ export default class Account {
 			form: consumer.authorize(requestTokenData, {})
 		}, (err, res, body) => {
 			var q = querystring.parse(body);
+			console.log(q);
 			access_token = q.oauth_token;
 			access_token_secret = q.oauth_token_secret;
 			login.loadURL('https://www.tumblr.com/oauth/authorize?oauth_token=' + access_token);
