@@ -133,3 +133,7 @@ ipcMain.on('blogInfo', (evt, msg) => {
 		evt.sender.send('blogInfo', err ? err : data);
 	});
 });
+
+ipcMain.on('download', (evt, msg) => {
+	console.log(msg);
+});

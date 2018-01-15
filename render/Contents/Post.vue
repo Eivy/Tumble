@@ -16,6 +16,7 @@
 			<div id='reblog' v-else @click="doPost('delete')"><Icon name='trash' scale=2></Icon></div>
 			<div id='like' v-if='post.liked' @click="doPost('unlike')" ><Icon name='heart' scale=2></Icon></div>
 			<div id='like' v-else @click="doPost('like')" ><Icon name='heart-o' scale=2></Icon></div>
+			<div id='download' @click="download()"><Icon name='download' scale=2></Icon></div>
 			<div id='prev' @click='prev'><Icon name='angle-left' scale=2></Icon></div>
 			<div id='next' @click='next'><Icon name='angle-right' scale=2></Icon></div>
 		</div>
@@ -127,6 +128,11 @@ export default {
 					comment: this.$refs.comment.value,
 					tags: this.post.tags.join(',')
 				});
+		},
+		download: function() {
+			for (var photo of this.post.photos) {
+				ipcRenderer.send('download', {url: photo.original_size.url})
+			}
 		}
 	}
 }
