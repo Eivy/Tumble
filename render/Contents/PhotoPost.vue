@@ -19,6 +19,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+@import '../base.scss';
 .photo {
 	color: #fff;
 	background-color: transparent;
@@ -34,10 +35,10 @@ export default {
 	.block {
 		display: inline;
 		width: auto;
-		max-height: 90vh;
+		max-height: calc(100vh - #{$headerHeight} * 2);
 	}
 	.single{
-		height: 90vh;
+		height: calc(100vh - #{$headerHeight} * 2);
 		width: auto;
 	}
 }

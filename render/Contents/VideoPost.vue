@@ -24,13 +24,14 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+@import "../base.scss";
 .video {
 	text-align: center;
 	overflow: auto;
 }
 .video /deep/ video {
 	max-width: 100% !important;
-	max-height: 85vh !important;
+	max-height: calc(100vh - #{$headerHeight} *2) !important;
 	object-fit: contain !important;
 }
 </style>
