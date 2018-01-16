@@ -1,5 +1,8 @@
 document.onkeydown = function() {
 	switch(event.keyCode) {
+		case 83: // s
+			document.getElementById('download').click();
+			break;
 		case 74: // j
 		case 39: // right
 		case 40: // down
