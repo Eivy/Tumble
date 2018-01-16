@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build-mac": "webpack && electron-packager . Tumble --overwrite --ignore=\"(main|render|node_modules)/\" --platform=darwin --icon=icon/Tumble.icns",
-    "build-win": "webpack && electron-packager . Tumble --overwrite --ignore='(main|render|node_modules)/' --platform=win32",
+    "build-win": "webpack && electron-packager . Tumble --overwrite --ignore=\"(main|render|node_modules)/\" --platform=win32 --icon=icon/Tumble.ico",
     "watch": "webpack --watch",
     "consumer": "node create_consumer.js"
   },
