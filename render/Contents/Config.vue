@@ -48,6 +48,15 @@
 					</div>
 				</div>
 			</div>
+			<div class='group'>
+				<div class='subtitle'>Save</div>
+				<div id='local' class='item'>
+					<span class='name'>To Local</span>
+					<div class='value'>
+						<input type='text' v-model='save_dir' @change='apply("save_dir")'>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
