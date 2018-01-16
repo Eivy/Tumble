@@ -1,3 +1,4 @@
+var JavaScriptObfuscator = require('webpack-obfuscator');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = [
   {
@@ -18,6 +19,11 @@ module.exports = [
       __filename: false
     },
     target: 'electron-main',
+    plugins: [
+      new JavaScriptObfuscator ({
+        rotateUnicodeArray: true
+      }, [])
+    ],
   },
   {
     entry: './render/index.js',
