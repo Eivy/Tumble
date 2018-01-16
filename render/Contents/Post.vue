@@ -132,15 +132,25 @@ export default {
 				});
 		},
 		download: function() {
+			let dir = store.get('config.save_dir', '')
+			let name = this.post.blog_name+"_"+this.post.id
 			switch (this.post.type) {
 				case 'photo':
 					for (var photo of this.post.photos) {
-						let dir = store.get('config.save_dir', '')
-						let name = this.post.blog_name+"_"+this.post.id+"_"+this.post.photos.indexOf(photo)+photo.original_size.url.slice(photo.original_size.url.length-4)
 						let url = photo.original_size.url
-						ipcRenderer.send('download', {path: dir+name, url: url})
+						let ext = "_"+this.post.photos.indexOf(photo)+photo.original_size.url.slice(photo.original_size.url.length-4)
+						ipcRenderer.send('download', {path: dir+name+ext, url: url})
 						break;
 					}
+				case 'video':
+					if (this.post.video_type === 'tumblr') {
+						let parser = new DOMParser();
+						let video = parser.parseFromString(this.post.player[0].embed_code, "text/html");
+						let url=video.getElementsByTagName('source')[0].src;
+						let ext = ".mp4"
+						ipcRenderer.send('download', {path: dir+name+ext, url: url})
+					}
+					break;
 			}
 		}
 	}
