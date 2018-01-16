@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import Store from 'electron-store'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 import {ipcRenderer,remote} from 'electron'
@@ -43,6 +44,7 @@ import VideoPost from './VideoPost.vue'
 import PhotoPost from './PhotoPost.vue'
 import QuotePost from './QuotePost.vue'
 import TextPost from './TextPost.vue'
+let store = new Store()
 export default {
 	props: ['post'],
 	components: {
@@ -130,8 +132,15 @@ export default {
 				});
 		},
 		download: function() {
-			for (var photo of this.post.photos) {
-				ipcRenderer.send('download', {url: photo.original_size.url})
+			switch (this.post.type) {
+				case 'photo':
+					for (var photo of this.post.photos) {
+						let dir = store.get('config.save_dir', '')
+						let name = this.post.blog_name+"_"+this.post.id+"_"+this.post.photos.indexOf(photo)+photo.original_size.url.slice(photo.original_size.url.length-4)
+						let url = photo.original_size.url
+						ipcRenderer.send('download', {path: dir+name, url: url})
+						break;
+					}
 			}
 		}
 	}

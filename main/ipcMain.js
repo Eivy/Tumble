@@ -1,5 +1,7 @@
 import {ipcMain} from 'electron'
 import Store from 'electron-store'
+import request from 'request';
+import fs from 'fs';
 const store = new Store()
 
 ipcMain.on('reblog', (evt, msg) => {
@@ -136,4 +138,12 @@ ipcMain.on('blogInfo', (evt, msg) => {
 
 ipcMain.on('download', (evt, msg) => {
 	console.log(msg);
+	request(
+		{method: 'GET', url: msg.url, encoding: null},
+		function (error, response, body){
+			if(!error && response.statusCode === 200){
+				fs.writeFileSync(msg.path, body, 'binary');
+			}
+		} ,
+	);
 });

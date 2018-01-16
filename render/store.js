@@ -10,7 +10,8 @@ export default new Vuex.Store({
 	state: {
 		thumb_size: 4,
 		distinct: false,
-		own: false
+		own: false,
+		save_dir: ''
 	},
 	mutations: {
 		valueChange (st, payload) {
