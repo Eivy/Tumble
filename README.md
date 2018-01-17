@@ -1,4 +1,4 @@
-# Tumble
+# Tumble ![latest build status](https://travis-ci.org/Eivy/Tumble.svg?branch=master)
 
 Tumblr client for Desktop(Windows, macOS, Linux)
 
