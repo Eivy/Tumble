@@ -1,8 +1,7 @@
 package-lock.json
-node_module
-render.js
 main.js
-consumer.js
+render.js
 style.css
+main/consumer.js
+node_modules/
 icon/Tumble.iconset/
-Tumble-*/
