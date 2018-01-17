@@ -12,13 +12,13 @@
 			<TextPost v-else-if="post.type === 'text'" :post='post'/>
 		</div>
 		<div id='buttons'>
-			<div id='reblog' v-if='post.blog_name !== user' @click="doPost('reblog')" ><Icon name='retweet' scale=2></Icon></div>
-			<div id='reblog' v-else @click="doPost('delete')"><Icon name='trash' scale=2></Icon></div>
-			<div id='like' v-if='post.liked' @click="doPost('unlike')" ><Icon name='heart' scale=2></Icon></div>
-			<div id='like' v-else @click="doPost('like')" ><Icon name='heart-o' scale=2></Icon></div>
-			<div id='download' @click="download()"><Icon name='download' scale=2></Icon></div>
-			<div id='prev' @click='prev'><Icon name='angle-left' scale=2></Icon></div>
-			<div id='next' @click='next'><Icon name='angle-right' scale=2></Icon></div>
+			<div id='reblog' title='Reblog' v-if='post.blog_name !== user' @click="doPost('reblog')" ><Icon name='retweet' scale=2></Icon></div>
+			<div id='reblog' title='Delete' v-else @click="doPost('delete')"><Icon name='trash' scale=2></Icon></div>
+			<div id='like' title='UnLike' v-if='post.liked' @click="doPost('unlike')" ><Icon name='heart' scale=2></Icon></div>
+			<div id='like' title='Like' v-else @click="doPost('like')" ><Icon name='heart-o' scale=2></Icon></div>
+			<div id='download' title='Download' @click="download()"><Icon name='download' scale=2></Icon></div>
+			<div id='prev' title='Previous Post' @click='prev'><Icon name='angle-left' scale=2></Icon></div>
+			<div id='next' title='Next Post' @click='next'><Icon name='angle-right' scale=2></Icon></div>
 		</div>
 		<div id='edit_reblog'>
 			<div id='form'>

@@ -1,9 +1,9 @@
 <template>
 	<div id='links'>
-		<div id='dashboard' @click="goTo('/dashboard')"><Icon name='dashboard'></Icon></div>
-		<div id='likes' @click="goTo('/likes')"><Icon name='heartbeat'></Icon></div>
-		<div id='search' @click="search"><Icon name='search'></Icon></div>
-		<div id='userinfo' @click="goTo('/userinfo')"><Icon name='user'></Icon></div>
+		<div id='dashboard' title='Dashboard' @click="goTo('/dashboard')"><Icon name='dashboard'></Icon></div>
+		<div id='likes' title='Likes' @click="goTo('/likes')"><Icon name='heartbeat'></Icon></div>
+		<div id='search' title='Search for Tag' @click="search"><Icon name='search'></Icon></div>
+		<div id='userinfo' title='UserInfo' @click="goTo('/userinfo')"><Icon name='user'></Icon></div>
 	</div>
 </template>
 
