@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-mac": "webpack && electron-packager . Tumble --overwrite --ignore=\"(main|render|node_modules)/\" --platform=darwin --icon=icon/Tumble.icns",
-    "build-win": "webpack && electron-packager . Tumble --overwrite --ignore=\"(main|render|node_modules)/\" --platform=win32 --icon=icon/Tumble.ico",
+    "build-mac": "webpack && electron-packager . Tumble --out=publish --asar --overwrite --ignore=\"(main|render)/\" --ignore=\"\\.gitignore\" --ignore=\"create_consumer.js\" --platform=darwin --icon=icon/Tumble.icns",
+    "build-win": "webpack && electron-packager . Tumble --out=publish --asar --overwrite --ignore=\"(main|render)/\" --ignore=\"\\.gitignore\" --ignore=\"create_consumer.js\" --platform=win32 --icon=icon/Tumble.ico",
     "watch": "webpack --watch",
     "consumer": "node create_consumer.js"
   },
