@@ -5,10 +5,16 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-mac": "webpack && electron-packager . Tumble --out=publish --asar --overwrite --ignore=\"(main|render)/\" --ignore=\"\\.gitignore\" --ignore=\"create_consumer.js\" --platform=darwin --icon=icon/Tumble.icns",
-    "build-win": "webpack && electron-packager . Tumble --out=publish --asar --overwrite --ignore=\"(main|render)/\" --ignore=\"\\.gitignore\" --ignore=\"create_consumer.js\" --platform=win32 --icon=icon/Tumble.ico",
+    "build-mac": "electron-packager . Tumble --out=publish --asar --overwrite --ignore=\"(main|render)/\" --ignore=\"\\.gitignore\" --ignore=\"create_consumer.js\" --platform=darwin --ia=x64 --icon=icon/Tumble.icns",
+    "build-win": "electron-packager . Tumble --out=publish --asar --overwrite --ignore=\"(main|render)/\" --ignore=\"\\.gitignore\" --ignore=\"create_consumer.js\" --platform=win32 --ia=x64 --icon=icon/Tumble.ico",
+    "build-all": "webpack && npm run build-mac && npm run build-win",
+    "package-mac": "npm run build-mac && zip -rv publish/Tumble-darwin-x64.zip publish/Tumble-darwin-x64/",
+    "package-win": "npm run build-win && 7z a publish/Tumble-win32-x64.zip publish/Tumble-win32-x64/",
+    "package-all": "npm run package-mac && npm run package-win",
+    "clearn": "rm -rf publish",
     "watch": "webpack --watch",
-    "consumer": "node create_consumer.js"
+    "consumer": "node create_consumer.js",
+    "test": "webpack"
   },
   "repository": {
     "type": "git",
