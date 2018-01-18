@@ -1,0 +1,30 @@
+platform:
+  - x64
+
+cache:
+  - node_modules
+  - '%APPDATA%\npm-cache'
+  - '%USERPROFILE%\.electron'
+
+install:
+  - ps: Install-Product node 7 x64
+  - npm install
+
+build_script:
+  - npm run consumer
+  - npm test
+  - npm run package-win
+
+test: off
+
+artifacts:
+    path: publish\Tumble-win32-x64.zip
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: 4/Emgc7UBEcaz64zbGupQSTf08VvvfiGPuAi4PrhZL3IJx1wPJUyKw6+960Qij7X
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true

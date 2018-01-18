@@ -1,0 +1,17 @@
+language: node_js
+node_js: stable
+dist: trusty
+before_script:
+- npm run consumer
+before_deploy:
+- npm run package-mac
+deploy:
+  provider: releases
+  api_key:
+    secure: JHeUHupQKTk45mOeQJ548MXaYjDp9Bh5zGMw3ai4TfXgOy/pIEJyf+d5eyIHKfOB3+DaxrpOlXo6jL5Ry9lJHa2PrZZ7jJwSAhJKl6wNEgxrvZ/jS0pEcuKjgSWyuaFCPsm6LzMQsarTpnbnBaIg/gKsbdB9k+gb4gsyUFwYhNhkInd+cA/2EaxU8IFDfM/r99rvDqoAtBAPbrsNcFK9L69aJAYVxC3SgZMVQqC9k7Pihpg+tL7tBkVZbUSETreMOl1gwm0XiNaqyG8NhAIuo+g6WVWpBuBqLXnu2i5En230B0Ph1fkjL9kypXpD1U3gdE8Ek1wTlQnfb9DZKaBE1JGIbfHZkLmYCIQgyFkWCjf3j9kB2bcSs6K24rmHf824qu/DSh20f1AC4xIu0ioxHcPbTJooEQjLYCWy/VUW6LwHPBfimNY+7tj1/s/5nhlmYaTQe77FWHTptakcBscYmEI6nBuHWEeCMa6MvhEhGpAeHzWXopvO9Dos1nOCcrpE49a/4/nSr1QMS+fUGttMkK1vqMPMusgR/UpOvMfrN5lr/E7pUxesEPLroVJl3uRIWyPSuqzU/ORiFL/nmhAN1qul3e8L4X+gG1Z0AMod+gWZqKuKgZ3pOPSFyZj4jz2zmrtGJgB/uOgDN1pinO0tqUcwVlC4fIvIV/Gf6LFCCIc=
+  file: publish/Tumble-darwin-x64.zip
+  skip_cleanup: true
+  on:
+    repo: Eivy/Tumble
+    all_branchies: true
+    tags: true
