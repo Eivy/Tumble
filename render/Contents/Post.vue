@@ -140,8 +140,8 @@ export default {
 						let url = photo.original_size.url
 						let ext = "_"+this.post.photos.indexOf(photo)+photo.original_size.url.slice(photo.original_size.url.length-4)
 						ipcRenderer.send('download', {path: dir+name+ext, url: url})
-						break;
 					}
+					break;
 				case 'video':
 					if (this.post.video_type === 'tumblr') {
 						let parser = new DOMParser();
