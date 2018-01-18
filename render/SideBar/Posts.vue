@@ -1,18 +1,20 @@
 <template>
-	<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
-	<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post) :height=size[post.id] >
-		<AnswerPost v-if="post.type === 'answer'" :post='post' @text_resize=resize />
-		<AudioPost v-else-if="post.type === 'audio'" :post='post' @resize=resize />
-		<ChatPost v-else-if="post.type === 'chat'" :post='post' @text_resize=resize />
-		<LinkPost v-else-if="post.type === 'link'" :post='post' @text_resize=resize />
-		<VideoPost v-else-if="post.type === 'video'" :post='post'/>
-		<PhotoPost v-else-if="post.type === 'photo'" :post='post'/>
-		<QuotePost v-else-if="post.type === 'quote'" :post='post' @text_resize=resize />
-		<TextPost v-else-if="post.type === 'text'" :post='post' @text_resize=resize />
-		<div v-else>{{post.type}}</div>
-	</waterfall-slot>
-	<div id='current'></div>
-	</waterfall>
+	<div>
+		<waterfall @reflowed=reflowed id='posts' :line-gap=width :watch=posts >
+		<waterfall-slot @click.native=contentsRender(post) class='post' v-for='(post, index) in posts' :order=index :key=post.id :width=postSize(post) :height=size[post.id] >
+			<AnswerPost v-if="post.type === 'answer'" :post='post' @text_resize=resize />
+			<AudioPost v-else-if="post.type === 'audio'" :post='post' @resize=resize />
+			<ChatPost v-else-if="post.type === 'chat'" :post='post' @text_resize=resize />
+			<LinkPost v-else-if="post.type === 'link'" :post='post' @text_resize=resize />
+			<VideoPost v-else-if="post.type === 'video'" :post='post'/>
+			<PhotoPost v-else-if="post.type === 'photo'" :post='post'/>
+			<QuotePost v-else-if="post.type === 'quote'" :post='post' @text_resize=resize />
+			<TextPost v-else-if="post.type === 'text'" :post='post' @text_resize=resize />
+			<div v-else>{{post.type}}</div>
+		</waterfall-slot>
+		</waterfall>
+		<div id='current'></div>
+	</div>
 </template>
 
 <script>
@@ -92,7 +94,7 @@ export default {
 			}
 			global.current = target;
 			var current = document.getElementById('current');
-			current.style.top = global.current.style.top;
+			current.style.top = 'calc(' + global.current.style.top + ' + ' + global.current.parentNode.offsetTop + 'px)';
 			current.style.left = global.current.style.left;
 			current.style.width = global.current.style.width;
 			current.style.height = global.current.style.height;

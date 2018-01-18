@@ -7,19 +7,13 @@ document.onkeydown = function() {
 		case 39: // right
 		case 40: // down
 			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
-				if (global.current.nextElementSibling !== null) {
-					global.current = current.nextElementSibling;
-				} else {
+				if (global.current === undefined) {
 					global.current = document.getElementById('posts').firstChild;
-				}
-				global.current.firstChild.click();
-				var rect = global.current.getClientRects()[0];
-				if (global.current.getClientRects()[0].top < 0) {
-					global.current.scrollIntoView();
-				} else if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
-					global.current.scrollIntoView(false);
+				} else if (global.current.nextElementSibling !== null) {
+					global.current = current.nextElementSibling;
 				}
 			}
+			click();
 			break;
 		case 75: // k
 		case 37: // left
@@ -27,19 +21,11 @@ document.onkeydown = function() {
 			if (!event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
 				if (global.current === undefined) {
 					global.current = document.getElementById('posts').lastChild;
-				} else {
-					if (global.current.previousElementSibling !== null) {
-						global.current = current.previousElementSibling;
-					}
-				}
-				global.current.firstChild.click();
-				var rect = global.current.getClientRects()[0];
-				if (global.current.getClientRects()[0].top < 0) {
-					global.current.scrollIntoView();
-				} else if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
-					global.current.scrollIntoView(false);
+				} else if (global.current.previousElementSibling !== null) {
+					global.current = current.previousElementSibling;
 				}
 			}
+			click();
 			break;
 		case 82: // r
 			if (!event.altKey && !event.ctrlKey && !event.metaKey) {
@@ -68,3 +54,13 @@ document.onkeydown = function() {
 			break;
 	}
 };
+
+function click() {
+	global.current.firstChild.click();
+	var rect = global.current.getClientRects()[0];
+	if (global.current.getClientRects()[0].top < 0) {
+		global.current.scrollIntoView();
+	} else if (rect.bottom > document.getElementById('posts-cover').clientHeight) {
+		global.current.scrollIntoView(false);
+	}
+}
