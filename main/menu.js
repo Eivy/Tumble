@@ -28,10 +28,10 @@ const template = [
 		submenu: [
 			{label: 'Reload', accelerator: 'CommandOrControl+R', click: () => electron.BrowserWindow.getFocusedWindow().send('reload')},
 			{type: 'separator'},
-			{label: 'Dashboard', accelerator: 'CommandOrControl+Shift+D', click: () => electron.BrowserWindow.getFocusedWindow().send('goto', 'dashboard')},
-			{label: 'Like', accelerator: 'CommandOrControl+Shift+L', click: () => electron.BrowserWindow.getFocusedWindow().send('goto', 'likes')},
+			{label: 'Dashboard', accelerator: 'CommandOrControl+Shift+D', click: () => electron.BrowserWindow.getFocusedWindow().send('goto', '/dashboard')},
+			{label: 'Like', accelerator: 'CommandOrControl+Shift+L', click: () => electron.BrowserWindow.getFocusedWindow().send('goto', '/likes')},
 			{label: 'Search', accelerator: 'CommandOrControl+Shift+S', click: () => electron.BrowserWindow.getFocusedWindow().send('search')},
-			{label: 'UserInfo', accelerator: 'CommandOrControl+Shift+U', click: () => electron.BrowserWindow.getFocusedWindow().send('goto', 'userinfo')},
+			{label: 'UserInfo', accelerator: 'CommandOrControl+Shift+U', click: () => electron.BrowserWindow.getFocusedWindow().send('goto', '/userinfo')},
 			{type: 'separator'},
 			{role: 'toggledevtools'},
 			{type: 'separator'},
