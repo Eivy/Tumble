@@ -22,7 +22,7 @@ prompt.get(prompting, (err, result) => {
 		o.consumer_secret = result.secret;
 	}
 	Object.assign(consumer, o);
-	fs.writeFile('main/consumer.js', 'export default '+JSON.stringify(consumer), (err) => {
+	fs.writeFile('main/consumer.js', 'export default '+JSON.stringify(consumer, undefined, "\t").replace(/"/g, "'") + '\n', (err) => {
 		if (err) {
 			console.log('Error!! '+err);
 			process.exit(1);

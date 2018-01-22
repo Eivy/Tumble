@@ -10,9 +10,21 @@ module.exports = [
     },
     devtool: 'inline-source-map',
     module: {
-      loaders: [
-        {test: /\.js$/, loader: 'babel-loader'},
-      ]
+      rules: [
+        {
+          enforce: "pre",
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: "eslint-loader",
+          options: {
+            formatter: require('eslint-friendly-formatter')
+          }
+        },
+        {
+          test: /\.js$/,
+          loader: 'babel-loader'
+        }
+      ],
     },
     node: {
       __dirname: false,
@@ -34,14 +46,23 @@ module.exports = [
     },
     devtool: 'inline-source-map',
     module: {
-      loaders: [
+      rules: [
+        {
+          enforce: "pre",
+          test: /\.(js|vue)$/,
+          exclude: /node_modules/,
+          loader: "eslint-loader",
+          options: {
+            formatter: require('eslint-friendly-formatter')
+          }
+        },
         {
           test: /\.vue$/, loader: 'vue-loader'
         },
         {
           test: /\.js$/, loader: 'babel-loader'
         }
-      ]
+      ],
     },
     resolve: {
       alias: {
