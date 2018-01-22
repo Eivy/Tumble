@@ -13,18 +13,18 @@ import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Search from './Contents/Search.vue'
 export default {
-	components: {Icon},
+	components: { Icon },
 	methods: {
-		goTo: function(target) {
-			this.$router.push(target);
+		goTo: function (target) {
+			this.$router.push(target)
 		},
-		search: function() {
-			new Vue({
-				el: '#contents',
-				components: {Search},
+		search: function () {
+			const contents = new Vue({
+				components: { Search },
 				template: '<Search></Search>',
 				router: this.$router
 			})
+			contents.$mount('#contents')
 		}
 	}
 }

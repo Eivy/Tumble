@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {Waterfall,WaterfallSlot} from 'vue-waterfall'
+import { Waterfall, WaterfallSlot } from 'vue-waterfall'
 import Store from 'electron-store'
 import Vue from 'vue'
 import Post from '../Contents/Post.vue'
@@ -31,7 +31,7 @@ import PhotoPost from './PhotoPost.vue'
 import QuotePost from './QuotePost.vue'
 import TextPost from './TextPost.vue'
 
-const store = new Store();
+const store = new Store()
 
 export default {
 	components: {
@@ -47,68 +47,72 @@ export default {
 		TextPost
 	},
 	props: ['posts'],
-	data: function() { return {size: {}} },
-	mounted: function() {
-		this.$store.commit('valueChange', {name: 'thumb_size', value: store.get('config.thumb_size', 3)});
-		this.$store.commit('valueChange', {name: 'distinct', value: store.get('config.distinct', false)});
+	data: function () {
+		return {
+			size: {}
+		}
+	},
+	mounted: function () {
+		this.$store.commit('valueChange', { name: 'thumb_size', value: store.get('config.thumb_size', 3) })
+		this.$store.commit('valueChange', { name: 'distinct', value: store.get('config.distinct', false) })
 	},
 	computed: {
 		width () {
-			var el = document.getElementById('posts-cover');
-			return (el ? document.getElementById('posts-cover').clientWidth : 300) / this.$store.state.thumb_size;
+			var el = document.getElementById('posts-cover')
+			return (el ? document.getElementById('posts-cover').clientWidth : 300) / this.$store.state.thumb_size
 		}
 	},
 	methods: {
-		postSize: function(post) {
-			if(this.size.hasOwnProperty(post.id)) {
-				return 1;
+		postSize: function (post) {
+			if (this.size.hasOwnProperty(post.id)) {
+				return 1
 			}
-			switch(post.type) {
-				case 'photo':
-					var height = 0.0;
-					for(var i = 0; i < post.photos.length; i++) {
-						height += (post.photos[i].alt_sizes[2].height * 0.98) / post.photos[i].alt_sizes[2].width;
-					}
-					this.$set(this.size, post.id, height);
-					break;
-				case 'video':
-					this.$set(this.size, post.id, post.thumbnail_height / post.thumbnail_width);
-					break;
-				default:
-					this.$set(this.size, post.id, 1);
+			switch (post.type) {
+			case 'photo':
+				var height = 0.0
+				for (var i = 0; i < post.photos.length; i++) {
+					height += (post.photos[i].alt_sizes[2].height * 0.98) / post.photos[i].alt_sizes[2].width
+				}
+				this.$set(this.size, post.id, height)
+				break
+			case 'video':
+				this.$set(this.size, post.id, post.thumbnail_height / post.thumbnail_width)
+				break
+			default:
+				this.$set(this.size, post.id, 1)
 			}
-			return 1;
+			return 1
 		},
-		contentsRender: function(post) {
+		contentsRender: function (post) {
 			console.log(post)
-			new Vue({
-				el: '#contents',
-				components: {Post},
-				data: function() { return post },
+			const contents = new Vue({
+				components: { Post },
+				data: function () { return post },
 				router: this.$router,
 				template: '<Post v-bind:post=this />'
 			})
-			var target = event.target;
+			contents.$mount('#contents')
+			var target = event.target
 			while (!target.classList.contains('post')) {
-				target = target.parentNode;
+				target = target.parentNode
 			}
-			global.current = target;
-			var current = document.getElementById('current');
-			current.style.top = 'calc(' + global.current.style.top + ' + ' + global.current.parentNode.offsetTop + 'px)';
-			current.style.left = global.current.style.left;
-			current.style.width = global.current.style.width;
-			current.style.height = global.current.style.height;
+			global.current = target
+			var current = document.getElementById('current')
+			current.style.top = 'calc(' + global.current.style.top + ' + ' + global.current.parentNode.offsetTop + 'px)'
+			current.style.left = global.current.style.left
+			current.style.width = global.current.style.width
+			current.style.height = global.current.style.height
 		},
-		reflowed: function() {
-			let postsCover = document.getElementById('posts-cover');
-			let posts = document.getElementById('posts');
-			if (postsCover.clientHeight > posts.scrollHeight && this.posts.length != 0) {
-				posts.style.height = (postsCover.clientHeight + 10) + 'px';
-				postsCover.scrollTop = 10;
+		reflowed: function () {
+			const postsCover = document.getElementById('posts-cover')
+			const posts = document.getElementById('posts')
+			if (postsCover.clientHeight > posts.scrollHeight && this.posts.length !== 0) {
+				posts.style.height = (postsCover.clientHeight + 10) + 'px'
+				postsCover.scrollTop = 10
 			}
 		},
-		resize: function(arg) {
-			this.size[arg.id] = arg.height / arg.width;
+		resize: function (arg) {
+			this.size[arg.id] = arg.height / arg.width
 		}
 	}
 }

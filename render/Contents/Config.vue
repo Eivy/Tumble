@@ -64,14 +64,14 @@
 <script>
 import Store from 'electron-store'
 
-const store = new Store();
+const store = new Store()
 
 export default {
 	data: function () { return store.get('config', {}) },
 	methods: {
 		apply: function (name) {
-			store.set('config.'+name, event.target.type == 'checkbox' ? event.target.checked : event.target.value);
-			this.$store.commit('valueChange', {name: name, value: event.target.type == 'checkbox' ? event.target.checked : event.target.value});
+			store.set('config.' + name, event.target.type === 'checkbox' ? event.target.checked : event.target.value)
+			this.$store.commit('valueChange', { name: name, value: event.target.type === 'checkbox' ? event.target.checked : event.target.value })
 		},
 		token: function () {
 			return store.get('token')

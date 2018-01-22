@@ -12,22 +12,20 @@
 </template>
 
 <script>
-import Store from 'electron-store'
-var store = new Store();
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 import Mixin from './Mixin.vue'
 
 export default {
 	props: ['blog'],
 	mixins: [Mixin],
-	created: function() {
-		ipcRenderer.send(this.$router.currentRoute.name, {name: this.blog});
+	created: function () {
+		ipcRenderer.send(this.$router.currentRoute.name, { name: this.blog })
 	},
-	beforeRouteUpdate: function(to, from, next) {
-		console.log(to);
-		this.posts = [];
-		ipcRenderer.send(this.$router.currentRoute.name, {name: to.params.blog});
-		next();
+	beforeRouteUpdate: function (to, from, next) {
+		console.log(to)
+		this.posts = []
+		ipcRenderer.send(this.$router.currentRoute.name, { name: to.params.blog })
+		next()
 	}
 }
 </script>

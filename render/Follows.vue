@@ -15,45 +15,45 @@
 <script>
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 import Vue from 'vue'
 import Blog from './SideBar/Blog.vue'
 import BlogInfo from './Contents/BlogInfo.vue'
 
 export default {
 	props: ['blog'],
-	components: {Icon, Blog},
-	data: function () { return {blogs: []}},
-	created: function() {
-		console.log(this.$router.currentRoute.name);
-		ipcRenderer.removeAllListeners(this.$router.currentRoute.name);
+	components: { Icon, Blog },
+	data: function () { return { blogs: [] } },
+	created: function () {
+		console.log(this.$router.currentRoute.name)
+		ipcRenderer.removeAllListeners(this.$router.currentRoute.name)
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
-			console.log(msg);
-			this.blogs = this.blogs.concat(msg.blogs);
-		});
-		ipcRenderer.send(this.$router.currentRoute.name, {blog_identifier: this.blog, offset: this.blog.lengs > 0 ? this.blogs.length+1 : 0});
+			console.log(msg)
+			this.blogs = this.blogs.concat(msg.blogs)
+		})
+		ipcRenderer.send(this.$router.currentRoute.name, { blog_identifier: this.blog, offset: this.blog.lengs > 0 ? this.blogs.length + 1 : 0 })
 	},
 	methods: {
 		back: function () {
-			this.$router.back();
+			this.$router.back()
 		},
 		onscroll: function () {
 			clearTimeout(this.scrollTimeOut)
-			this.scrollTimeOut = setTimeout(function(obj) {
-				var cover = document.getElementById('posts-cover');
+			this.scrollTimeOut = setTimeout(function (obj) {
+				var cover = document.getElementById('posts-cover')
 				if (cover.scrollTop + cover.clientHeight > document.getElementById('follows').lastChild.previousElementSibling.offsetTop) {
-					ipcRenderer.send(obj.$router.currentRoute.name, {blog_identifier: obj.blog, offset: obj.blogs.length+1});
+					ipcRenderer.send(obj.$router.currentRoute.name, { blog_identifier: obj.blog, offset: obj.blogs.length + 1 })
 				}
 			}, 200, this)
 		},
-		render_bloginfo: function(blog_name) {
-			new Vue({
-				el: '#contents',
-				components: {BlogInfo},
+		render_bloginfo: function (blog_name) {
+			const contents = new Vue({
+				components: { BlogInfo },
 				router: this.$router,
-				data: {blog_name: blog_name},
+				data: { blog_name: blog_name },
 				template: '<BlogInfo :blog_name=blog_name />'
 			})
+			contents.$mount('#contents')
 		}
 	}
 }

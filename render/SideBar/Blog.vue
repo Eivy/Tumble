@@ -7,19 +7,19 @@
 </template>
 
 <script>
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 export default {
 	props: ['blog_name'],
-	data: function() { return {avatar_url: null} },
-	components: {Icon},
-	created: function() {
-		ipcRenderer.removeAllListeners('avatar'+this.blog_name)
-		ipcRenderer.on('avatar'+this.blog_name, (evt, msg) => {
-			this.avatar_url = msg.avatar_url;
-		});
-		ipcRenderer.send('avatar', {name: this.blog_name, size: 48});
+	data: function () { return { avatar_url: null } },
+	components: { Icon },
+	created: function () {
+		ipcRenderer.removeAllListeners('avatar' + this.blog_name)
+		ipcRenderer.on('avatar' + this.blog_name, (evt, msg) => {
+			this.avatar_url = msg.avatar_url
+		})
+		ipcRenderer.send('avatar', { name: this.blog_name, size: 48 })
 	}
 }
 </script>

@@ -1,5 +1,5 @@
 'use strict;'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
@@ -11,35 +11,35 @@ import './keydown.js'
 import router from './router.js'
 import store from './store.js'
 
-Vue.use(VueRouter);
-Vue.use(Vuex);
+Vue.use(VueRouter)
+Vue.use(Vuex)
 
-var app = new Vue({
+const app = new Vue({
 	router,
 	store,
-	el: '#app',
-	components: {Links}
-});
-router.push('dashboard');
+	components: { Links }
+})
+app.$mount('#app')
+router.push('dashboard')
 
 ipcRenderer.on('config', (evt, msg) => {
-	new Vue({
-		el: '#contents',
-		components: {Config},
+	const contents = new Vue({
+		components: { Config },
 		template: '<Config></Config>',
 		store,
 		router
 	})
-});
+	contents.$mount('#contents')
+})
 
 ipcRenderer.on('reload', (evt, msg) => {
-	document.getElementById('update').dispatchEvent(new MouseEvent('click'));
-});
+	document.getElementById('update').dispatchEvent(new MouseEvent('click'))
+})
 
 ipcRenderer.on('search', (evt, msg) => {
-	document.getElementById('search').click();
-});
+	document.getElementById('search').click()
+})
 
 ipcRenderer.on('goto', (evt, msg) => {
 	router.push(msg)
-});
+})

@@ -17,19 +17,19 @@ import Store from 'electron-store'
 import LinkItem from '../LinkItem.vue'
 const store = new Store()
 export default {
-	components: {Icon, LinkItem},
-	data: function () { return {'log': store.get('cache.search', [])}},
+	components: { Icon, LinkItem },
+	data: function () { return { 'log': store.get('cache.search', []) } },
 	mounted: function () {
 		this.$refs.text.focus()
 	},
 	methods: {
-		search: function(value) {
+		search: function (value) {
 			if (value.length > 0) {
-				this.$router.push('/tag/'+value)
-				event.target.blur();
+				this.$router.push('/tag/' + value)
+				event.target.blur()
 				this.log.unshift(value)
-				this.log = this.log.filter((item, i, array) => array.indexOf(item) == i)
-				store.set('cache.search', this.log);
+				this.log = this.log.filter((item, i, array) => array.indexOf(item) === i)
+				store.set('cache.search', this.log)
 			}
 		}
 	}

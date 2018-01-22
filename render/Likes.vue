@@ -12,25 +12,26 @@
 </template>
 
 <script>
+import { ipcRenderer, remote } from 'electron'
 import Store from 'electron-store'
-var store = new Store();
-import {ipcRenderer, remote} from 'electron'
 import Mixin from './Mixin.vue'
+
+var store = new Store()
 
 export default {
 	mixins: [Mixin],
-	created: function() {
-		this.name = remote.getCurrentWindow().webContents.user;
-		console.log(ipcRenderer);
+	created: function () {
+		this.name = remote.getCurrentWindow().webContents.user
+		console.log(ipcRenderer)
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
-			store.set('cache.'+this.name+'.'+this.$router.currentRoute.name+'.posts', this.posts);
-		});
+			store.set('cache.' + this.name + '.' + this.$router.currentRoute.name + '.posts', this.posts)
+		})
 	},
-	mounted: function() {
-		if (store.has('cache.'+this.name+'.'+this.$router.currentRoute.name)) {
-			this.posts = store.get('cache.'+this.name+'.'+this.$router.currentRoute.name+'.posts');
+	mounted: function () {
+		if (store.has('cache.' + this.name + '.' + this.$router.currentRoute.name)) {
+			this.posts = store.get('cache.' + this.name + '.' + this.$router.currentRoute.name + '.posts')
 		} else {
-			ipcRenderer.send(this.$router.currentRoute.name, {});
+			ipcRenderer.send(this.$router.currentRoute.name, {})
 		}
 	}
 }

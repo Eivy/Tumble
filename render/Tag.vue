@@ -12,20 +12,20 @@
 </template>
 
 <script>
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 import Mixin from './Mixin.vue'
 
 export default {
 	props: ['tag'],
 	mixins: [Mixin],
-	created: function() {
-		ipcRenderer.send(this.$router.currentRoute.name, {tag: this.tag});
+	created: function () {
+		ipcRenderer.send(this.$router.currentRoute.name, { tag: this.tag })
 	},
-	beforeRouteUpdate: function(to, from, next) {
-		console.log(to);
-		this.posts = [];
-		ipcRenderer.send(this.$router.currentRoute.name, {tag: to.params.tag});
-		next();
+	beforeRouteUpdate: function (to, from, next) {
+		console.log(to)
+		this.posts = []
+		ipcRenderer.send(this.$router.currentRoute.name, { tag: to.params.tag })
+		next()
 	}
 }
 </script>

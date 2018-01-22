@@ -14,11 +14,11 @@
 import Mixin from './Mixin.vue'
 export default {
 	mixins: [Mixin],
-	mounted: function() {
-		var video = document.getElementsByTagName('video')[0];
-		video.setAttribute('controls', '');
-		video.setAttribute('preload', 'metadata');
-		video.removeAttribute('muted', '');
+	mounted: function () {
+		var video = document.getElementsByTagName('video')[0]
+		video.setAttribute('controls', '')
+		video.setAttribute('preload', 'metadata')
+		video.removeAttribute('muted', '')
 	}
 }
 </script>

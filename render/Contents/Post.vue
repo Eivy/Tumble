@@ -35,7 +35,7 @@
 import Store from 'electron-store'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
-import {ipcRenderer,remote} from 'electron'
+import { ipcRenderer, remote } from 'electron'
 import AnswerPost from './AnswerPost.vue'
 import AudioPost from './AudioPost.vue'
 import ChatPost from './ChatPost.vue'
@@ -44,7 +44,7 @@ import VideoPost from './VideoPost.vue'
 import PhotoPost from './PhotoPost.vue'
 import QuotePost from './QuotePost.vue'
 import TextPost from './TextPost.vue'
-let store = new Store()
+const store = new Store()
 export default {
 	props: ['post'],
 	components: {
@@ -58,99 +58,97 @@ export default {
 		QuotePost,
 		TextPost
 	},
-	data: function() { return {user: remote.getCurrentWindow().webContents.user} },
-	created: function() {
-		ipcRenderer.removeAllListeners('reblog');
-		ipcRenderer.removeAllListeners('like');
+	data: function () { return { user: remote.getCurrentWindow().webContents.user } },
+	created: function () {
+		ipcRenderer.removeAllListeners('reblog')
+		ipcRenderer.removeAllListeners('like')
 		ipcRenderer.on('reblog', (evt, msg) => {
-			console.log(msg);
-		});
+			console.log(msg)
+		})
 		ipcRenderer.on('like', (evt, msg) => {
-			console.log(msg);
+			console.log(msg)
 			if (msg.type === 'like') {
-				this.post.liked = true;
+				this.post.liked = true
 			} else {
-				this.post.liked = false;
+				this.post.liked = false
 			}
-		});
+		})
 	},
 	methods: {
-		doPost: function(method) {
+		doPost: function (method) {
 			if (event.target.classList.contains('disabled')) {
-				return;
+				return
 			}
 			if (method === 'reblog' && event.shiftKey) {
-				document.getElementById('edit_reblog').style.display = 'block';
+				document.getElementById('edit_reblog').style.display = 'block'
 			} else {
 				ipcRenderer.send(method, {
 					id: this.post.id,
 					reblog_key: this.post.reblog_key
-				});
+				})
 				if (method === 'reblog') {
-					event.target.classList.add('disabled');
+					event.target.classList.add('disabled')
 				}
 			}
 		},
-		prev: function() {
+		prev: function () {
 			if (global.current === undefined) {
-				global.current = document.getElementById('posts').lastChild;
+				global.current = document.getElementById('posts').lastChild
 			} else {
 				if (global.current.previousElementSibling !== null) {
-					global.current = current.previousElementSibling;
+					global.current = global.current.previousElementSibling
 				}
 			}
-			global.current.firstChild.click();
-			global.current.scrollIntoView(false);
+			global.current.firstChild.click()
+			global.current.scrollIntoView(false)
 		},
-		next: function() {
+		next: function () {
 			if (global.current === undefined) {
-				global.current = document.getElementById('posts').firstChild;
+				global.current = document.getElementById('posts').firstChild
 			} else {
 				if (global.current.nextElementSibling !== null) {
-					global.current = current.nextElementSibling;
+					global.current = global.current.nextElementSibling
 				}
 			}
-			global.current.firstChild.click();
-			global.current.scrollIntoView(false);
+			global.current.firstChild.click()
+			global.current.scrollIntoView(false)
 		},
-		addTag: function() {
-			if (this.$refs.tag.value.length > 0)
-				this.post.tags.push(this.$refs.tag);
+		addTag: function () {
+			if (this.$refs.tag.value.length > 0) { this.post.tags.push(this.$refs.tag) }
 		},
-		removeTag: function() {
-			this.post.tags.splice(this.post.tags.indexOf(event.target.innerHTML), 1);
+		removeTag: function () {
+			this.post.tags.splice(this.post.tags.indexOf(event.target.innerHTML), 1)
 		},
-		reblogEditted: function() {
-			if (this.$refs.tag.length > 0)
-				alert('Tag not added.')
-			else 
+		reblogEditted: function () {
+			if (this.$refs.tag.length > 0) { alert('Tag not added.') } else {
 				ipcRenderer.send('reblog', {
 					id: this.post.id,
 					reblog_key: this.post.reblog_key,
 					comment: this.$refs.comment.value,
 					tags: this.post.tags.join(',')
-				});
+				})
+			}
 		},
-		download: function() {
-			let dir = store.get('config.save_dir', '')
-			let name = this.post.blog_name+"_"+this.post.id
+		download: function () {
+			const dir = store.get('config.save_dir', '')
+			const name = this.post.blog_name + '_' + this.post.id
 			switch (this.post.type) {
-				case 'photo':
-					for (var photo of this.post.photos) {
-						let url = photo.original_size.url
-						let ext = "_"+this.post.photos.indexOf(photo)+photo.original_size.url.slice(photo.original_size.url.length-4)
-						ipcRenderer.send('download', {path: dir+name+ext, url: url})
-					}
-					break;
-				case 'video':
-					if (this.post.video_type === 'tumblr') {
-						let parser = new DOMParser();
-						let video = parser.parseFromString(this.post.player[0].embed_code, "text/html");
-						let url=video.getElementsByTagName('source')[0].src;
-						let ext = ".mp4"
-						ipcRenderer.send('download', {path: dir+name+ext, url: url})
-					}
-					break;
+			case 'photo':
+				for (var photo of this.post.photos) {
+					const url = photo.original_size.url
+					const ext = '_' + this.post.photos.indexOf(photo) + photo.original_size.url.slice(photo.original_size.url.length - 4)
+					ipcRenderer.send('download', { path: dir + name + ext, url: url })
+				}
+				break
+			case 'video':
+				if (this.post.video_type === 'tumblr') {
+					const parser = new DOMParser()
+					const video = parser.parseFromString(this.post.player[0].embed_code, 'text/html')
+					const url = video.getElementsByTagName('source')[0].src
+					const ext = '.mp4'
+					ipcRenderer.send('download', { path: dir + name + ext, url: url })
+				}
+				break
 			}
 		}
 	}

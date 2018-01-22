@@ -13,47 +13,47 @@
 
 <script>
 import LinkItem from '../LinkItem.vue'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 export default {
 	props: ['blog_name'],
-	components: {LinkItem},
-	data: function() {return {blog: {}, avatar_url: ''}},
-	created: function() {
-		ipcRenderer.on('avatar'+this.blog_name, (evt, msg) => {
-			this.avatar_url = msg.avatar_url;
-		});
-		ipcRenderer.send('avatar', {name: this.blog_name, size: 48});
+	components: { LinkItem },
+	data: function () { return { blog: {}, avatar_url: '' } },
+	created: function () {
+		ipcRenderer.on('avatar' + this.blog_name, (evt, msg) => {
+			this.avatar_url = msg.avatar_url
+		})
+		ipcRenderer.send('avatar', { name: this.blog_name, size: 48 })
 		ipcRenderer.on('blogInfo', (evt, msg) => {
-			console.log(msg);
+			console.log(msg)
 			if (msg.hasOwnProperty('blog')) {
-				this.blog = msg.blog;
+				this.blog = msg.blog
 			} else {
-				this.$refs.msg.style.display = 'table';
+				this.$refs.msg.style.display = 'table'
 			}
-		});
-		ipcRenderer.send('blogInfo', {name: this.blog_name});
+		})
+		ipcRenderer.send('blogInfo', { name: this.blog_name })
 		ipcRenderer.on('follow', (evt, msg) => {
-			console.log(msg);
-			ipcRenderer.send('blogInfo', {name: this.blog_name});
-		});
+			console.log(msg)
+			ipcRenderer.send('blogInfo', { name: this.blog_name })
+		})
 		ipcRenderer.on('unfollow', (evt, msg) => {
-			console.log(msg);
-			ipcRenderer.send('blogInfo', {name: this.blog_name});
-		});
+			console.log(msg)
+			ipcRenderer.send('blogInfo', { name: this.blog_name })
+		})
 	},
 	methods: {
-		follow: function() {
+		follow: function () {
 			if (this.blog.followed) {
-				ipcRenderer.send('unfollow', {url: this.blog.url});
+				ipcRenderer.send('unfollow', { url: this.blog.url })
 			} else {
-				ipcRenderer.send('follow', {url: this.blog.url});
+				ipcRenderer.send('follow', { url: this.blog.url })
 			}
 		},
-		open: function(path) {
-			window.open(path);
+		open: function (path) {
+			window.open(path)
 		},
-		goTo: function(path) {
-			this.$router.push(path);
+		goTo: function (path) {
+			this.$router.push(path)
 		}
 	}
 }

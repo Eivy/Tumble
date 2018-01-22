@@ -15,14 +15,14 @@ import LinkItem from '../LinkItem.vue'
 import BlogInfo from './BlogInfo.vue'
 export default {
 	props: ['post'],
-	components: {LinkItem},
+	components: { LinkItem },
 	methods: {
-		blog: function(blog_name) {
-			new Vue({
+		blog: function (blog_name) {
+			Vue({
 				el: '#contents',
-				components: {BlogInfo},
+				components: { BlogInfo },
 				router: this.$router,
-				data: {blog_name: blog_name},
+				data: { blog_name: blog_name },
 				template: '<BlogInfo :blog_name=blog_name />'
 			})
 		}

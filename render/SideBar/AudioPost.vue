@@ -12,7 +12,7 @@ import Icon from 'vue-awesome/components/Icon.vue'
 import Mixin from './Mixin.vue'
 export default {
 	mixins: [Mixin],
-	components: {Icon}
+	components: { Icon }
 }
 </script>
 

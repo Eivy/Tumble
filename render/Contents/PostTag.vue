@@ -9,10 +9,10 @@
 import LinkItem from '../LinkItem.vue'
 export default {
 	props: ['post'],
-	components: {LinkItem},
+	components: { LinkItem },
 	methods: {
-		goTo: function(tag) {
-			this.$router.push('/tag/'+tag);
+		goTo: function (tag) {
+			this.$router.push('/tag/' + tag)
 		}
 	}
 }

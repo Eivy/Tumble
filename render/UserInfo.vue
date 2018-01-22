@@ -21,33 +21,33 @@
 
 <script>
 import Vue from 'vue'
-import {ipcRenderer, remote} from 'electron'
+import { ipcRenderer, remote } from 'electron'
 import Icon from 'vue-awesome/components/Icon.vue'
 import LinkItem from './LinkItem.vue'
 import Config from './Contents/Config.vue'
 export default {
-	components: {Icon, LinkItem},
-	data: function () { return {blogs: null, name: '', following: ''} },
-	created: function() {
-		this.name = remote.getCurrentWindow().webContents.user;
+	components: { Icon, LinkItem },
+	data: function () { return { blogs: null, name: '', following: '' } },
+	created: function () {
+		this.name = remote.getCurrentWindow().webContents.user
 		ipcRenderer.send('user')
 		ipcRenderer.removeAllListeners('user')
 		ipcRenderer.on('user', (err, data) => {
-			this.blogs = data.user.blogs;
-			this.following = data.user.following;
-		});
+			this.blogs = data.user.blogs
+			this.following = data.user.following
+		})
 	},
 	methods: {
-		goTo: function(path) {
+		goTo: function (path) {
 			this.$router.push(path)
 		},
-		config: function() {
-			new Vue({
-				el: '#contents',
-				components: {Config},
+		config: function () {
+			const contents = new Vue({
+				components: { Config },
 				store: this.$store,
 				template: '<Config></Config>'
 			})
+			contents.$mount('contents')
 		}
 	}
 }

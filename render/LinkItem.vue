@@ -10,7 +10,7 @@
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 export default {
-	components: {Icon},
+	components: { Icon },
 	props: ['text', 'count']
 }
 </script>

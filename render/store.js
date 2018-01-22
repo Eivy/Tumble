@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Store from 'electron-store'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-const store = new Store();
+const store = new Store()
 
 export default new Vuex.Store({
 	state: {
@@ -16,9 +16,9 @@ export default new Vuex.Store({
 	mutations: {
 		valueChange (st, payload) {
 			if (document.getElementById('posts')) {
-				store.set('config.'+payload.name, payload.value);
-				st[payload.name] = payload.value;
+				store.set('config.' + payload.name, payload.value)
+				st[payload.name] = payload.value
 			}
 		}
 	}
-});
+})
