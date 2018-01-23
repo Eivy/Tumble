@@ -13,7 +13,7 @@
 			<div v-else>{{post.type}}</div>
 		</waterfall-slot>
 		</waterfall>
-		<div id='current'></div>
+		<div id='marker'></div>
 	</div>
 </template>
 
@@ -97,11 +97,11 @@ export default {
 				target = target.parentNode
 			}
 			global.current = target
-			var current = document.getElementById('current')
-			current.style.top = 'calc(' + global.current.style.top + ' + ' + global.current.parentNode.offsetTop + 'px)'
-			current.style.left = global.current.style.left
-			current.style.width = global.current.style.width
-			current.style.height = global.current.style.height
+			var marker = global.marker
+			marker.style.top = 'calc(' + global.marker.style.top + ' + ' + global.marker.parentNode.offsetTop + 'px)'
+			marker.style.left = global.marker.style.left
+			marker.style.width = global.marker.style.width
+			marker.style.height = global.marker.style.height
 		},
 		reflowed: function () {
 			const postsCover = document.getElementById('posts-cover')
@@ -123,7 +123,7 @@ export default {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	overflow: hidden;
 }
-#current {
+#marker {
 	position: absolute;
 	background-color: #000;
 	opacity: 0.5;
