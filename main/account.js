@@ -23,6 +23,12 @@ export default class Account {
 		this.getAuth(login, token)
 	}
 	static createWindow (token, name) {
+		console.log(token)
+		if (token.consumer_key === undefined || token.consumer_secret === undefined) {
+			token.consumer_key = Consumer.consumer_key
+			token.consumer_secret = Consumer.consumer_secret
+		}
+		console.log(token)
 		var w = new electron.BrowserWindow({
 			width: 1000,
 			height: 800,
