@@ -3,7 +3,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = [
   {
     entry: './main/entry.js',
-    externals: [{ 'electron-store': 'require("electron-store")' }],
+    externals: [{ 'electron-store': 'require("electron-store")', 'about-window': 'require("about-window")' }],
     output: {
       path: __dirname,
       filename: './main.js'

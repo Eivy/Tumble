@@ -1,5 +1,7 @@
 import Account from './account.js'
 import { default as electron, app, Menu } from 'electron'
+import openAboutWindow from 'about-window'
+import path from 'path'
 import Store from 'electron-store'
 const store = new Store()
 
@@ -15,6 +17,13 @@ for (const a in accounts) {
 			click: () => Account.createWindow(accounts[a], a)
 		}
 	)
+}
+
+const aboutWindowInfo = {
+	icon_path: path.join('file://', __dirname, 'icon', 'Tumble.png'),
+	bug_report_url: 'https://github.com/Eivy/Tumble/issues',
+	description: 'Tumblr client for Desktop',
+	open_devtools: process.env.NODE_ENV !== 'production'
 }
 
 var config = { label: 'Config', click: () => electron.BrowserWindow.getFocusedWindow().send('config') }
@@ -55,7 +64,7 @@ if (process.platform === 'darwin') {
 	template.unshift({
 		label: app.getName(),
 		submenu: [
-			{ role: 'about' },
+			{ label: 'About This App', click: () => openAboutWindow(aboutWindowInfo) },
 			config,
 			{ type: 'separator' },
 			{ role: 'services', submenu: [] },
@@ -77,7 +86,8 @@ if (process.platform === 'darwin') {
 	template.push({
 		label: 'Help',
 		submenu: [
-			config
+			config,
+			{ label: 'About This App', click: () => openAboutWindow(aboutWindowInfo) }
 		]
 	})
 }

@@ -13,7 +13,7 @@ const store = new Store()
 export default class Account {
 	static newAccount () {
 		var token = {}
-		var login = new electron.BrowserWindow({ width: 800, heigh: 600, icon: 'icon/Tumble.png' })
+		var login = new electron.BrowserWindow({ width: 800, heigh: 600, icon: path.join('file://', __dirname, 'icon', 'Tumble.png') })
 		login.on('close', () => {
 			if (login.did_auth) {
 				this.createWindow(token)
@@ -29,7 +29,7 @@ export default class Account {
 			webPreferences: {
 				blinkFeatures: 'CSSBackdropFilter'
 			},
-			icon: 'icon/Tumble.png'
+			icon: path.join('file://', __dirname, 'icon', 'Tumble.png')
 		})
 		var c = new tumblr.Client({
 			consumer_key: token.consumer_key,

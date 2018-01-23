@@ -23,6 +23,7 @@
   "author": "Eivy",
   "license": "ISC",
   "dependencies": {
+    "about-window": "^1.8.0",
     "electron-store": "^1.3.0",
     "oauth-1.0a": "^2.2.3",
     "request": "^2.83.0",
