@@ -1,6 +1,6 @@
 {
   "name": "Tumble",
-  "version": "0.9.0",
+  "version": "0.0.1",
   "description": "Tumblr client for desktop",
   "main": "main.js",
   "scripts": {
