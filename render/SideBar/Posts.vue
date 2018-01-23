@@ -98,10 +98,10 @@ export default {
 			}
 			global.current = target
 			var marker = global.marker
-			marker.style.top = 'calc(' + global.marker.style.top + ' + ' + global.marker.parentNode.offsetTop + 'px)'
-			marker.style.left = global.marker.style.left
-			marker.style.width = global.marker.style.width
-			marker.style.height = global.marker.style.height
+			marker.style.top = 'calc(' + global.current.style.top + ' + ' + global.current.parentNode.offsetTop + 'px)'
+			marker.style.left = global.current.style.left
+			marker.style.width = global.current.style.width
+			marker.style.height = global.current.style.height
 		},
 		reflowed: function () {
 			const postsCover = document.getElementById('posts-cover')
