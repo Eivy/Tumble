@@ -40,9 +40,8 @@ document.onkeydown = function () {
 	case 32: // space
 		if (!event.altKey && !event.ctrlKey && !event.metaKey) {
 			event.preventDefault()
-			var cover = document.getElementById('contents')
 			var content = document.getElementById('content')
-			var value = (cover.clientHeight / 2) - content.style.paddingTop
+			var value = (content.clientHeight / 2) - content.style.paddingTop
 			if (event.shiftKey) {
 				value = value * -1
 			}
