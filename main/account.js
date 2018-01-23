@@ -128,7 +128,7 @@ export default class Account {
 					console.log('Error getting OAuth access token: ' + err)
 				} else {
 					var q = querystring.parse(body)
-					returnToken.accessToken = q.oauth_token
+					returnToken.access_token = q.oauth_token
 					returnToken.access_token_secret = q.oauth_token_secret
 				}
 				login.did_auth = true
