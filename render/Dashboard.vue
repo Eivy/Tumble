@@ -25,8 +25,6 @@ export default {
 		ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
 			store.set('cache.' + this.name + '.' + this.$router.currentRoute.name + '.posts', this.posts)
 		})
-	},
-	mounted: function () {
 		if (store.has('cache.' + this.name + '.' + this.$router.currentRoute.name + '.posts')) {
 			this.posts = store.get('cache.' + this.name + '.' + this.$router.currentRoute.name + '.posts')
 		} else {
