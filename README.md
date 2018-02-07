@@ -1,4 +1,4 @@
-# Tumble [![latest build status](https://travis-ci.org/Eivy/Tumble.svg?branch=master)](https://travis-ci.org/Eivy/Tumble) [![Build status](https://ci.appveyor.com/api/projects/status/50dd7sa8q3s82ae2?svg=true)](https://ci.appveyor.com/project/Eivy/tumble)
+# Tumble [![latest build status](https://travis-ci.org/Eivy/Tumble.svg?branch=master)](https://travis-ci.org/Eivy/Tumble) [![Build status](https://ci.appveyor.com/api/projects/status/qkicvbyvvg9sd6eh/branch/master?svg=true)](https://ci.appveyor.com/project/Eivy/tumble/branch/master)
 
 Tumblr client for Desktop(Windows, macOS, Linux)
 
