@@ -15,9 +15,6 @@ export default {
 		ipcRenderer.removeAllListeners(this.$router.currentRoute.name)
 		if (this.$router.currentRoute.name === 'dashboard') {
 			ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
-				if (evt !== this.$router.currentRoute.name) {
-					return
-				}
 				if (store.get('config.own', false)) {
 					msg.posts = msg.posts.filter((item, index, array) => item.blog_name !== remote.getCurrentWindow().webContents.user)
 				}
@@ -38,9 +35,6 @@ export default {
 			})
 		} else {
 			ipcRenderer.on(this.$router.currentRoute.name, (evt, msg) => {
-				if (evt !== this.$router.currentRoute.name) {
-					return
-				}
 				if (msg.type === 'after') {
 					this.posts = msg.posts.concat(this.posts)
 				} else {
